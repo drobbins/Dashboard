@@ -1,29 +1,36 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My New CouchApp</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="style/main.css" type="text/css">
+    <link rel="stylesheet" href="style/blueprint/screen.css" media="screen, projection" type="text/css">
+    <link rel="stylesheet" href="style/blueprint/print.css" media="print" type="text/css">
+    <!--[if lt IE 8]>
+      <link rel="stylesheet" href="style/blueprint/ie.css" type="text/css">
+    <![endif]-->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/themes/smoothness/jquery-ui.css" type="text/css">
   </head>
-  <body>
-    <div id="account"></div>
+  <body><div class="container">
+    <div id="account" class="prepend-16 span-8 last" style="text-align:right"></div>
 
-    <h1>Generated CouchApp</h1>
-
-    <div id="profile"></div>
-    <div id="items"></div>
-
-    <div id="sidebar">
-      <p>Edit welcome message.</p>
-      <p>Ideas: You could easily turn this into a photo sharing app, or a grocery list, or a chat room.</p>
+    <div id="header" class="span-24">
+      <h1>Dashboard</h1>
     </div>
-  </body>
+
+    <div id="navigation" class="span-4"></div>
+
+    <div id="main" class="span-14"></div>
+
+    <div id="sidebar" class="span-6 last"></div>
+
+  </div></body>
   <script src="vendor/couchapp/loader.js"></script>
+  <script src="loader.js"></script>
   <script type="text/javascript" charset="utf-8">
     $.couch.app(function(app) {
       $("#account").evently("account", app);
-      $("#profile").evently("profile", app);
-      $.evently.connect("#account","#profile", ["loggedIn","loggedOut"]);
-      $("#items").evently("items", app);
+      $("#main").evently("main", app);
+      $("#navigation").evently("navigation", app);
     });
   </script>
 </html>

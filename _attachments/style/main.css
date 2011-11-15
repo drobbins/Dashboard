@@ -1,5 +1,5 @@
 /* add styles here */
-
+/*
 body {
   font:1em Helvetica, sans-serif;
   padding:4px;
@@ -73,3 +73,41 @@ div.avatar img {
 #items ul {
   list-style: none;
 }
+
+form.dmf label{
+  width: 300px;
+  float: left;
+  text-align: right;
+  margin: 5px;
+}
+
+form.dmf input,select{
+  float: left;
+  margin: 5px;
+}
+
+form.dmf div, form.dmf fieldset{
+  clear: both;
+}
+
+form.dmf input.nofloat {
+  float: none;
+}
+*/
+.chart div {
+   font: 10px sans-serif;
+   background-color: steelblue;
+   text-align: right;
+   padding: 3px;
+   margin: 1px;
+   color: white;
+}
+
+.chart rect{
+  stroke: white;
+}
+
+.label{
+  writing-mode: tb-rl;
+}
+
