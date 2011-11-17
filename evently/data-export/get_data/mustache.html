@@ -1,0 +1,14 @@
+<h2>Data Export: {{view}}</h2>
+<table id="results">
+    <tr>
+        {{#key_labels}}<th>{{.}}</th>{{/key_labels}}
+        {{#value_labels}}<th>{{.}}</th>{{/value_labels}}
+    </tr>
+    {{#rows}}
+    <tr>
+        {{#key}}<td>{{.}}</td>{{/key}}
+        {{#value}}<td>{{.}}</td>{{/value}}
+    </tr>
+    {{/rows}}
+</table>
+<a href="{{url}}">Download as CSV</a>

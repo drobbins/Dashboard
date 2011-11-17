@@ -8,6 +8,7 @@ function app_load(scripts) {
 app_load([
   "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js",
   //"http://documentcloud.github.com/underscore/underscore-min.js",
+  "scripts/dashboard.js",
   "scripts/d3.min.js",
   "scripts/d3.behavior.min.js",
   "scripts/d3.chart.min.js",
