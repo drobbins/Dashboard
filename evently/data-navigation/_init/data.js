@@ -1,4 +1,4 @@
 function(data){
-    var views = Object.keys(data);
+    var views = Object.keys(data).sort();
     return { "views":views};
 }

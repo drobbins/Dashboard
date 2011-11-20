@@ -1,4 +1,12 @@
 <h2>Data Export: {{view}}</h2>
+<form>
+    <select id="group_level">
+        <option value="#">Group by</option>
+        {{#group_levels}}
+            <option value="#{{group_level}}">{{label}}</option>
+        {{/group_levels}}
+    </select>
+</form>
 <table id="results">
     <tr>
         {{#key_labels}}<th>{{.}}</th>{{/key_labels}}
@@ -7,7 +15,7 @@
     {{#rows}}
     <tr>
         {{#key}}<td>{{.}}</td>{{/key}}
-        {{#value}}<td>{{.}}</td>{{/value}}
+        {{#value}}{{#values}}<td>{{.}}</td>{{/values}}{{/value}}
     </tr>
     {{/rows}}
 </table>
