@@ -1,0 +1,25 @@
+<h3>Dashboard Users</h3>
+<form id="new_admin">
+	<label>New Admin: <input name="username" type="text"></label>
+</form>
+<form id="new_reader">
+	<label>New Reader: <input name="username" type="text"></label>
+</form>
+<h4>Current Admins</h4>
+<ul>
+	{{#admins}}
+		Names: {{^names}}(none){{/names}}
+		<ul>{{#names}}<li>{{.}}</li>{{/names}}</ul>
+		Roles: {{^roles}}(none){{/roles}}
+		<ul>{{#roles}}<li>{{.}}</li>{{/roles}}</ul>
+	{{/admins}}
+</ul>
+<h4>Current Readers</h4>
+<ul>
+	{{#readers}}
+		Names:
+		<ul>{{#names}}<li>{{.}}</li>{{/names}}</ul>
+		Roles: {{^roles}}(none){{/roles}}
+		<ul>{{#roles}}<li>{{.}}</li>{{/roles}}</ul>
+	{{/readers}}
+</ul>

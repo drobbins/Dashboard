@@ -14,7 +14,7 @@ function(doc){
                     "value_labels" : ["number of enrollments","number of visits"]
                 }
             };
-            if(doc.cltrial === "Yes"){
+            if(doc.cltrial === "Yes" || doc.cltrial === "yes"){
                 value.values = [1, 1];
             }
             else {

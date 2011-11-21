@@ -1,0 +1,296 @@
+<script>
+    $(function() {
+        $( ".datepicker" ).datepicker();
+    });
+</script>
+<form class="dmf"><fieldset>
+    <legend>Data for {{ptname}}{{^ptname}}a new patient{{/ptname}}</legend>
+    <div>
+        <label for="tdysdate">Today's Date: </label><br/>
+        <input type="text" name="tdysdate" value="{{tdysdate}}" class="datepicker text" />
+    </div>
+    <div>
+        <label for="clinic">Clinic: </label><br/>
+        <input type="hidden" name="clinic_text" value="{{clinic}}" id="clinic_text"/>
+        <select id="clinic" name="clinic">
+            <option value="" selected="selected" >Select Clinic</option>
+            <option value="Breast">Breast</option>
+            <option value="Gi">Gi</option>
+            <option value="Gyn Onc">Gyn Onc</option>
+            <option value="Head And Neck">Head And Neck</option>
+            <option value="Lymp And Leuk">Lymp And Leuk</option>
+            <option value="Neuro Onc">Neuro Onc</option>
+            <option value="Thoracic">Thoracic</option>
+            <option value="Urology">Urology</option>
+        </select>
+    </div>
+    <div>
+        <label for="opername">Operator: </label><br/>
+        <input type="text" class="text" name="opername" value="{{opername}}" />
+    </div>
+    <div>
+        <label for="datadate">Data Date: </label><br/>
+        <input type="text" name="datadate" value="{{datadate}}"    class="datepicker text" />
+    </div>
+    <div>
+        <label for="ptfstnm">Patient First Name: </label><br/>
+        <input type="text" class="text" name="ptfstnm" value="{{ptfstnm}}" /><br/>
+        <label for="ptlstnm">Patient Last Name: </label><br/>
+        <input type="text" class="text" name="ptlstnm" value="{{ptlstnm}}" />
+    </div>
+    <div>
+        <label for="medrec">Medical Record Number: </label><br/>
+        <input type="text" class="text" name="medrec" value="{{medrec}}" />
+    </div>
+    <div>
+        <label for="refermd">Referring Physician: </label><br/>
+        <input type="text" class="text" name="refermd" value="{{refermd}}" />
+    </div>
+    <div>
+        <label for="mdphone">Phone: </label><br/>
+        <input type="text" class="text" name="mdphone" value="{{mdphone}}" />
+    </div>
+    <div>
+        <label for="mdaddy">Address: </label><br/>
+        <input type="text" class="text" name="mdaddy" value="{{mdaddy}}" />
+    </div>
+    <div>
+        <label for="refUABmd">Referring UAB Multidisciplinary MD: </label><br/>
+        <input type="text" class="text" name="refUABmd" value="{{refUABmd}}" />
+    </div>
+    <div>
+        <label for="dtrefer">Date of Referral: </label><br/>
+        <input type="text" name="dtrefer" value="{{dtrefer}}"    class="datepicker text" />
+    </div>
+    <div>
+        <label for="selfrfer">Self-referral?: </label><br/>
+        <input type="text" class="text" name="selfrfer" value="{{selfrfer}}" />
+    </div>
+    <div>
+        <label for="other">List "Other" Referral: </label><br/>
+        <input type="text" class="text" name="other" value="{{other}}" />
+    </div>
+    <div>
+        <label for="refnav">Referral to Navigation Services?: </label><br/>
+        <input type="text" class="text" name="refnav" value="{{refnav}}" />
+    </div>
+    <div>
+        <label for="icd9">ICD-9: </label><br/>
+        <input type="text" class="text" name="icd9" value="{{icd9}}" />
+    </div>
+    <div>
+        <label for="clinstg">Clinical Stage at Presentation: </label><br/>
+        <input type="text" class="text" name="clinstg" value="{{clinstg}}" />
+    </div>
+    <div>
+        <label for="medrecdt">Date Medical Records Received: </label><br/>
+        <input type="text" name="medrecdt" value="{{medrecdt}}"    class="datepicker text" />
+    </div>
+    <div>
+        <label for="attmpdt">Date of Attempted Inital Pt. Contact: </label><br/>
+        <input type="text" name="attmpdt" value="{{attmpdt}}"    class="datepicker text" />
+    </div>
+    <div>
+        <label for="actualdt">Dat of Actual Pt. Contact: </label><br/>
+        <input type="text" name="actualdt" value="{{actualdt}}"    class="datepicker text" />
+    </div>
+    <div>
+        <label for="offerdt">Appointment Date Offered: </label><br/>
+        <input type="text" name="offerdt" value="{{offerdt}}"    class="datepicker text" />
+    </div>
+    <div>
+        <label for="accptdt">Appointment Date Accepted: </label><br/>
+        <input type="text" name="accptdt" value="{{accptdt}}"    class="datepicker text" />
+    </div>
+    <div>
+        <label for="previns">Did Pt. Previously have insurance?: </label><br/>
+        <input type="text" class="text" name="previns" value="{{previns}}" />
+    </div>
+    <div>
+        <label for="appins">If "No", dit Pt. apply for insurance?: </label><br/>
+        <input type="text" class="text" name="appins" value="{{appins}}" />
+    </div>
+    <div>
+        <label for="typeins">Type of insurance: </label><br/>
+        <input type="text" class="text" name="typeins" value="{{typeins}}" />
+    </div>
+    <div>
+        <label for="pthowinf">How did the patient hear about the Multidisciplinary Clinic at UAB?: </label><br/>
+        <input type="text" class="text" name="pthowinf" value="{{pthowinf}}" />
+    </div>
+    <div>
+        <label for="ptaddy">Patient Home Town/County of Residence: </label><br/>
+        <input type="text" class="text" name="ptaddy" value="{{ptaddy}}" />
+    </div>
+    <fieldset id="SURG"><legend>Surgery Consultation</legend>
+    <div>
+        <label for="surgdt">Date: </label><br/>
+        <input type="text" name="surgdt" value="{{surgdt}}"    class="datepicker text" />
+    </div>
+    <div>
+        <label for="surgtm">Time: </label><br/>
+        <input type="text" name="surgtm" value="{{surgtm}}" />
+    </div>
+    <div>
+        <label for="surgloc">Location: </label><br/>
+        <input type="text" class="text" name="surgloc" value="{{surgloc}}" />
+    </div>
+    <div>
+        <label for="surgmd">Consulting Physician: </label><br/>
+        <input type="text" class="text" name="surgmd" value="{{surgmd}}" />
+    </div>
+    </fieldset><fieldset id="MDONC"><legend>Medical Oncology Consultation</legend>
+    <div>
+        <label for="mdoncdt">Date: </label><br/>
+        <input type="text" name="mdoncdt" value="{{mdoncdt}}"    class="datepicker text" />
+    </div>
+    <div>
+        <label for="mdonctm">Time: </label><br/>
+        <input type="text" name="mdonctm" value="{{mdonctm}}" />
+    </div>
+    <div>
+        <label for="mdoncloc">Location: </label><br/>
+        <input type="text" class="text" name="mdoncloc" value="{{mdoncloc}}" />
+    </div>
+    <div>
+        <label for="medoncmd">Consulting Physician: </label><br/>
+        <input type="text" class="text" name="medoncmd" value="{{medoncmd}}" />
+    </div>
+    </fieldset><fieldset id="RADON"><legend>Radiation Oncology Consultation</legend>
+    <div>
+        <label for="radondt">Date: </label><br/>
+        <input type="text" name="radondt" value="{{radondt}}"    class="datepicker text" />
+    </div>
+    <div>
+        <label for="radontm">Time: </label><br/>
+        <input type="text" name="radontm" value="{{radontm}}" />
+    </div>
+    <div>
+        <label for="radonloc">Location: </label><br/>
+        <input type="text" class="text" name="radonloc" value="{{radonloc}}" />
+    </div>
+    <div>
+        <label for="radoncmd">Consulting Physician: </label><br/>
+        <input type="text" class="text" name="radoncmd" value="{{radoncmd}}" />
+    </div>
+    </fieldset><fieldset id="PLSUR"><legend>Plastic Surgery Consultation</legend>
+    <div>
+        <label for="plsurdt">Date: </label><br/>
+        <input type="text" name="plsurdt" value="{{plsurdt}}"    class="datepicker text" />
+    </div>
+    <div>
+        <label for="plsurtm">Time: </label><br/>
+        <input type="text" class="text" name="plsurtm" value="{{plsurtm}}" />
+    </div>
+    <div>
+        <label for="plsurloc">Location: </label><br/>
+        <input type="text" class="text" name="plsurloc" value="{{plsurloc}}" />
+    </div>
+    <div>
+        <label for="plsurgmd">Consulting Physician: </label><br/>
+        <input type="text" class="text" name="plsurgmd" value="{{plsurgmd}}" />
+    </div>
+    </fieldset><fieldset id="BMT"><legend>Bome Marrow Transplant Consultation</legend>
+    <div>
+        <label for="bmtdt">Date: </label><br/>
+        <input type="text" name="bmtdt" value="{{bmtdt}}"    class="datepicker text" />
+    </div>
+    <div>
+        <label for="bmttm">Time: </label><br/>
+        <input type="text" class="text" name="bmttm" value="{{bmttm}}" />
+    </div>
+    <div>
+        <label for="bmtloc">Location: </label><br/>
+        <input type="text" class="text" name="bmtloc" value="{{bmtloc}}" />
+    </div>
+    <div>
+        <label for="bmtmd">Consulting Physician: </label><br/>
+        <input type="text" class="text" name="bmtmd" value="{{bmtmd}}" />
+    </div>
+    </fieldset><fieldset id="DENT"><legend>Dental Consultation</legend>
+    <div>
+        <label for="dentdt">Date: </label><br/>
+        <input type="text" name="dentdt" value="{{dentdt}}"    class="datepicker text" />
+    </div>
+    <div>
+        <label for="denttm">Time: </label><br/>
+        <input type="text" class="text" name="denttm" value="{{denttm}}" />
+    </div>
+    <div>
+        <label for="dentloc">Location: </label><br/>
+        <input type="text" class="text" name="dentloc" value="{{dentloc}}" />
+    </div>
+    <div>
+        <label for="dentmd">Consulting Physician: </label><br/>
+        <input type="text" class="text" name="dentmd" value="{{dentmd}}" />
+    </div>
+    </fieldset><fieldset id="OTH"><legend>Other Consultation</legend>
+    <div>
+        <label for="othdt">Date: </label><br/>
+        <input type="text" name="othdt" value="{{othdt}}"    class="datepicker text" />
+    </div>
+    <div>
+        <label for="othtm">Time: </label><br/>
+        <input type="text" class="text" name="othtm" value="{{othtm}}" />
+    </div>
+    <div>
+        <label for="othloc">Location: </label><br/>
+        <input type="text" class="text" name="othloc" value="{{othloc}}" />
+    </div>
+    <div>
+        <label for="othmd">Consulting Physician: </label><br/>
+        <input type="text" class="text" name="othmd" value="{{othmd}}" />
+    </div>
+    </fieldset>
+    <div>
+        <label for="txsurg">Surgery Location: </label><br/>
+        <input type="hidden" id="txsurg" name="txsurg" value="{{txsurg}}" />
+        <input id="txsurg-UAB"    type="radio" name="txsurg" value="UAB" /> UAB<br />
+        <input id="txsurg-Elsewhere"    type="radio" name="txsurg" value="Elsewhere" /> Elsewhere<br />
+        <input id="txsurg-ni"    type="radio" name="txsurg" value="" /> Not Indicated<br />
+    </div>
+    <div>
+        <label for="txmedonc">Medical Oncology Location: </label><br/>
+        <input type="hidden" id="txmedonc" name="txmedonc" value="{{txmedonc}}" />
+        <input id="txmedonc-UAB"    type="radio" name="txmedonc" value="UAB" /> UAB<br />
+        <input id="txmedonc-Elsewhere"    type="radio" name="txmedonc" value="Elsewhere" /> Elsewhere<br />
+        <input id="txmedonc-ni"    type="radio" name="txmedonc" value="" /> Not Indicated<br />
+    </div>
+    <div>
+        <label for="txradonc">Radiation Oncology Location: </label><br/>
+        <input type="hidden" id="txradonc" name="txradonc" value="{{txradonc}}" />
+        <input id="txradonc-UAB"    type="radio" name="txradonc" value="UAB" /> UAB<br />
+        <input id="txradonc-Elsewhere"    type="radio" name="txradonc" value="Elsewhere" /> Elsewhere<br />
+        <input id="txradonc-ni"    type="radio" name="txradonc" value="" /> Not Indicated<br />
+    </div>
+    <div>
+        <label for="txelsewh">If "elsewhere selected, please list the Clinic/Hospital of Treatment: </label><br/>
+        <input type="text" class="text" name="txelsewh" value="{{txelsewh}}" />
+    </div>
+    <div>
+        <label for="txplan">Treatment Plan: </label><br/>
+        <input type="text" class="text" name="txplan" value="{{txplan}}" />
+    </div>
+    <div>
+        <label for="cltrial">Clinical Trials: </label><br/>
+        <input type="hidden" id="cltrial1" name="cltrial" value="{{cltrial}}" />
+        <input type="radio" name="cltrial" id="cltrial1-Yes" value="Yes" />Yes
+        <input type="radio" name="cltrial" id="cltrial1-ni" value="" checked="checked" />No
+    </div>
+    <div>
+        <label for="uabprtcl">If Yes, UAB Protocol#: </label><br/>
+        <input type="text" class="text" name="uabprtcl" value="{{uabprtcl}}" />
+    </div>
+    <div>
+        <label for="dtltrfwd">Date letter sent to referring physician: </label><br/>
+        <input type="text" name="dtltrfwd" value="{{dtltrfwd}}"    class="datepicker text" />
+    </div>
+    <div>
+        <label for="othclnts">Other Clinical Notes: </label><br/>
+        <input type="text" class="text" name="othclnts" value="{{othclnts}}" />
+    </div>
+    <div><input type="button" value="Submit" class="submit" />
+    </div>
+    <input type="hidden" name="_id" value="{{_id}}" />
+    <input type="hidden" name="_rev" value="{{_rev}}" />
+</fieldset></form>

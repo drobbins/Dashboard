@@ -1,0 +1,12 @@
+<h2>Data Export: {{view}}</h2>
+<form>
+    <select id="group_level">
+        <option value="#">Group by</option>
+        {{#group_levels}}
+            <option value="#{{group_level}}">{{label}}</option>
+        {{/group_levels}}
+    </select>
+</form>
+<div id="key"></div>
+<div id="comments"></div>
+<div id="chart"></div>
