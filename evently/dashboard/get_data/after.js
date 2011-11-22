@@ -7,8 +7,11 @@ function(){
         rw = w/data.rows.length,
         my = d3.max(data.rows, function(row){
             return row.value.values[0];
-        })
-        y = d3.scale.linear().domain([0,my]).range([0,h]);
+        }),
+        y = d3.scale.linear().domain([0,my]).range([0,h]),
+        num = d3.format(".0f"),
+        cx,
+        cy;
     var chart = d3.select("#chart")
         .append("svg:svg")
         .attr("class", "chart")
@@ -18,10 +21,10 @@ function(){
     chart.selectAll("rect")
         .data(data.rows)
         .enter().append("svg:rect")
-        .attr("x", function(d, i){return i * rw;})
+        .attr("x", function(d, i){return cx = i * rw;})
         .attr("width", rw)
         .attr("height", function(d,i){return y(d.value.values[0]);})
-        .attr("y", function(d,i){return h-y(d.value.values[0]);})
+        .attr("y", function(d,i){return cy = h-y(d.value.values[0]);})
         .style("fill", "steelblue")
         .style("stroke", "white");
 
@@ -34,7 +37,15 @@ function(){
         .attr("dx", rw/2)
         .attr("dy", "0.35em")
         .style("writing-mode", "tb-rl")
-        .text(function(d,i){return d.value.values[0];});
+        .text(function(d,i){return num(d.value.values[0]);});
+
+    chart.selectAll("text.value")
+        .attr("transform", function(){
+            var bb = this.getBBox();
+            if (bb.y + bb.height > h){
+                return "translate(0 -"+(bb.height+5)+")";
+            }
+        });
 
     chart.selectAll("text.label")
         .data(data.rows)
@@ -44,5 +55,6 @@ function(){
         .attr("y", h+6)
         .attr("dx", rw/2)
         .style("writing-mode", "tb-rl")
+        //.attr("transform", "rotate(90 0 0)")
         .text(function(d,i){return d.key.join(", ");});
 }
