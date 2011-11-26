@@ -32,20 +32,31 @@ function(){
         .data(data.rows)
         .enter().append("svg:text")
         .attr("class", "value")
-        .attr("x", function(d, i){return i * rw;})
+        .attr("x", function(d, i){return i * rw + rw/2;})
         .attr("y", function(d,i){return h-y(d.value.values[0]);})
-        .attr("dx", rw/2)
+        //.attr("dx", rw/2)
         .attr("dy", "0.35em")
         .style("writing-mode", "tb-rl")
         .text(function(d,i){return num(d.value.values[0]);});
 
     chart.selectAll("text.value")
-        .attr("transform", function(){
-            var bb = this.getBBox();
-            if (bb.y + bb.height > h){
-                return "translate(0 -"+(bb.height+5)+")";
+        .attr("transform", function(d, i){
+            var bb = this.getBBox(),
+                x = this.attributes.x.value,
+                y = this.attributes.y.value,
+                transformation = "",
+                centering_y;
+            //Rotate and center text in bar
+            //transformation += "rotate(90 "+x+" "+y+") ";
+            //centering_y = bb.height/2;
+            //transformation += "translate(5 "+centering_y+") ";
+            if (bb.y + bb.width > h){
+                transformation += "translate(0 -"+(bb.height+5)+")";
             }
+            return transformation;
         });
+
+
 
     chart.selectAll("text.label")
         .data(data.rows)
