@@ -87,61 +87,57 @@ function(){
     };
 
     var plot_by_clinic = function(){
-        var clinics = [],
-            all_dates = [],
+        var nested_data = d3.nest().key(function(d){return d.key[0]}).entries(data.rows),
+            clinics = nested_data.map(function(d){return d.key;}),
+            layout_data = nested_data.map(function(d){return d.values;}),
+            all_dates = (d3.nest().key(function(d){return d.key.slice(1)}).entries(data.rows)).map(function(d){return d.key;}),
             layout_data,
             current_clinic = "",
-            current_clinic_index;
-
+            current_clinic_indexp;
         //Preprocess for d3.layout.stacks()
-        clinics = _.unique(data.rows, true, function(el){return el.key[0];}).map(function(el){return el.key[0];});
-        all_x = _.unique(data.rows, true, function(el){return el.key[0];}).map(function(el){return el.key[0];});
-        all_x = 
-        layout_data = clinics.map(function(){return [];}); //Initialize empty arrays
-        //_.toArray(_.groupBy(data.rows, function(el){return el.key[0];}))
-        data.rows.map(function(el, i){
-            var date = el.key.slice(1),
-                x = _.myIndexOf(all_dates, date);
-            if(x === -1){
-                all_dates.push(date);
-                all_dates.sort();
-                x = _.myIndexOf(all_dates, date);
-            }
-            if(el.key[0] !== current_clinic){
-                current_clinic = el.key[0];
-                current_clinic_index = _.myIndexOf(clinics, current_clinic);
-            }
-            el.x = x;
-            el.y = el.value.values[0];
-            layout_data[current_clinic_index].push(el);
-
-        });
-        all_dates.map(function(date, x){
-            clinics.map(function(clinic, index){
-                var current_date = layout_data[index][x] && layout_data[index][x].key.slice(1),
+        all_dates.forEach(function(date,i){
+            clinics.forEach(function(clinic, j){
+                var clinic_data = layout_data[j],
+                    row_matches_date = function(row){
+                        if(row.key.slice(1).join(",") === date){
+                            return true;
+                        }
+                    },
                     empty_entry, key;
-                if(!current_date || (current_date > date || current_date < date)){
-                    key = date.slice(0);
-                    key.unshift(clinic);
+                //Check for the element
+                if(!(clinic_data.some(row_matches_date))){
+                    //Insert it if it's missing
+                    key = (clinic+","+date).split(",").map(function(el){
+                        if(isNaN(el)){
+                            return el;
+                        }
+                        else{
+                            return parseInt(el);
+                        }
+                    });
                     empty_entry = {
-                        "x" : x,
+                        "x" : i,
                         "y" : 0,
                         "key" : key,
                         "value" : {
-                            "values" : layout_data[index][0].value.values.map(function(){return 0;}),
-                            "labels" : layout_data[index][0].value.labels
+                            "values" : clinic_data[0].value.values.map(function(){return 0;}),
+                            "labels" : clinic_data[0].value.labels
                         }
                     };
-                    if(key < layout_data[index][0].key){
-                        layout_data[index].unshift(empty_entry);
+                    if(key < clinic_data[0].key){
+                        clinic_data.unshift(empty_entry);
                     }
                     else{
-                        layout_data[index].splice(x,0,empty_entry);
+                        var x=0;
+                        while(x < clinic_data.length && key > clinic_data[x].key){
+                            x+=1;
+                        }
+                        clinic_data.splice(x,0,empty_entry);
                     }
+
                 }
             });
         });
-        debugger;
 
         //Plot the datas!
         var n = layout_data.length,
@@ -164,6 +160,7 @@ function(){
             y2 = function(d) { return d.y * h / my; }, //or my not to scale
             scale = d3.scale.linear().domain([0,my]).range([0,h]),
             clinic_colors = app.dashboard.config.colors.clinics;
+        debugger;
 
         var vis = d3.select("#chart")
             .append("svg:svg")
