@@ -111,3 +111,6 @@ form.dmf input.nofloat {
   writing-mode: tb-rl;
 }
 
+table.nostripes tbody tr td{
+    background: transparent;
+}
