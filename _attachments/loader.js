@@ -7,7 +7,7 @@ function app_load(scripts) {
 
 app_load([
   "scripts/jquery-ui.min.js",
-  //"http://documentcloud.github.com/underscore/underscore-min.js",
+  "scripts/underscore.js",
   "scripts/dashboard.js",
   "scripts/d3.min.js",
   "scripts/d3.behavior.min.js",
