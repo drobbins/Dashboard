@@ -167,6 +167,32 @@ function(){
             .attr("width", w)
             .attr("height", h + p);
 
+        var labels = vis.selectAll("text.label")
+            .data(d[0])
+            .enter().append("svg:text")
+            .attr("class", "label")
+            .attr("x", x)
+            .attr("y", h + 6)
+            .attr("dx", x({x: .45}))
+            .attr("dy", "0.35em")
+            .attr("text-anchor", "left")
+            .text(function(d, i) { return d.key.slice(1).join(", ");});
+        vis.append("svg:line")
+            .attr("x1", 0)
+            .attr("x2", w - x({x: .1}))
+            .attr("y1", h)
+            .attr("y2", h)
+            .attr("stroke", "#000000");
+        vis.selectAll("line")
+            .data(scale.ticks(10))
+            .enter().append("svg:line")
+                .attr("x1", 0)
+                .attr("x2", w)
+                .attr("y1", scale)
+                .attr("y2", scale)
+                .attr("stroke", "#000000");
+
+
         var layers = vis.selectAll("g.layer")
             .data(d)
             .enter().append("svg:g")
@@ -199,9 +225,9 @@ function(){
                 var $headers = $("<tr/>"),
                     $values = $("<tr/>"),
                     $comment = $("<table class='nostripes'></table>")
-                e.value.labels.key_labels.forEach(function(label, i){
-                    $headers.append("<th>"+label+"</th>");
-                    $values.append("<td>"+e.key[i]+"</td>");
+                e.key.forEach(function(key, i){
+                    $headers.append("<th>"+e.value.labels.key_labels[i]+"</th>");
+                    $values.append("<td>"+key+"</td>");
                 });
                 e.value.labels.value_labels.forEach(function(label, i){
                     $headers.append("<th>"+label+"</th>");
@@ -211,28 +237,6 @@ function(){
                 $comment.append($headers).append($values).appendTo("#comments");
             });
 
-        var labels = vis.selectAll("text.label")
-            .data(d[0])
-            .enter().append("svg:text")
-            .attr("class", "label")
-            .attr("x", x)
-            .attr("y", h + 6)
-            .attr("dx", x({x: .45}))
-            .attr("dy", "0.35em")
-            .attr("text-anchor", "left")
-            .text(function(d, i) { return d.key.slice(1).join(", ");/*q[i]*/; });
-        vis.append("svg:line")
-            .attr("x1", 0)
-            .attr("x2", w - x({x: .1}))
-            .attr("y1", h)
-            .attr("y2", h);
-        vis.selectAll("line")
-            .data(scale.ticks(10))
-            .enter().append("svg:line")
-                .attr("x1", 0)
-                .attr("x2", w)
-                .attr("y1", scale)
-                .attr("y2", scale);
 
         function transitionGroup() {
                 var group = d3.selectAll("#chart");
@@ -315,3 +319,4 @@ function(){
         plot_all();
     }
 }
+
