@@ -1,14 +1,14 @@
 function(){
-    var radios = ["#txsurg", "#txradonc", "#txmedonc", "#cltrial1"],
+    var radios = ["#txsurg", "#txradonc", "#txmedonc", "#cltrial", "#refnav"],
         i,
         hidden_field,
         selected_clinic,
         $clinic;
 
-    if ($("#cltrial").val()){
-        $("#cltrial-checkbox").attr("checked","checked");
-        $("#cltrial").remove();
-    }
+    //if ($("#cltrial").val()){
+    //    $("#cltrial-checkbox").attr("checked","checked");
+    //    $("#cltrial").remove();
+    //}
 
     for (i=0; i<radios.length; i+=1){
         //debugger;
@@ -18,7 +18,7 @@ function(){
         }
         id_of_correct_radio = radios[i]+"-"+hidden_field.val();
         $(id_of_correct_radio).attr("checked","checked");
-        //hidden_field.remove();
+        hidden_field.remove();
     }
 
     $clinic = $("#clinic");

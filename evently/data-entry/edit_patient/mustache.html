@@ -71,7 +71,9 @@
     </div>
     <div>
         <label for="refnav">Referral to Navigation Services?: </label><br/>
-        <input type="text" class="text" name="refnav" value="{{refnav}}" />
+        <input type="hidden" id="refnav" name="refnav" value="{{refnav}}" />
+        <input type="radio" name="refnav" id="refnav-Yes" value="Yes" />Yes
+        <input type="radio" name="refnav" id="refnav-ni" value="" checked="checked" />No
     </div>
     <div>
         <label for="icd9">ICD-9: </label><br/>
@@ -271,10 +273,10 @@
         <input type="text" class="text autofill" name="txplan" value="{{txplan}}" />
     </div>
     <div>
-        <label for="cltrial">Clinical Trials: </label><br/>
-        <input type="hidden" id="cltrial1" name="cltrial" value="{{cltrial}}" />
-        <input type="radio" name="cltrial" id="cltrial1-Yes" value="Yes" />Yes
-        <input type="radio" name="cltrial" id="cltrial1-ni" value="" checked="checked" />No
+        <label for="cltrial">Clinical Trials: </label>
+        <input type="hidden" id="cltrial" name="cltrial" value="{{cltrial}}" />
+        <input type="radio" name="cltrial" id="cltrial-Yes" value="Yes" />Yes
+        <input type="radio" name="cltrial" id="cltrial-ni" value="" checked="checked" />No
     </div>
     <div>
         <label for="uabprtcl">If Yes, UAB Protocol#: </label><br/>
