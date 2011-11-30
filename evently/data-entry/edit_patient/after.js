@@ -1,5 +1,5 @@
 function(){
-    var radios = ["#txsurg", "#txradonc", "#txmedonc", "#cltrial", "#refnav"],
+    var radios = ["#txsurg", "#txradonc", "#txmedonc", "#cltrial", "#refnav", "#appins", "#previns"],
         i,
         hidden_field,
         selected_clinic,

@@ -70,7 +70,7 @@
         <input type="text" class="text" name="other" value="{{other}}" />
     </div>
     <div>
-        <label for="refnav">Referral to Navigation Services?: </label><br/>
+        <label for="refnav">Referral to Navigation Services?: </label>
         <input type="hidden" id="refnav" name="refnav" value="{{refnav}}" />
         <input type="radio" name="refnav" id="refnav-Yes" value="Yes" />Yes
         <input type="radio" name="refnav" id="refnav-ni" value="" checked="checked" />No
@@ -104,12 +104,16 @@
         <input type="text" name="accptdt" value="{{accptdt}}"    class="datepicker text" />
     </div>
     <div>
-        <label for="previns">Did Pt. Previously have insurance?: </label><br/>
-        <input type="text" class="text" name="previns" value="{{previns}}" />
+        <label for="previns">Did Pt. Previously have insurance?: </label>
+        <input type="hidden" id="previns" name="previns" value="{{previns}}" />
+        <input type="radio" name="previns" id="previns-Yes" value="Yes" />Yes
+        <input type="radio" name="previns" id="previns-ni" value="" checked="checked" />No
     </div>
     <div>
-        <label for="appins">If "No", dit Pt. apply for insurance?: </label><br/>
-        <input type="text" class="text" name="appins" value="{{appins}}" />
+        <label for="appins">If "No", dit Pt. apply for insurance?: </label>
+        <input type="hidden" id="appins" name="appins" value="{{appins}}" />
+        <input type="radio" name="appins" id="appins-Yes" value="Yes" />Yes
+        <input type="radio" name="appins" id="appins-ni" value="" checked="checked" />No
     </div>
     <div>
         <label for="typeins">Type of insurance: </label><br/>
