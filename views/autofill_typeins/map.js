@@ -1,0 +1,1 @@
+function(doc){if(doc.type === 'data_management_form' && doc.typeins){emit(doc.typeins, null);}}
