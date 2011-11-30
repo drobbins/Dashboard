@@ -28,4 +28,26 @@ function(){
         $("[value='']", $clinic).removeAttr("selected");
         $("#clinic_text").remove;
     }
+    $(".datepicker").datepicker();
+    $(".autofill").autocomplete({
+        source : function(request, response){
+            var db = $$(this.element).app.db,
+                design_doc_name = $$(this.element).app.ddoc._id.split("/")[1],
+                field_name = $(this.element).attr("name"),
+                term = $(this.element).val(),
+                nonce = Math.random();
+            $$($(this)).nonce = nonce;
+            db.view(design_doc_name+"/autofill_"+field_name, {
+                startkey : term,
+                endkey : term+"\u9999", //I don't know why only \u9999 works, not \uFFFF
+                limit : 10,
+                group : true,
+                success : function(results){
+                    if($$($(this)).nonce = nonce){
+                        response(results.rows.map(function(row){return row.key;}));
+                    }
+                }
+            });
+        }
+    });
 }

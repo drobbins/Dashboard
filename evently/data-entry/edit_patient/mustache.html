@@ -1,6 +1,5 @@
 <script>
     $(function() {
-        $( ".datepicker" ).datepicker();
     });
 </script>
 <form class="dmf"><fieldset>
@@ -26,7 +25,7 @@
     </div>
     <div>
         <label for="opername">Operator: </label><br/>
-        <input type="text" class="text" name="opername" value="{{opername}}" />
+        <input type="text" class="text autofill" name="opername" value="{{opername}}" />
     </div>
     <div>
         <label for="datadate">Data Date: </label><br/>
@@ -44,7 +43,7 @@
     </div>
     <div>
         <label for="refermd">Referring Physician: </label><br/>
-        <input type="text" class="text" name="refermd" value="{{refermd}}" />
+        <input type="text" class="text autofill" name="refermd" value="{{refermd}}" />
     </div>
     <div>
         <label for="mdphone">Phone: </label><br/>
@@ -55,8 +54,8 @@
         <input type="text" class="text" name="mdaddy" value="{{mdaddy}}" />
     </div>
     <div>
-        <label for="refUABmd">Referring UAB Multidisciplinary MD: </label><br/>
-        <input type="text" class="text" name="refUABmd" value="{{refUABmd}}" />
+        <label for="refuabmd">Referring UAB Multidisciplinary MD: </label><br/>
+        <input type="text" class="text autofill" name="refuabmd" value="{{refuabmd}}" />
     </div>
     <div>
         <label for="dtrefer">Date of Referral: </label><br/>
@@ -76,11 +75,11 @@
     </div>
     <div>
         <label for="icd9">ICD-9: </label><br/>
-        <input type="text" class="text" name="icd9" value="{{icd9}}" />
+        <input type="text" class="text autofill" name="icd9" value="{{icd9}}" />
     </div>
     <div>
         <label for="clinstg">Clinical Stage at Presentation: </label><br/>
-        <input type="text" class="text" name="clinstg" value="{{clinstg}}" />
+        <input type="text" class="text autofill" name="clinstg" value="{{clinstg}}" />
     </div>
     <div>
         <label for="medrecdt">Date Medical Records Received: </label><br/>
@@ -112,7 +111,7 @@
     </div>
     <div>
         <label for="typeins">Type of insurance: </label><br/>
-        <input type="text" class="text" name="typeins" value="{{typeins}}" />
+        <input type="text" class="text autofill" name="typeins" value="{{typeins}}" />
     </div>
     <div>
         <label for="pthowinf">How did the patient hear about the Multidisciplinary Clinic at UAB?: </label><br/>
@@ -133,11 +132,11 @@
     </div>
     <div>
         <label for="surgloc">Location: </label><br/>
-        <input type="text" class="text" name="surgloc" value="{{surgloc}}" />
+        <input type="text" class="text autofill" name="surgloc" value="{{surgloc}}" />
     </div>
     <div>
         <label for="surgmd">Consulting Physician: </label><br/>
-        <input type="text" class="text" name="surgmd" value="{{surgmd}}" />
+        <input type="text" class="text autofill" name="surgmd" value="{{surgmd}}" />
     </div>
     </fieldset><fieldset id="MDONC"><legend>Medical Oncology Consultation</legend>
     <div>
@@ -150,11 +149,11 @@
     </div>
     <div>
         <label for="mdoncloc">Location: </label><br/>
-        <input type="text" class="text" name="mdoncloc" value="{{mdoncloc}}" />
+        <input type="text" class="text autofill" name="mdoncloc" value="{{mdoncloc}}" />
     </div>
     <div>
         <label for="medoncmd">Consulting Physician: </label><br/>
-        <input type="text" class="text" name="medoncmd" value="{{medoncmd}}" />
+        <input type="text" class="text autofill" name="medoncmd" value="{{medoncmd}}" />
     </div>
     </fieldset><fieldset id="RADON"><legend>Radiation Oncology Consultation</legend>
     <div>
@@ -167,11 +166,11 @@
     </div>
     <div>
         <label for="radonloc">Location: </label><br/>
-        <input type="text" class="text" name="radonloc" value="{{radonloc}}" />
+        <input type="text" class="text autofill" name="radonloc" value="{{radonloc}}" />
     </div>
     <div>
         <label for="radoncmd">Consulting Physician: </label><br/>
-        <input type="text" class="text" name="radoncmd" value="{{radoncmd}}" />
+        <input type="text" class="text autofill" name="radoncmd" value="{{radoncmd}}" />
     </div>
     </fieldset><fieldset id="PLSUR"><legend>Plastic Surgery Consultation</legend>
     <div>
@@ -184,11 +183,11 @@
     </div>
     <div>
         <label for="plsurloc">Location: </label><br/>
-        <input type="text" class="text" name="plsurloc" value="{{plsurloc}}" />
+        <input type="text" class="text autofill" name="plsurloc" value="{{plsurloc}}" />
     </div>
     <div>
         <label for="plsurgmd">Consulting Physician: </label><br/>
-        <input type="text" class="text" name="plsurgmd" value="{{plsurgmd}}" />
+        <input type="text" class="text autofill" name="plsurgmd" value="{{plsurgmd}}" />
     </div>
     </fieldset><fieldset id="BMT"><legend>Bome Marrow Transplant Consultation</legend>
     <div>
@@ -201,11 +200,11 @@
     </div>
     <div>
         <label for="bmtloc">Location: </label><br/>
-        <input type="text" class="text" name="bmtloc" value="{{bmtloc}}" />
+        <input type="text" class="text autofill" name="bmtloc" value="{{bmtloc}}" />
     </div>
     <div>
         <label for="bmtmd">Consulting Physician: </label><br/>
-        <input type="text" class="text" name="bmtmd" value="{{bmtmd}}" />
+        <input type="text" class="text autofill" name="bmtmd" value="{{bmtmd}}" />
     </div>
     </fieldset><fieldset id="DENT"><legend>Dental Consultation</legend>
     <div>
@@ -218,11 +217,11 @@
     </div>
     <div>
         <label for="dentloc">Location: </label><br/>
-        <input type="text" class="text" name="dentloc" value="{{dentloc}}" />
+        <input type="text" class="text autofill" name="dentloc" value="{{dentloc}}" />
     </div>
     <div>
         <label for="dentmd">Consulting Physician: </label><br/>
-        <input type="text" class="text" name="dentmd" value="{{dentmd}}" />
+        <input type="text" class="text autofill" name="dentmd" value="{{dentmd}}" />
     </div>
     </fieldset><fieldset id="OTH"><legend>Other Consultation</legend>
     <div>
@@ -235,11 +234,11 @@
     </div>
     <div>
         <label for="othloc">Location: </label><br/>
-        <input type="text" class="text" name="othloc" value="{{othloc}}" />
+        <input type="text" class="text autofill" name="othloc" value="{{othloc}}" />
     </div>
     <div>
         <label for="othmd">Consulting Physician: </label><br/>
-        <input type="text" class="text" name="othmd" value="{{othmd}}" />
+        <input type="text" class="text autofill" name="othmd" value="{{othmd}}" />
     </div>
     </fieldset>
     <div>
@@ -269,7 +268,7 @@
     </div>
     <div>
         <label for="txplan">Treatment Plan: </label><br/>
-        <input type="text" class="text" name="txplan" value="{{txplan}}" />
+        <input type="text" class="text autofill" name="txplan" value="{{txplan}}" />
     </div>
     <div>
         <label for="cltrial">Clinical Trials: </label><br/>
@@ -279,7 +278,7 @@
     </div>
     <div>
         <label for="uabprtcl">If Yes, UAB Protocol#: </label><br/>
-        <input type="text" class="text" name="uabprtcl" value="{{uabprtcl}}" />
+        <input type="text" class="text autofill" name="uabprtcl" value="{{uabprtcl}}" />
     </div>
     <div>
         <label for="dtltrfwd">Date letter sent to referring physician: </label><br/>
