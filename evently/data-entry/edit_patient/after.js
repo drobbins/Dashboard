@@ -31,8 +31,8 @@ function(){
     $(".datepicker").datepicker();
     $(".autofill").autocomplete({
         source : function(request, response){
-            var db = $$(this.element).app.db,
-                design_doc_name = $$(this.element).app.ddoc._id.split("/")[1],
+            var db = $$($("#main")).app.db,
+                design_doc_name = $$($("#main")).app.ddoc._id.split("/")[1],
                 field_name = $(this.element).attr("name"),
                 term = $(this.element).val(),
                 nonce = Math.random();
