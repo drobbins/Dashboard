@@ -1,3 +1,4 @@
 *.swp
 .couchapprc
 .couchappignore
+node_modules/*
