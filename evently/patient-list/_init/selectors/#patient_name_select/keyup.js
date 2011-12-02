@@ -1,9 +1,10 @@
 function(){
   var db = $$(this).app.db,
       term = $(this).val(),
-      nonce = Math.random();
+      nonce = Math.random()
+      design_doc_name = $$($("#main")).app.ddoc._id.split("/")[1],
   $$($(this)).nonce = nonce;
-  db.view("dashboard/patient_names", {
+  db.view(design_doc_name+"/patient_names", {
     startkey : term,
     endkey : term+"\u9999", //I don't know why only \u9999 works, not \uFFFF
     limit : 25,

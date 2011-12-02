@@ -5,7 +5,7 @@ requirejs(['couchapp', 'path', 'fs'], function(couchapp, path, fs){
     var ignore = JSON.parse(fs.readFileSync(path.join(__dirname, ".couchappignore")).toString()),
         loadFileOptions = {ignore: ignore};
     var ddoc = {
-        _id: '_design/dashboard',
+        _id: '_design/dashboard1',
         views : couchapp.loadFiles('./views', loadFileOptions),
         evently : couchapp.loadFiles('./evently', loadFileOptions),
         lists : {},
