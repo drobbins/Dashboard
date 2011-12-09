@@ -1,13 +1,17 @@
 <h2>Data for {{ptname}}{{^ptname}}a new patient{{/ptname}}</h2>
 <form class="dmf"><fieldset>
-    <div>
-        <label for="tdysdate">Today's Date: </label><br/>
-        <input type="text" name="tdysdate" value="{{tdysdate}}" class="datepicker text" />
+    <div class="clearfix">
+        <label for="tdysdate">Today's Date: </label>
+        <div class="input">
+          <input type="text" name="tdysdate" value="{{tdysdate}}" class="datepicker xLarge" />
+        </div>
     </div>
-    <div>
-        <label for="clinic">Clinic: </label><br/>
-        <input type="hidden" name="clinic_text" value="{{clinic}}" id="clinic_text"/>
-        <select id="clinic" name="clinic">
+    <div class="clearfix">
+        <label for="clinic">Clinic: </label>
+        <div class="input">
+            <input type="hidden" name="clinic_text" value="{{clinic}}" id="clinic_text"/>
+        <div class="input">
+        <select id="clinic" name="clinic" class="medium">
             <option value="" selected="selected" >Select Clinic</option>
             <option value="Breast">Breast</option>
             <option value="Gi">Gi</option>
@@ -18,279 +22,403 @@
             <option value="Thoracic">Thoracic</option>
             <option value="Urology">Urology</option>
         </select>
+        </div>
     </div>
-    <div>
-        <label for="opername">Operator: </label><br/>
-        <input type="text" class="text autofill" name="opername" value="{{opername}}" />
+    <div class="clearfix">
+        <label for="opername">Operator: </label>
+        <div class="input">
+          <input type="text" class="xLarge autofill" name="opername" value="{{opername}}" />
+        </div>
     </div>
-    <div>
-        <label for="datadate">Data Date: </label><br/>
-        <input type="text" name="datadate" value="{{datadate}}"    class="datepicker text" />
+    <div class="clearfix">
+        <label for="datadate">Data Date: </label>
+        <div class="input">
+          <input type="text" name="datadate" value="{{datadate}}"    class="datepicker text" />
+        </div>
     </div>
-    <div>
-        <label for="ptfstnm">Patient First Name: </label><br/>
-        <input type="text" class="text" name="ptfstnm" value="{{ptfstnm}}" /><br/>
-        <label for="ptlstnm">Patient Last Name: </label><br/>
-        <input type="text" class="text" name="ptlstnm" value="{{ptlstnm}}" />
+    <div class="clearfix">
+        <label for="ptfstnm">Patient First Name: </label>
+        <div class="input">
+          <input type="text" class="text" name="ptfstnm" value="{{ptfstnm}}" />
+        </div>
     </div>
-    <div>
-        <label for="medrec">Medical Record Number: </label><br/>
-        <input type="text" class="text" name="medrec" value="{{medrec}}" />
+    <div class="clearfix">
+        <label for="ptlstnm">Patient Last Name: </label>
+        <div class="input">
+          <input type="text" class="text" name="ptlstnm" value="{{ptlstnm}}" />
+        </div>
     </div>
-    <div>
-        <label for="refermd">Referring Physician: </label><br/>
-        <input type="text" class="text autofill" name="refermd" value="{{refermd}}" />
+    <div class="clearfix">
+        <label for="medrec">Medical Record Number: </label>
+        <div class="input">
+          <input type="text" class="text" name="medrec" value="{{medrec}}" />
+        </div>
     </div>
-    <div>
-        <label for="mdphone">Phone: </label><br/>
-        <input type="text" class="text" name="mdphone" value="{{mdphone}}" />
+    <div class="clearfix">
+        <label for="refermd">Referring Physician: </label>
+        <div class="input">
+          <input type="text" class="text autofill" name="refermd" value="{{refermd}}" />
+        </div>
     </div>
-    <div>
-        <label for="mdaddy">Address: </label><br/>
-        <input type="text" class="text" name="mdaddy" value="{{mdaddy}}" />
+    <div class="clearfix">
+        <label for="mdphone">Phone: </label>
+        <div class="input">
+          <input type="text" class="text" name="mdphone" value="{{mdphone}}" />
+        </div>
     </div>
-    <div>
-        <label for="refuabmd">Referring UAB Multidisciplinary MD: </label><br/>
-        <input type="text" class="text autofill" name="refuabmd" value="{{refuabmd}}" />
+    <div class="clearfix">
+        <label for="mdaddy">Address: </label>
+        <div class="input">
+          <input type="text" class="text" name="mdaddy" value="{{mdaddy}}" />
+        </div>
     </div>
-    <div>
-        <label for="dtrefer">Date of Referral: </label><br/>
-        <input type="text" name="dtrefer" value="{{dtrefer}}"    class="datepicker text" />
+    <div class="clearfix">
+        <label for="refuabmd">Referring UAB Multidisciplinary MD: </label>
+        <div class="input">
+          <input type="text" class="text autofill" name="refuabmd" value="{{refuabmd}}" />
+        </div>
     </div>
-    <div>
-        <label for="selfrfer">Self-referral?: </label><br/>
-        <input type="text" class="text" name="selfrfer" value="{{selfrfer}}" />
+    <div class="clearfix">
+        <label for="dtrefer">Date of Referral: </label>
+        <div class="input">
+            <input type="text" name="dtrefer" value="{{dtrefer}}"    class="datepicker text" />
+        </div>
     </div>
-    <div>
-        <label for="other">List "Other" Referral: </label><br/>
-        <input type="text" class="text" name="other" value="{{other}}" />
+    <div class="clearfix">
+        <label for="selfrfer">Self-referral?: </label>
+        <div class="input">
+            <input type="text" class="text" name="selfrfer" value="{{selfrfer}}" />
+        </div>
     </div>
-    <div>
+    <div class="clearfix">
+        <label for="other">List "Other" Referral: </label>
+        <div class="input">
+            <input type="text" class="text" name="other" value="{{other}}" />
+        </div>
+    </div>
+    <div class="clearfix">
         <label for="refnav">Referral to Navigation Services?: </label>
-        <input type="hidden" id="refnav" name="refnav" value="{{refnav}}" />
+        <div class="input">
+            <input type="hidden" id="refnav" name="refnav" value="{{refnav}}" />
         <input type="radio" name="refnav" id="refnav-Yes" value="Yes" />Yes
         <input type="radio" name="refnav" id="refnav-ni" value="" checked="checked" />No
     </div>
-    <div>
-        <label for="icd9">ICD-9: </label><br/>
-        <input type="text" class="text autofill" name="icd9" value="{{icd9}}" />
+    <div class="clearfix">
+        <label for="icd9">ICD-9: </label>
+        <div class="input">
+            <input type="text" class="text autofill" name="icd9" value="{{icd9}}" />
+        </div>
     </div>
-    <div>
-        <label for="clinstg">Clinical Stage at Presentation: </label><br/>
-        <input type="text" class="text autofill" name="clinstg" value="{{clinstg}}" />
+    <div class="clearfix">
+        <label for="clinstg">Clinical Stage at Presentation: </label>
+        <div class="input">
+            <input type="text" class="text autofill" name="clinstg" value="{{clinstg}}" />
+        </div>
     </div>
-    <div>
-        <label for="medrecdt">Date Medical Records Received: </label><br/>
-        <input type="text" name="medrecdt" value="{{medrecdt}}"    class="datepicker text" />
+    <div class="clearfix">
+        <label for="medrecdt">Date Medical Records Received: </label>
+        <div class="input">
+            <input type="text" name="medrecdt" value="{{medrecdt}}"    class="datepicker text" />
+        </div>
     </div>
-    <div>
-        <label for="attmpdt">Date of Attempted Inital Pt. Contact: </label><br/>
-        <input type="text" name="attmpdt" value="{{attmpdt}}"    class="datepicker text" />
+    <div class="clearfix">
+        <label for="attmpdt">Date of Attempted Inital Pt. Contact: </label>
+        <div class="input">
+            <input type="text" name="attmpdt" value="{{attmpdt}}"    class="datepicker text" />
+        </div>
     </div>
-    <div>
-        <label for="actualdt">Dat of Actual Pt. Contact: </label><br/>
-        <input type="text" name="actualdt" value="{{actualdt}}"    class="datepicker text" />
+    <div class="clearfix">
+        <label for="actualdt">Dat of Actual Pt. Contact: </label>
+        <div class="input">
+            <input type="text" name="actualdt" value="{{actualdt}}"    class="datepicker text" />
+        </div>
     </div>
-    <div>
-        <label for="offerdt">Appointment Date Offered: </label><br/>
-        <input type="text" name="offerdt" value="{{offerdt}}"    class="datepicker text" />
+    <div class="clearfix">
+        <label for="offerdt">Appointment Date Offered: </label>
+        <div class="input">
+            <input type="text" name="offerdt" value="{{offerdt}}"    class="datepicker text" />
+        </div>
     </div>
-    <div>
-        <label for="accptdt">Appointment Date Accepted: </label><br/>
-        <input type="text" name="accptdt" value="{{accptdt}}"    class="datepicker text" />
+    <div class="clearfix">
+        <label for="accptdt">Appointment Date Accepted: </label>
+        <div class="input">
+            <input type="text" name="accptdt" value="{{accptdt}}"    class="datepicker text" />
+        </div>
     </div>
-    <div>
+    <div class="clearfix">
         <label for="previns">Did Pt. Previously have insurance?: </label>
-        <input type="hidden" id="previns" name="previns" value="{{previns}}" />
+        <div class="input">
+            <input type="hidden" id="previns" name="previns" value="{{previns}}" />
         <input type="radio" name="previns" id="previns-Yes" value="Yes" />Yes
         <input type="radio" name="previns" id="previns-ni" value="" checked="checked" />No
     </div>
-    <div>
+    <div class="clearfix">
         <label for="appins">If "No", dit Pt. apply for insurance?: </label>
-        <input type="hidden" id="appins" name="appins" value="{{appins}}" />
+        <div class="input">
+            <input type="hidden" id="appins" name="appins" value="{{appins}}" />
         <input type="radio" name="appins" id="appins-Yes" value="Yes" />Yes
         <input type="radio" name="appins" id="appins-ni" value="" checked="checked" />No
     </div>
-    <div>
-        <label for="typeins">Type of insurance: </label><br/>
-        <input type="text" class="text autofill" name="typeins" value="{{typeins}}" />
+    <div class="clearfix">
+        <label for="typeins">Type of insurance: </label>
+        <div class="input">
+            <input type="text" class="text autofill" name="typeins" value="{{typeins}}" />
+        </div>
     </div>
-    <div>
-        <label for="pthowinf">How did the patient hear about the Multidisciplinary Clinic at UAB?: </label><br/>
-        <input type="text" class="text" name="pthowinf" value="{{pthowinf}}" />
+    <div class="clearfix">
+        <label for="pthowinf">How did the patient hear about the Multidisciplinary Clinic at UAB?: </label>
+        <div class="input">
+            <input type="text" class="text" name="pthowinf" value="{{pthowinf}}" />
+        </div>
     </div>
-    <div>
-        <label for="ptaddy">Patient Home Town/County of Residence: </label><br/>
-        <input type="text" class="text" name="ptaddy" value="{{ptaddy}}" />
+    <div class="clearfix">
+        <label for="ptaddy">Patient Home Town/County of Residence: </label>
+        <div class="input">
+            <input type="text" class="text" name="ptaddy" value="{{ptaddy}}" />
+        </div>
     </div>
     <fieldset id="SURG"><legend>Surgery Consultation</legend>
-    <div>
-        <label for="surgdt">Date: </label><br/>
-        <input type="text" name="surgdt" value="{{surgdt}}"    class="datepicker text" />
+    <div class="clearfix">
+        <label for="surgdt">Date: </label>
+        <div class="input">
+            <input type="text" name="surgdt" value="{{surgdt}}"    class="datepicker text" />
+        </div>
     </div>
-    <div>
-        <label for="surgtm">Time: </label><br/>
-        <input type="text" name="surgtm" value="{{surgtm}}" />
+    <div class="clearfix">
+        <label for="surgtm">Time: </label>
+        <div class="input">
+            <input type="text" name="surgtm" value="{{surgtm}}" />
+        </div>
     </div>
-    <div>
-        <label for="surgloc">Location: </label><br/>
-        <input type="text" class="text autofill" name="surgloc" value="{{surgloc}}" />
+    <div class="clearfix">
+        <label for="surgloc">Location: </label>
+        <div class="input">
+            <input type="text" class="text autofill" name="surgloc" value="{{surgloc}}" />
+        </div>
     </div>
-    <div>
-        <label for="surgmd">Consulting Physician: </label><br/>
-        <input type="text" class="text autofill" name="surgmd" value="{{surgmd}}" />
+    <div class="clearfix">
+        <label for="surgmd">Consulting Physician: </label>
+        <div class="input">
+            <input type="text" class="text autofill" name="surgmd" value="{{surgmd}}" />
+        </div>
     </div>
     </fieldset><fieldset id="MDONC"><legend>Medical Oncology Consultation</legend>
-    <div>
-        <label for="mdoncdt">Date: </label><br/>
-        <input type="text" name="mdoncdt" value="{{mdoncdt}}"    class="datepicker text" />
+    <div class="clearfix">
+        <label for="mdoncdt">Date: </label>
+        <div class="input">
+            <input type="text" name="mdoncdt" value="{{mdoncdt}}"    class="datepicker text" />
+        </div>
     </div>
-    <div>
-        <label for="mdonctm">Time: </label><br/>
-        <input type="text" name="mdonctm" value="{{mdonctm}}" />
+    <div class="clearfix">
+        <label for="mdonctm">Time: </label>
+        <div class="input">
+            <input type="text" name="mdonctm" value="{{mdonctm}}" />
+        </div>
     </div>
-    <div>
-        <label for="mdoncloc">Location: </label><br/>
-        <input type="text" class="text autofill" name="mdoncloc" value="{{mdoncloc}}" />
+    <div class="clearfix">
+        <label for="mdoncloc">Location: </label>
+        <div class="input">
+            <input type="text" class="text autofill" name="mdoncloc" value="{{mdoncloc}}" />
+        </div>
     </div>
-    <div>
-        <label for="medoncmd">Consulting Physician: </label><br/>
-        <input type="text" class="text autofill" name="medoncmd" value="{{medoncmd}}" />
+    <div class="clearfix">
+        <label for="medoncmd">Consulting Physician: </label>
+        <div class="input">
+            <input type="text" class="text autofill" name="medoncmd" value="{{medoncmd}}" />
+        </div>
     </div>
     </fieldset><fieldset id="RADON"><legend>Radiation Oncology Consultation</legend>
-    <div>
-        <label for="radondt">Date: </label><br/>
-        <input type="text" name="radondt" value="{{radondt}}"    class="datepicker text" />
+    <div class="clearfix">
+        <label for="radondt">Date: </label>
+        <div class="input">
+            <input type="text" name="radondt" value="{{radondt}}"    class="datepicker text" />
+        </div>
     </div>
-    <div>
-        <label for="radontm">Time: </label><br/>
-        <input type="text" name="radontm" value="{{radontm}}" />
+    <div class="clearfix">
+        <label for="radontm">Time: </label>
+        <div class="input">
+            <input type="text" name="radontm" value="{{radontm}}" />
+        </div>
     </div>
-    <div>
-        <label for="radonloc">Location: </label><br/>
-        <input type="text" class="text autofill" name="radonloc" value="{{radonloc}}" />
+    <div class="clearfix">
+        <label for="radonloc">Location: </label>
+        <div class="input">
+            <input type="text" class="text autofill" name="radonloc" value="{{radonloc}}" />
+        </div>
     </div>
-    <div>
-        <label for="radoncmd">Consulting Physician: </label><br/>
-        <input type="text" class="text autofill" name="radoncmd" value="{{radoncmd}}" />
+    <div class="clearfix">
+        <label for="radoncmd">Consulting Physician: </label>
+        <div class="input">
+            <input type="text" class="text autofill" name="radoncmd" value="{{radoncmd}}" />
+        </div>
     </div>
     </fieldset><fieldset id="PLSUR"><legend>Plastic Surgery Consultation</legend>
-    <div>
-        <label for="plsurdt">Date: </label><br/>
-        <input type="text" name="plsurdt" value="{{plsurdt}}"    class="datepicker text" />
+    <div class="clearfix">
+        <label for="plsurdt">Date: </label>
+        <div class="input">
+            <input type="text" name="plsurdt" value="{{plsurdt}}"    class="datepicker text" />
+        </div>
     </div>
-    <div>
-        <label for="plsurtm">Time: </label><br/>
-        <input type="text" class="text" name="plsurtm" value="{{plsurtm}}" />
+    <div class="clearfix">
+        <label for="plsurtm">Time: </label>
+        <div class="input">
+            <input type="text" class="text" name="plsurtm" value="{{plsurtm}}" />
+        </div>
     </div>
-    <div>
-        <label for="plsurloc">Location: </label><br/>
-        <input type="text" class="text autofill" name="plsurloc" value="{{plsurloc}}" />
+    <div class="clearfix">
+        <label for="plsurloc">Location: </label>
+        <div class="input">
+            <input type="text" class="text autofill" name="plsurloc" value="{{plsurloc}}" />
+        </div>
     </div>
-    <div>
-        <label for="plsurgmd">Consulting Physician: </label><br/>
-        <input type="text" class="text autofill" name="plsurgmd" value="{{plsurgmd}}" />
+    <div class="clearfix">
+        <label for="plsurgmd">Consulting Physician: </label>
+        <div class="input">
+            <input type="text" class="text autofill" name="plsurgmd" value="{{plsurgmd}}" />
+        </div>
     </div>
     </fieldset><fieldset id="BMT"><legend>Bome Marrow Transplant Consultation</legend>
-    <div>
-        <label for="bmtdt">Date: </label><br/>
-        <input type="text" name="bmtdt" value="{{bmtdt}}"    class="datepicker text" />
+    <div class="clearfix">
+        <label for="bmtdt">Date: </label>
+        <div class="input">
+            <input type="text" name="bmtdt" value="{{bmtdt}}"    class="datepicker text" />
+        </div>
     </div>
-    <div>
-        <label for="bmttm">Time: </label><br/>
-        <input type="text" class="text" name="bmttm" value="{{bmttm}}" />
+    <div class="clearfix">
+        <label for="bmttm">Time: </label>
+        <div class="input">
+            <input type="text" class="text" name="bmttm" value="{{bmttm}}" />
+        </div>
     </div>
-    <div>
-        <label for="bmtloc">Location: </label><br/>
-        <input type="text" class="text autofill" name="bmtloc" value="{{bmtloc}}" />
+    <div class="clearfix">
+        <label for="bmtloc">Location: </label>
+        <div class="input">
+            <input type="text" class="text autofill" name="bmtloc" value="{{bmtloc}}" />
+        </div>
     </div>
-    <div>
-        <label for="bmtmd">Consulting Physician: </label><br/>
-        <input type="text" class="text autofill" name="bmtmd" value="{{bmtmd}}" />
+    <div class="clearfix">
+        <label for="bmtmd">Consulting Physician: </label>
+        <div class="input">
+            <input type="text" class="text autofill" name="bmtmd" value="{{bmtmd}}" />
+        </div>
     </div>
     </fieldset><fieldset id="DENT"><legend>Dental Consultation</legend>
-    <div>
-        <label for="dentdt">Date: </label><br/>
-        <input type="text" name="dentdt" value="{{dentdt}}"    class="datepicker text" />
+    <div class="clearfix">
+        <label for="dentdt">Date: </label>
+        <div class="input">
+            <input type="text" name="dentdt" value="{{dentdt}}"    class="datepicker text" />
+        </div>
     </div>
-    <div>
-        <label for="denttm">Time: </label><br/>
-        <input type="text" class="text" name="denttm" value="{{denttm}}" />
+    <div class="clearfix">
+        <label for="denttm">Time: </label>
+        <div class="input">
+            <input type="text" class="text" name="denttm" value="{{denttm}}" />
+        </div>
     </div>
-    <div>
-        <label for="dentloc">Location: </label><br/>
-        <input type="text" class="text autofill" name="dentloc" value="{{dentloc}}" />
+    <div class="clearfix">
+        <label for="dentloc">Location: </label>
+        <div class="input">
+            <input type="text" class="text autofill" name="dentloc" value="{{dentloc}}" />
+        </div>
     </div>
-    <div>
-        <label for="dentmd">Consulting Physician: </label><br/>
-        <input type="text" class="text autofill" name="dentmd" value="{{dentmd}}" />
+    <div class="clearfix">
+        <label for="dentmd">Consulting Physician: </label>
+        <div class="input">
+            <input type="text" class="text autofill" name="dentmd" value="{{dentmd}}" />
+        </div>
     </div>
     </fieldset><fieldset id="OTH"><legend>Other Consultation</legend>
-    <div>
-        <label for="othdt">Date: </label><br/>
-        <input type="text" name="othdt" value="{{othdt}}"    class="datepicker text" />
+    <div class="clearfix">
+        <label for="othdt">Date: </label>
+        <div class="input">
+            <input type="text" name="othdt" value="{{othdt}}"    class="datepicker text" />
+        </div>
     </div>
-    <div>
-        <label for="othtm">Time: </label><br/>
-        <input type="text" class="text" name="othtm" value="{{othtm}}" />
+    <div class="clearfix">
+        <label for="othtm">Time: </label>
+        <div class="input">
+            <input type="text" class="text" name="othtm" value="{{othtm}}" />
+        </div>
     </div>
-    <div>
-        <label for="othloc">Location: </label><br/>
-        <input type="text" class="text autofill" name="othloc" value="{{othloc}}" />
+    <div class="clearfix">
+        <label for="othloc">Location: </label>
+        <div class="input">
+            <input type="text" class="text autofill" name="othloc" value="{{othloc}}" />
+        </div>
     </div>
-    <div>
-        <label for="othmd">Consulting Physician: </label><br/>
-        <input type="text" class="text autofill" name="othmd" value="{{othmd}}" />
+    <div class="clearfix">
+        <label for="othmd">Consulting Physician: </label>
+        <div class="input">
+            <input type="text" class="text autofill" name="othmd" value="{{othmd}}" />
+        </div>
     </div>
     </fieldset>
-    <div>
-        <label for="txsurg">Surgery Location: </label><br/>
-        <input type="hidden" id="txsurg" name="txsurg" value="{{txsurg}}" />
+    <div class="clearfix">
+        <label for="txsurg">Surgery Location: </label>
+        <div class="input">
+            <input type="hidden" id="txsurg" name="txsurg" value="{{txsurg}}" />
         <input id="txsurg-UAB"    type="radio" name="txsurg" value="UAB" /> UAB<br />
         <input id="txsurg-Elsewhere"    type="radio" name="txsurg" value="Elsewhere" /> Elsewhere<br />
         <input id="txsurg-ni"    type="radio" name="txsurg" value="" /> Not Indicated<br />
+        </div>
     </div>
-    <div>
-        <label for="txmedonc">Medical Oncology Location: </label><br/>
-        <input type="hidden" id="txmedonc" name="txmedonc" value="{{txmedonc}}" />
+    <div class="clearfix">
+        <label for="txmedonc">Medical Oncology Location: </label>
+        <div class="input">
+            <input type="hidden" id="txmedonc" name="txmedonc" value="{{txmedonc}}" />
         <input id="txmedonc-UAB"    type="radio" name="txmedonc" value="UAB" /> UAB<br />
         <input id="txmedonc-Elsewhere"    type="radio" name="txmedonc" value="Elsewhere" /> Elsewhere<br />
         <input id="txmedonc-ni"    type="radio" name="txmedonc" value="" /> Not Indicated<br />
+        </div>
     </div>
-    <div>
-        <label for="txradonc">Radiation Oncology Location: </label><br/>
-        <input type="hidden" id="txradonc" name="txradonc" value="{{txradonc}}" />
+    <div class="clearfix">
+        <label for="txradonc">Radiation Oncology Location: </label>
+        <div class="input">
+            <input type="hidden" id="txradonc" name="txradonc" value="{{txradonc}}" />
         <input id="txradonc-UAB"    type="radio" name="txradonc" value="UAB" /> UAB<br />
         <input id="txradonc-Elsewhere"    type="radio" name="txradonc" value="Elsewhere" /> Elsewhere<br />
         <input id="txradonc-ni"    type="radio" name="txradonc" value="" /> Not Indicated<br />
+        </div>
     </div>
-    <div>
-        <label for="txelsewh">If "elsewhere selected, please list the Clinic/Hospital of Treatment: </label><br/>
-        <input type="text" class="text" name="txelsewh" value="{{txelsewh}}" />
+    <div class="clearfix">
+        <label for="txelsewh">If "elsewhere selected, please list the Clinic/Hospital of Treatment: </label>
+        <div class="input">
+            <input type="text" class="text" name="txelsewh" value="{{txelsewh}}" />
+        </div>
     </div>
-    <div>
-        <label for="txplan">Treatment Plan: </label><br/>
-        <input type="text" class="text autofill" name="txplan" value="{{txplan}}" />
+    <div class="clearfix">
+        <label for="txplan">Treatment Plan: </label>
+        <div class="input">
+            <input type="text" class="text autofill" name="txplan" value="{{txplan}}" />
+        </div>
     </div>
-    <div>
+    <div class="clearfix">
         <label for="cltrial">Clinical Trials: </label>
-        <input type="hidden" id="cltrial" name="cltrial" value="{{cltrial}}" />
+        <div class="input">
+            <input type="hidden" id="cltrial" name="cltrial" value="{{cltrial}}" />
         <input type="radio" name="cltrial" id="cltrial-Yes" value="Yes" />Yes
         <input type="radio" name="cltrial" id="cltrial-ni" value="" checked="checked" />No
     </div>
-    <div>
-        <label for="uabprtcl">If Yes, UAB Protocol#: </label><br/>
-        <input type="text" class="text autofill" name="uabprtcl" value="{{uabprtcl}}" />
+    <div class="clearfix">
+        <label for="uabprtcl">If Yes, UAB Protocol#: </label>
+        <div class="input">
+            <input type="text" class="text autofill" name="uabprtcl" value="{{uabprtcl}}" />
+        </div>
     </div>
-    <div>
-        <label for="dtltrfwd">Date letter sent to referring physician: </label><br/>
-        <input type="text" name="dtltrfwd" value="{{dtltrfwd}}"    class="datepicker text" />
+    <div class="clearfix">
+        <label for="dtltrfwd">Date letter sent to referring physician: </label>
+        <div class="input">
+            <input type="text" name="dtltrfwd" value="{{dtltrfwd}}"    class="datepicker text" />
+        </div>
     </div>
-    <div>
-        <label for="othclnts">Other Clinical Notes: </label><br/>
-        <input type="text" class="text" name="othclnts" value="{{othclnts}}" />
+    <div class="clearfix">
+        <label for="othclnts">Other Clinical Notes: </label>
+        <div class="input">
+            <input type="text" class="text" name="othclnts" value="{{othclnts}}" />
+        </div>
     </div>
     <div><input type="button" value="Submit" class="submit" />
+        </div>
     </div>
     <input type="hidden" name="_id" value="{{_id}}" />
     <input type="hidden" name="_rev" value="{{_rev}}" />
