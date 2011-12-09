@@ -2,28 +2,43 @@
 <html>
   <head>
     <title>Dashboard</title>
-    <link rel="stylesheet" href="style/blueprint/screen.css" media="screen, projection" type="text/css">
-    <link rel="stylesheet" href="style/blueprint/print.css" media="print" type="text/css">
+    <!--link rel="stylesheet" href="style/blueprint/screen.css" media="screen, projection" type="text/css"-->
+    <!--link rel="stylesheet" href="style/blueprint/print.css" media="print" type="text/css"-->
+    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
     <link rel="stylesheet" href="style/main.css" type="text/css">
     <!--[if lt IE 8]>
       <link rel="stylesheet" href="style/blueprint/ie.css" type="text/css">
     <![endif]-->
     <link rel="stylesheet" href="style/jquery-ui.css" type="text/css">
   </head>
-  <body><div class="container">
-    <div id="account" class="prepend-12 span-12 last" style="text-align:right"></div>
-
-    <div id="header" class="span-24">
-      <h1>Dashboard</h1>
+  <body>
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="#">IMCCP Dashboard</a>
+          <ul class="nav" id="navigation">
+          </ul>
+        </div>
+      </div>
     </div>
-
-    <div id="navigation" class="span-4"></div>
-
-    <div id="main" class="span-14"></div>
-
-    <div id="sidebar" class="span-6 last"></div>
-
-  </div></body>
+    <div class="container">
+      <div class="content">
+        <div class="row">
+          <div id="main" class="span10">
+            <h2>Welcome</h2>
+            <p>Select an area of the application above.</p>
+          </div>
+          <div id="sidebar" class="span4">
+            <h2>Sidebar</h2>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <p>Div Informatics | Dept Pathology | UAB</p>
+        <p>&copy; 2011</p>
+      </footer>
+    </div>
+  </body>
   <script src="vendor/couchapp/loader.js"></script>
   <script src="loader.js"></script>
   <script type="text/javascript" charset="utf-8">
