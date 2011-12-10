@@ -11,7 +11,6 @@ function(){
     //}
 
     for (i=0; i<radios.length; i+=1){
-        //debugger;
         hidden_field = $(radios[i]);
         if (hidden_field.val() === ""){
             hidden_field.val("ni");
@@ -19,6 +18,7 @@ function(){
         id_of_correct_radio = radios[i]+"-"+hidden_field.val();
         $(id_of_correct_radio).attr("checked","checked");
         hidden_field.remove();
+        console.log($(id_of_correct_radio).attr("checked"));
     }
 
     $clinic = $("#clinic");

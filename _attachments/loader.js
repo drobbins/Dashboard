@@ -17,5 +17,6 @@ app_load([
   "scripts/d3.geom.min.js",
   "scripts/d3.layout.min.js",
   "scripts/d3.time.min.js",
+  "scripts/bootstrap-tabs.js",
   "scripts/jquery.mustache.js" //my fixed version of mustache.js. Check for updates later.
 ]);

@@ -119,7 +119,7 @@ table.nostripes tbody tr td{
 
 /* Override some defaults */
 html, body {
-  background-color: #eee;
+  background-color: #A0A085;
 }
 body {
   padding-top: 40px; /* 40px to make the container go all the way to the bottom of the topbar */
@@ -130,7 +130,6 @@ body {
 .container {
   width: 820px; /* downsize our container to make the content feel a bit tighter and more cohesive. NOTE: this removes two full columns from the grid, meaning you only go to 14 columns and not 16. */
 }
-
 /* The white background content wrapper */
 .content {
   background-color: #fff;
