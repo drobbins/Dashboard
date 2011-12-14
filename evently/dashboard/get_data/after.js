@@ -281,9 +281,9 @@ function(){
              }
         }
 
-        $("#controls").append('<button id="group">Group</button>');
+        $("#controls").append('<button id="group" class="btn">Group</button>');
         $("#group").click(function(){transitionGroup();});
-        $("#controls").append('<button id="stack">Stack</button>');
+        $("#controls").append('<button id="stack" class="btn">Stack</button>');
         $("#stack").click(function(){transitionStack();});
 
         var key = d3.select("#key")
