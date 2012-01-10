@@ -18,7 +18,6 @@ function(){
         id_of_correct_radio = radios[i]+"-"+hidden_field.val();
         $(id_of_correct_radio).attr("checked","checked");
         hidden_field.remove();
-        console.log($(id_of_correct_radio).attr("checked"));
     }
 
     $clinic = $("#clinic");
