@@ -1,25 +1,35 @@
 <h3>Dashboard Users</h3>
 <form id="new_admin">
-	<label>New Admin: <input name="username" type="text"></label>
+  <div class="clearfix">
+    <label>New Admin</label>
+    <div class="input">
+      <input type="text" name="username" class="datepicker xLarge" />
+    </div>
+  </div>
 </form>
 <form id="new_reader">
-	<label>New Reader: <input name="username" type="text"></label>
+  <div class="clearfix">
+    <label>New Reader</label>
+    <div class="input">
+      <input type="text" name="username" class="datepicker xLarge" />
+    </div>
+  </div>
 </form>
 <h4>Current Admins</h4>
-<ul>
-	{{#admins}}
-		Names: {{^names}}(none){{/names}}
-		<ul>{{#names}}<li>{{.}}</li>{{/names}}</ul>
-		Roles: {{^roles}}(none){{/roles}}
-		<ul>{{#roles}}<li>{{.}}</li>{{/roles}}</ul>
-	{{/admins}}
-</ul>
+<dl>
+  {{#admins}}
+    <dt>Names</dt> {{^names}}<dd>(none)</dd>{{/names}}
+    <dd><ul>{{#names}}<li>{{.}}</li>{{/names}}</ul></dd>
+    <dt>Roles</dt> {{^roles}}<dd>(none)</dd>{{/roles}}
+    <dd><ul>{{#roles}}<li>{{.}}</li>{{/roles}}</ul></dd>
+  {{/admins}}
+</dl>
 <h4>Current Readers</h4>
-<ul>
-	{{#readers}}
-		Names:
-		<ul>{{#names}}<li>{{.}}</li>{{/names}}</ul>
-		Roles: {{^roles}}(none){{/roles}}
-		<ul>{{#roles}}<li>{{.}}</li>{{/roles}}</ul>
-	{{/readers}}
-</ul>
+<dl>
+  {{#readers}}
+    <dt>Names</dt> {{^names}}<dd>(none)</dd>{{/names}}
+    <dd><ul>{{#names}}<li>{{.}}</li>{{/names}}</ul></dd>
+    <dt>Roles</dt> {{^roles}}<dd>(none)</dd>{{/roles}}
+    <dd><ul>{{#roles}}<li>{{.}}</li>{{/roles}}</ul></dd>
+  {{/readers}}
+</dl>

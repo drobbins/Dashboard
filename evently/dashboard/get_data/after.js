@@ -282,9 +282,9 @@ function(){
         }
 
         $("#controls").append('<button id="group" class="btn">Group</button>');
-        $("#group").click(function(){transitionGroup();});
+        $("#group").click(function(){transitionGroup(); return false;});
         $("#controls").append('<button id="stack" class="btn">Stack</button>');
-        $("#stack").click(function(){transitionStack();});
+        $("#stack").click(function(){transitionStack(); return false;});
 
         var key = d3.select("#key")
             .append("svg:svg")
