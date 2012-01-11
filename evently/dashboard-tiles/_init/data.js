@@ -25,5 +25,8 @@ function(data){
       }
     });
     app.dashboard.data_views = data_views;
+
+    app.sidebar = $('#sidebar').detach();
+    $("#main").removeClass("span10").addClass("span14");
     return { "views":data_views};
 }

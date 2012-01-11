@@ -4,7 +4,6 @@ function(){
 
   data_views.forEach(function(view){
     var tile = $("<div class='tile'>").appendTo("#main");
-    tile.html("<p>Check out the "+view+"</p>");
     tile.evently("dashboard-tile", app);
     tile.trigger("get_data", {"view":view});
   });

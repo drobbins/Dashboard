@@ -171,4 +171,7 @@ footer {
 
 div.tile {
   width: 200px;
+  float: left;
+  overflow: hidden;
+  padding: 10px;
 }
