@@ -16,7 +16,6 @@ function(data){
     data_out['rows'] = data.rows;
     data_out['view'] = $(this).data('view');
     data_out['url'] = $(this).data('url');
-
-    $$(this).app.dashboard_data = data_out;
+    $(this).data('dashboard_data', data_out);
     return data_out;
 }

@@ -1,6 +1,6 @@
 function(){
     var app = $$(this).app,
-        data = app.dashboard_data,
+        data = $(this).data('dashboard_data'),
         view = $(this).data('view'),
         w = $(this).width(),
         h = $(this).width(),
@@ -220,7 +220,7 @@ function(){
             //.attr("value", function(d){return d.value.values[0];})
             .attr("height", function(d) {return y0(d) - y1(d); });
 
-        d3.selectAll("g.bar rect").on(
+        d3.selectAll("#"+view+"-chart g.bar rect").on(
             "mouseover",
             function(e){
                 var $headers = $("<tr/>"),
@@ -234,8 +234,8 @@ function(){
                     $headers.append("<th>"+label+"</th>");
                     $values.append("<td>"+e.value.values[i]+"</td>");
                 });
-                $("#comments").html("");
-                $comment.append($headers).append($values).appendTo("#comments");
+                $("#"+view+"-comments").html("");
+                $comment.append($headers).append($values).appendTo("#"+view+"-comments");
             });
 
 
@@ -309,7 +309,7 @@ function(){
                 .attr("dy", -5)
                 .text(function(d){return d;});
 
-       // $("#comments").addClass("info").html("Mouseover a box to see it's data");
+       $("#"+view+"-comments").addClass("info").html("Mouseover a box to see it's data");
 
     };
 
