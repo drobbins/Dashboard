@@ -19,7 +19,7 @@ function(){
   });
 
   views.forEach(function(view){
-    var tile = $("<li>").appendTo(".dashboard");
+    var tile = $("<li class='tile-container'>").appendTo(".dashboard");
     tile.evently("dashboard-tile", app);
     tile.trigger("get_data", {"view":view});
   });

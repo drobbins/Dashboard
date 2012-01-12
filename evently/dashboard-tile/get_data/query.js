@@ -13,7 +13,11 @@ function(e, args){
         }
         if (args.group_level){
             view_obj.group_level = args.group_level;
-        }else{view_obj.group_level = "2";}
+        }else{view_obj.group_level = "1";}
+        if(view_obj.view.match(/by_clinic/)){
+          view_obj.group_level = parseInt(view_obj.group_level)+1;
+        }
+        $(this).data('previous_view', view_obj);
         return view_obj;
     }
     return {view : "visits"};
