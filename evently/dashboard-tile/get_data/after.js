@@ -2,9 +2,9 @@ function(){
     var app = $$(this).app,
         data = $(this).data('dashboard_data'),
         view = $(this).data('view'),
-        w = $(this).width(),
-        h = $(this).width(),
-        p = 120,
+        w = 210,//$(this).width(),
+        h = 150,//$(this).width(),
+        p = 100,
         num = d3.format(".0f");
 
     var plot_all = function(){
