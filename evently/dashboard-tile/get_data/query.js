@@ -1,6 +1,5 @@
 function(e, args){
     if (args.view){
-    console.log(args.view);
         var app = $$(this).app;
         $(this).data('view',args.view);
         $(this).data('url', encodeURI(app.db.uri +
