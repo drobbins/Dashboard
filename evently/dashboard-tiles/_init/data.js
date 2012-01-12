@@ -1,7 +1,7 @@
 function(data){
     var app = $$(this).app;
 
-    app.dashboard = {};
+    app.dashboard || (app.dashboard = {});
     app.dashboard.config = {};
 
     app.dashboard.config.colors = {
@@ -17,16 +17,7 @@ function(data){
         }
     };
 
-    var all_views = Object.keys(data).sort(),
-        data_views = [];
-    all_views.forEach(function(view){
-      if(!(view.match(/^autofill/)) && !(view.match(/icd9/))){
-        data_views.push(view);
-      }
-    });
-    app.dashboard.data_views = data_views;
-
     app.sidebar = $('#sidebar').detach();
     $("#main").removeClass("span12").addClass("span16");
-    return { "views":data_views};
+    return data;
 }
