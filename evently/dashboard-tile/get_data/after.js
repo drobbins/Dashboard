@@ -198,7 +198,6 @@ function(){
             .data(d)
             .enter().append("svg:g")
             .style("fill", function(d, i) { return color(i / (n - 1)); })
-            //.style("fill", function(d){return clinic_colors[d[0].key[0]];})
             .attr("class", "layer");
 
         var bars = layers.selectAll("g.bar")
@@ -215,29 +214,7 @@ function(){
         .transition()
             .delay(function(d, i) { return i * 10; })
             .attr("y", y1)
-            //.attr("clinic", function(d){return d.key[0];})
-            //.attr("time", function(d,i){return d.key.slice(1).join("-");})
-            //.attr("value", function(d){return d.value.values[0];})
             .attr("height", function(d) {return y0(d) - y1(d); });
-
-        d3.selectAll("#"+view+"-chart g.bar rect").on(
-            "mouseover",
-            function(e){
-                var $headers = $("<tr/>"),
-                    $values = $("<tr/>"),
-                    $comment = $("<table class='nostripes'></table>")
-                e.key.forEach(function(key, i){
-                    $headers.append("<th>"+e.value.labels.key_labels[i]+"</th>");
-                    $values.append("<td>"+key+"</td>");
-                });
-                e.value.labels.value_labels.forEach(function(label, i){
-                    $headers.append("<th>"+label+"</th>");
-                    $values.append("<td>"+e.value.values[i]+"</td>");
-                });
-                $("#"+view+"-comments").html("");
-                $comment.append($headers).append($values).appendTo("#"+view+"-comments");
-            });
-
 
         function transitionGroup() {
                 var group = d3.selectAll("#chart");
@@ -259,8 +236,8 @@ function(){
                     .attr("y", function(d) { return h - y2(d); })
                     .attr("height", y2);
                 }
-         }
-         function transitionStack() {
+        }
+        function transitionStack() {
              var stack = d3.select("#chart");
              stack.select("#group")
                  .attr("class", "first");
@@ -281,11 +258,6 @@ function(){
                  .attr("width", x({x: .9}));
              }
         }
-
-        //$("#controls").append('<button id="group" class="btn">Group</button>');
-        //$("#group").click(function(){transitionGroup(); return false;});
-        //$("#controls").append('<button id="stack" class="btn">Stack</button>');
-        //$("#stack").click(function(){transitionStack(); return false;});
 
         var key = d3.select("#key")
             .append("svg:svg")
@@ -308,9 +280,6 @@ function(){
                 .attr("dx", 5)
                 .attr("dy", -5)
                 .text(function(d){return d;});
-
-       $("#"+view+"-comments").addClass("info").html("Mouseover a box to see it's data");
-
     };
 
     if (data.rows[0].value.labels.key_labels[0] === "clinic"){
