@@ -1,1 +1,43 @@
-<h2>Dashboard Tiles</h2>
+<h2>Dashboard</h2>
+<form id="dashboard-controls">
+  <div class="well row">
+    <div class="span3">
+      <select name="clinic" class="span3">
+        <option value="">All Clinics</option>
+        <option value="Breast">Breast</option>
+        <option value="Gi">Gi</option>
+        <option value="Gyn Onc">Gyn Onc</option>
+        <option value="Head And Neck">Head And Neck</option>
+        <option value="Lymp And Leuk">Lymp And Leuk</option>
+        <option value="Neuro Onc">Neuro Onc</option>
+        <option value="Thoracic">Thoracic</option>
+        <option value="Urology">Urology</option>
+      </select>
+    </div>
+    <div class="span2">
+    <select name="time-unit" class="span2">
+      <option value="1">by Year</option>
+      <option value="2">by Quarter</option>
+      <option value="3">by Month</option>
+    </select>
+    </div>
+    <div class="span5">
+      Time Range: <span id="start-time"></span> to <span id="end-time"></span>
+      <div id="date-slider"></div>
+      <script>
+        $(function(){
+          $("#date-slider").slider({
+            range : true,
+            min : 1,
+            max : 100,
+            values : [50,75],
+            slide : function(event, ui){
+              $("#start-time").text(ui.values[0]);
+              $("#end-time").text(ui.values[1]);
+            }
+          })
+        });
+      </script>
+    </div>
+  </div>
+</form>
