@@ -1,7 +1,7 @@
 function(){
   var app = $$(this).app;
   if (app.sidebar){
-    $("#main").removeClass("span14").addClass("span10");
+    $("#main").removeClass("span16").addClass("span12");
     app.sidebar.insertAfter("#main");
     delete app.sidebar;
   }

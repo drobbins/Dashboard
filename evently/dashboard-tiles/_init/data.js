@@ -27,6 +27,6 @@ function(data){
     app.dashboard.data_views = data_views;
 
     app.sidebar = $('#sidebar').detach();
-    $("#main").removeClass("span10").addClass("span14");
+    $("#main").removeClass("span12").addClass("span16");
     return { "views":data_views};
 }
