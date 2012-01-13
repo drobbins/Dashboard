@@ -27,7 +27,10 @@ function(){
         $("[value='']", $clinic).removeAttr("selected");
         $("#clinic_text").remove;
     }
-    $(".datepicker").datepicker();
+    $(".datepicker").each(function(i){
+      $(this).datepicker({dateFormat:'yy-mm-dd'});
+      $(this).val($(this).val().split('T')[0]);
+    });
     $(".autofill").autocomplete({
         source : function(request, response){
             var db = $$($("#main")).app.db,
