@@ -132,6 +132,9 @@ body {
 footer {
   border-color: #A0A085;
 }
+footer {
+  border-color: #A0A085;
+}
 /* The white background content wrapper */
 .content {
   background-color: #fff;
@@ -197,4 +200,3 @@ footer {
   -webkit-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
   -moz-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
   box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
-}
