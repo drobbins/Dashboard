@@ -37,6 +37,15 @@
         <p>Div Informatics | Dept Pathology | UAB</p>
         <p>&copy; 2011</p>
       </footer>
+      <div class="well">
+        <strong>Module Loading: </strong>
+        <input type="text" placeholder="Script URI" id="uri"/>
+        or
+        <select id="script_select">
+          <option value="" selected="">Select a Script</option>
+        </select>
+        <button class="btn" id="loadScript">Load</button>
+      </div>
     </div>
   </body>
   <script src="vendor/couchapp/loader.js"></script>
@@ -47,5 +56,19 @@
       $("#navigation").evently("navigation", app);
       //$("#main").evently("main", app);
     });
+
+    $("#loadScript").click(function(e){
+      var uri,
+          callback = function(){};
+      uri = $("#uri").val() || $("#script_select").val();
+      if(uri){
+        load_script(uri,callback);
+      }
+    });
+    window.onload = function(){
+      var uri = document.location.search,
+          callback = function(){};
+      if (uri.length>1){load_script(uri.slice(1),callback);}
+    };
   </script>
 </html>
