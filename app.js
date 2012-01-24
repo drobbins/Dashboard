@@ -8,7 +8,7 @@ requirejs(['couchapp', 'path', 'fs'], function(couchapp, path, fs){
         _id: '_design/dashboard',
         views : couchapp.loadFiles('./views', loadFileOptions),
         evently : couchapp.loadFiles('./evently', loadFileOptions),
-        lists : {},
+        lists : couchapp.loadFiles('./lists', loadFileOptions),
         shows : {},
         vendor : couchapp.loadFiles('./vendor', loadFileOptions)
     };
