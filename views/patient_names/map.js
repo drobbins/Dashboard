@@ -1,6 +1,7 @@
 function(doc){
   if (doc.type==="data_management_form"){
-    emit(doc.ptlstnm, doc.ptlstnm+", "+doc.ptfstnm);
-    emit(doc.ptfstnm, doc.ptlstnm+", "+doc.ptfstnm);
+    var value = { name : doc.ptlstnm+", "+doc.ptfstnm, opername : doc.opername};
+    emit(doc.ptlstnm, value);
+    emit(doc.ptfstnm, value);
   }
 }

@@ -1,18 +1,23 @@
 function(head, req){
-  var first_row = false,
+  var rows = [],
+      row,
+      user = req.userCtx,
       has_permission = function(row){
-        return true;
+        if(user.roles.indexOf("_admin") || row.opername === user.name){
+          return true;
+        }
+        return false;
       };
+
   provides('json', function(){
-    var row = getRow();
-    if(row){
-      send('[');
-      send(JSON.stringify(row));
-      while ( row = getRow()){
-        send('\n,');
-        send(JSON.stringify(row));
+    var response = {};
+    while(row = getRow()){
+      if(has_permission(row)){
+        rows.push(row);
       }
-      send(']');
     }
+    response.total_rows = rows.length;
+    response.rows = rows;
+    send(JSON.stringify(response));
   });
 }
