@@ -18,13 +18,14 @@
           <a class="brand" href="">IMCCP Dashboard</a>
           <ul class="nav" id="navigation">
           </ul>
+          <div class="pull-right" id="account"></div>
         </div>
       </div>
     </div>
     <div class="container">
       <div class="content">
         <div class="row">
-          <div id="main" class="span10">
+          <div id="main" class="span12">
             <h2>Welcome</h2>
             <p>Select an area of the application above.</p>
           </div>
@@ -52,7 +53,7 @@
   <script src="loader.js"></script>
   <script type="text/javascript" charset="utf-8">
     $.couch.app(function(app) {
-      //$("#account").evently("account", app);
+      $("#account").evently("account", app);
       $("#navigation").evently("navigation", app);
       //$("#main").evently("main", app);
     });
