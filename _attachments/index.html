@@ -18,6 +18,7 @@
           <a class="brand" href="">IMCCP Dashboard</a>
           <ul class="nav" id="navigation">
           </ul>
+          <div class="pull-right" id="account"></div>
         </div>
       </div>
     </div>
@@ -52,7 +53,7 @@
   <script src="loader.js"></script>
   <script type="text/javascript" charset="utf-8">
     $.couch.app(function(app) {
-      //$("#account").evently("account", app);
+      $("#account").evently("account", app);
       $("#navigation").evently("navigation", app);
       //$("#main").evently("main", app);
     });
