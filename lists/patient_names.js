@@ -3,7 +3,7 @@ function(head, req){
       row,
       user = req.userCtx,
       has_permission = function(row){
-        if(user.roles.indexOf("_admin") || row.opername === user.name){
+        if((user.roles.indexOf("_admin") >= 0) || row.opername === user.name){
           return true;
         }
         return false;
