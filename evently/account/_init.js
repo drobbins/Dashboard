@@ -11,6 +11,7 @@ function() {
       } else {
         elem.trigger("loggedOut");
       };
+      $(".nav").trigger("_init");
     }
   });
 }
