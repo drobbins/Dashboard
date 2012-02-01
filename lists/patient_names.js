@@ -3,8 +3,7 @@ function(head, req){
       row,
       user = req.userCtx,
       has_permission = function(row){
-        rows.push(JSON.stringify(user));
-        if((user.roles.indexOf("_admin") >= 0) || row.value.opername === user.name){
+        if((user.roles.indexOf("_admin") >= 0) || (user.roles.indexOf(row.value.clinic) >= 0)){
           return true;
         }
         return false;

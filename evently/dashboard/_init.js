@@ -22,5 +22,3 @@ function(){
     $.evently.connect("#sidebar","#main", ["get_data"]);
     $(this).trigger("empty", "");
 }
-
-

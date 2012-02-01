@@ -15,5 +15,5 @@ function(){
         return '<tr><td><a href="#'+r.id+'" class="patient">'+r.value.name+'</a></td></tr>';
       }).join(""));
       $("#select_results a").click(function(){$(this).trigger('edit_patient', $(this).attr('href'));});
-    }}});
+  }}});
 }
