@@ -7,31 +7,26 @@ function(doc){
         extract_visit_date = require("views/lib/extract_visit_date").extract_visit_date;
         visit_date = extract_visit_date(doc);
         if(visit_date){
-            key = [
-                visit_date.year,
-                visit_date.quarter,
-                visit_date.month
-            ];
+            key = [visit_date.year, visit_date.quarter, visit_date.month, doc.clinic];
             value = {
                 "values" : [1],
                 "labels": {
-                    "key_labels" : ["clinic", "insurance status", "year", "quarter", "month"],
+                    "key_labels" : ["year", "quarter", "month", "clinic", "insurance status"],
                     "value_labels" : ["number of visits"]
                 }
             };
             if(!doc.previns && !doc.appins){
-                key.unshift("unknown");
+                key.push("unknown");
             }
             else if(doc.appins && doc.appins === "Yes"){
-                key.unshift("applied for insurance");
+                key.push("applied for insurance");
             }
             else if(doc.previns && doc.previns === "Yes"){
-                key.unshift("previously insured");
+                key.push("previously insured");
             }
             else {
-                key.unshift("no insurance");
+                key.push("no insurance");
             }
-            key.unshift(doc.clinic);
             emit(key, value);
         }
     }
