@@ -2,7 +2,7 @@ function(){
     var app = $$(this).app,
         data = $(this).data('dashboard_data'),
         view = $(this).data('view'),
-        w = 210,//$(this).width(),
+        w = 280,//$(this).width(),
         h = 150,//$(this).width(),
         p = 100,
         num = d3.format(".0f");
@@ -19,6 +19,22 @@ function(){
             .attr("class", "chart")
             .attr("width", w)
             .attr("height", h+p);
+        
+        chart.append("svg:line")
+            .attr("x1", 0)
+            .attr("x2", w)
+            .attr("y1", h)
+            .attr("y2", h)
+            .attr("stroke", "#555555");
+
+        chart.selectAll("line")
+            .data(y.ticks(10))
+            .enter().append("svg:line")
+                .attr("x1", 0)
+                .attr("x2", w)
+                .attr("y1", y)
+                .attr("y2", y)
+                .attr("stroke", "#555555");
 
         chart.selectAll("rect")
             .data(data.rows)
@@ -62,8 +78,6 @@ function(){
                 return transformation;
             });
 
-
-
         chart.selectAll("text.label")
             .data(data.rows)
             .enter().append("svg:text")
@@ -80,7 +94,10 @@ function(){
         var preprocess_data = function(){
             var nested_data = d3.nest().key(function(d){return d.key[0]}).entries(data.rows),
                 clinics = nested_data.map(function(d){return d.key;}),
-                all_dates = (d3.nest().key(function(d){return d.key.slice(1)}).entries(data.rows)).map(function(d){return d.key;}),
+                all_dates = (d3.nest()
+                    .key(function(d){return d.key.slice(1)})
+                    .entries(data.rows))
+                    .map(function(d){return d.key;}),
                 layout_data = nested_data.map(function(d){
                     return d.values.map(function(row){
                         row.x = all_dates.indexOf(row.key.slice(1).join(","));
@@ -90,6 +107,7 @@ function(){
                 }),
                 current_clinic = "",
                 current_clinic_indexp;
+
             //Preprocess for d3.layout.stacks()
             all_dates.forEach(function(date,i){
                 clinics.forEach(function(clinic, j){
@@ -180,10 +198,10 @@ function(){
             .text(function(d, i) { return d.key.slice(1).join(", ");});
         vis.append("svg:line")
             .attr("x1", 0)
-            .attr("x2", w - x({x: .1}))
+            .attr("x2", w)
             .attr("y1", h)
             .attr("y2", h)
-            .attr("stroke", "#000000");
+            .attr("stroke", "#555555");
         vis.selectAll("line")
             .data(scale.ticks(10))
             .enter().append("svg:line")
@@ -191,7 +209,7 @@ function(){
                 .attr("x2", w)
                 .attr("y1", scale)
                 .attr("y2", scale)
-                .attr("stroke", "#000000");
+                .attr("stroke", "#555555");
 
 
         var layers = vis.selectAll("g.layer")
