@@ -113,22 +113,31 @@ function(){
 
   app.dashboard.plot_by_clinic = function(data, view){
     var preprocess_data = function(){
-        var nested_data = d3.nest().key(function(d){return d.key[0]}).entries(data.rows),
+        var parent_data = $("#"+view).parent().data(),
+            nested_data = d3.nest().key(function(d){return d.key[0]}).entries(data.rows),
             clinics = nested_data.map(function(d){return d.key;}),
             all_dates = (d3.nest()
                 .key(function(d){return d.key.slice(1)})
                 .entries(data.rows))
                 .map(function(d){return d.key;}),
-            layout_data = nested_data.map(function(d){
-                return d.values.map(function(row){
-                    row.x = all_dates.indexOf(row.key.slice(1).join(","));
-                    row.y = row.value.values[0];
-                    return row;
-                });
-            }),
+            startkey = (parent_data.startkey && parent_data.startkey.slice(0,all_dates[0].split(",").length).join(",")) || all_dates[0],
+            endkey =  (parent_data.endkey && parent_data.endkey.slice(0,all_dates[0].split(",").length).join(",")) || all_dates[all_dates.length-1],
+            layout_data,
             current_clinic = "",
             current_clinic_indexp;
-
+        all_dates = all_dates.filter(function(date){
+          return (date >= startkey) && (date <= endkey);
+        });
+        layout_data = nested_data.map(function(d){
+            return d.values.map(function(row){
+                row.x = all_dates.indexOf(row.key.slice(1).join(","));
+                row.y = row.value.values[0];
+                return row;
+            }).filter(function(row){
+              return row.x !== -1;
+            });
+        });
+//debugger;
         //Preprocess for d3.layout.stacks()
         all_dates.forEach(function(date,i){
             clinics.forEach(function(clinic, j){
@@ -155,11 +164,11 @@ function(){
                         "y" : 0,
                         "key" : key,
                         "value" : {
-                            "values" : clinic_data[0].value.values.map(function(){return 0;}),
-                            "labels" : clinic_data[0].value.labels
+                            "values" : layout_data[3][0].value.values.map(function(){return 0;}),
+                            "labels" : layout_data[3][0].value.labels
                         }
                     };
-                    if(key < clinic_data[0].key){
+                    if(clinic_data.length === 0 || key < clinic_data[0].key){
                         clinic_data.unshift(empty_entry);
                     }
                     else{
