@@ -53,19 +53,18 @@ function(){
         .enter().append("svg:line")
             .attr("x1", 0)
             .attr("x2", w)
-            .attr("y1", y)
-            .attr("y2", y)
+            .attr("y1", function(d,i){return h-y(d);})
+            .attr("y2", function(d,i){return h-y(d);})
             .attr("stroke", "#555555");
 
     chart.selectAll("rect")
         .data(data.rows)
         .enter().append("svg:rect")
         .attr("x", function(d, i){return i * rw;})
-        .attr("width", rw)
+        .attr("width", rw*0.9)
         .attr("height", 0)
         .attr("y", h)
         .style("fill", "#1E6B52")
-        .style("stroke", "white")
         .transition()
             .delay(function(d, i) { return i * 10; })
             .attr("y", function(d,i){return h-y(d.value.values[0]);})
@@ -137,7 +136,7 @@ function(){
               return row.x !== -1;
             });
         });
-//debugger;
+
         //Preprocess for d3.layout.stacks()
         all_dates.forEach(function(date,i){
             clinics.forEach(function(clinic, j){
@@ -240,8 +239,8 @@ function(){
         .enter().append("svg:line")
             .attr("x1", 0)
             .attr("x2", w)
-            .attr("y1", scale)
-            .attr("y2", scale)
+            .attr("y1", function(d,i){return h-scale(d);})
+            .attr("y2", function(d,i){return h-scale(d);})
             .attr("stroke", "#555555");
 
 

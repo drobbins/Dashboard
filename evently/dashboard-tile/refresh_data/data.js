@@ -1,6 +1,6 @@
 function(data){
     var data_out = {},
-        first_row = data.rows[1],
+        first_row = data.rows[0],
         labels = [],
         url;
 

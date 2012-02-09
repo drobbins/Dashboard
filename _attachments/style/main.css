@@ -102,11 +102,6 @@ form.dmf input.nofloat {
    margin: 1px;
    color: white;
 }
-
-.chart rect{
-  stroke: white;
-}
-
 .label{
   writing-mode: tb-rl;
 }
