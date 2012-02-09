@@ -13,11 +13,16 @@ function(doc){
         contact_date = make_date_object(doc.actualdt);
         lag = get_days_between_dates(contact_date, visit_date);
         lag = lag > 0 ? lag : 0;
-        key = [visit_date.year, visit_date.quarter, visit_date.month, doc.clinic];
+        key = [
+            doc.clinic,
+            visit_date.year,
+            visit_date.quarter,
+            visit_date.month
+        ];
         value = {
             "values" : [lag, 1],
             "labels": {
-                "key_labels" : ["year", "quarter", "month", "clinic"],
+                "key_labels" : ["clinic", "year", "quarter", "month"],
                 "value_labels" : ["average lag", "number of visits"]
             }
         };

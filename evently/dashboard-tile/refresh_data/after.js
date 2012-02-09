@@ -3,7 +3,7 @@ function(){
         data = $(this).data('dashboard_data'),
         view = $(this).data('view');
 
-    if (data.rows[0].value.labels.key_labels[3] === "clinic"){
+    if (data.rows[0].value.labels.key_labels[0] === "clinic"){
         app.dashboard.plot_by_clinic(data, view);
     }
     else {

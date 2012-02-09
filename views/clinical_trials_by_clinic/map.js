@@ -7,10 +7,10 @@ function(doc){
         extract_visit_date = require("views/lib/extract_visit_date").extract_visit_date;
         visit_date = extract_visit_date(doc);
         if(visit_date){
-            key = [visit_date.year, visit_date.quarter, visit_date.month, doc.clinic];
+            key = [doc.clinic, visit_date.year, visit_date.quarter, visit_date.month];
             value = {
                 "labels" : {
-                    "key_labels" : ["year", "quarter", "month", "clinic"],
+                    "key_labels" : ["clinic", "year", "quarter", "month"],
                     "value_labels" : ["number of enrollments","number of visits"]
                 }
             };

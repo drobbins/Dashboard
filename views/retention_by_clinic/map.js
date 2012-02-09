@@ -9,16 +9,16 @@ function(doc){
         get_treatments = require("views/lib/get_retention_value").get_treatments;
         visit_date = extract_visit_date(doc);
         if(visit_date){
-            key = [visit_date.year, visit_date.quarter, visit_date.month, doc.clinic];
+            key = [doc.clinic, null, visit_date.year, visit_date.quarter, visit_date.month];
             value = {
                 "labels" : {
-                    "key_labels" : ["year", "quarter", "month", "clinic", "treatment type"],
+                    "key_labels" : ["clinic", "treatment type", "year", "quarter", "month"],
                     "value_labels" : ["treatments at uab","treatments elsewhere"]
                 }
             };
             treatments = get_treatments(doc);
             treatments.map(function(treatment){
-                key.push(treatment.type);
+                key[1] = treatment.type;
                 value.values = treatment.value;
                 emit(key, value);
             });

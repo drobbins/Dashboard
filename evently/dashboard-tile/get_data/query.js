@@ -15,7 +15,7 @@ function(e, args){
             view_obj.group_level = args.group_level;
         }else{view_obj.group_level = "1";}
         if(view_obj.view.match(/by_clinic/)){
-          view_obj.group_level = 100;//parseInt(view_obj.group_level)+1;
+          view_obj.group_level = parseInt(view_obj.group_level)+1;
         }
         $(this).data('previous_view', view_obj);
         return view_obj;

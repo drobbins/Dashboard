@@ -113,15 +113,15 @@ function(){
 
   app.dashboard.plot_by_clinic = function(data, view){
     var preprocess_data = function(){
-        var nested_data = d3.nest().key(function(d){return d.key[3]}).entries(data.rows),
+        var nested_data = d3.nest().key(function(d){return d.key[0]}).entries(data.rows),
             clinics = nested_data.map(function(d){return d.key;}),
             all_dates = (d3.nest()
-                .key(function(d){return d.key.slice(0,3)})
+                .key(function(d){return d.key.slice(1)})
                 .entries(data.rows))
                 .map(function(d){return d.key;}),
             layout_data = nested_data.map(function(d){
                 return d.values.map(function(row){
-                    row.x = all_dates.indexOf(row.key.slice(0,3).join(","));
+                    row.x = all_dates.indexOf(row.key.slice(1).join(","));
                     row.y = row.value.values[0];
                     return row;
                 });
