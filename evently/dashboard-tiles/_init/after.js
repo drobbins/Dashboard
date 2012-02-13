@@ -19,14 +19,16 @@ function(){
   });
 
   app.dashboard.config = {
-    w : 280,//$(this).width(),
+    w : 220,//$(this).width(),
     h : 150,//$(this).width(),
-    p : 100,
+    pb : 100,
+    pr : 40,
     num : d3.format(".0f")
   };
   app.dashboard.plot_all = function(data, view){
     var w = app.dashboard.config.w,
-        p = app.dashboard.config.p,
+        pb = app.dashboard.config.pb,
+        pr = app.dashboard.config.pr,
         h = app.dashboard.config.h,
         num = app.dashboard.config.num,
         rw = w/data.rows.length,
@@ -38,8 +40,8 @@ function(){
     var chart = d3.select("#"+view+"-chart")
         .append("svg:svg")
         .attr("class", "chart")
-        .attr("width", w)
-        .attr("height", h+p);
+        .attr("width", w+pr)
+        .attr("height", h+pb);
 
     chart.append("svg:line")
         .attr("x1", 0)
@@ -56,6 +58,14 @@ function(){
             .attr("y1", function(d,i){return h-y(d);})
             .attr("y2", function(d,i){return h-y(d);})
             .attr("stroke", "#555555");
+
+    chart.selectAll("text.tick")
+        .data(y.ticks(10))
+        .enter().append("svg:text")
+        .attr("class", "tick")
+        .attr("x", w+5)
+        .attr("y", function(d,i){return h-y(d);})
+        .text(function(d,i){return num(d);});
 
     chart.selectAll("rect")
         .data(data.rows)
@@ -97,7 +107,11 @@ function(){
             }
             return transformation;
         });
-
+    chart.selectAll("text.tick")
+        .attr("transform", function(d,i){
+          var bb = this.getBBox();
+          return "translate(0 "+(bb.height/2)+")";
+        });
     chart.selectAll("text.label")
         .data(data.rows)
         .enter().append("svg:text")
@@ -189,7 +203,8 @@ function(){
         layout_data = stuff[0],
         clinics = stuff[1],
         w = app.dashboard.config.w,
-        p = app.dashboard.config.p,
+        pb = app.dashboard.config.pb,
+        pr = app.dashboard.config.pr,
         h = app.dashboard.config.h,
         num = app.dashboard.config.num,
         n = layout_data.length,
@@ -215,8 +230,8 @@ function(){
 
     var vis = d3.select("#"+view+"-chart")
         .append("svg:svg")
-        .attr("width", w)
-        .attr("height", h + p);
+        .attr("width", w + pr)
+        .attr("height", h + pb);
 
     var labels = vis.selectAll("text.label")
         .data(d[0])
@@ -243,6 +258,19 @@ function(){
             .attr("y2", function(d,i){return h-scale(d);})
             .attr("stroke", "#555555");
 
+    vis.selectAll("text.tick")
+        .data(scale.ticks(10))
+        .enter().append("svg:text")
+        .attr("class", "tick")
+        .attr("x", w+5)
+        .attr("y", function(d,i){return h-scale(d);})
+        .text(function(d,i){return num(d);});
+
+    vis.selectAll("text.tick")
+        .attr("transform", function(d,i){
+          var bb = this.getBBox();
+          return "translate(0 "+(bb.height/2)+")";
+        });
 
     var layers = vis.selectAll("g.layer")
         .data(d)
@@ -330,6 +358,26 @@ function(){
             .attr("dx", 5)
             .attr("dy", -5)
             .text(function(d){return d;});
+  };
+
+  app.dashboard.plot_insurance = function(data, view){
+    var w = app.dashboard.config.w,
+        pb = app.dashboard.config.pb,
+        pr = app.dashboard.config.pr,
+        h = app.dashboard.config.h,
+        r = w/2,
+        arc = d3.svg.arc().outerRadius(r);
+
+    debugger;
+    var vis = d3.select("#"+view+"-chart")
+        .append("svg:svg")
+        .data([data.rows])
+        .attr("class", "chart")
+        .attr("width", w+pr)
+        .attr("height", h+pb)
+        .append("svg:g").attr("transform", "translate("+r+" "+r+")");
+    var pie = d3.layout.pie()
+        .value(function(d){return d.row;});
   };
 
   views.forEach(function(view){
