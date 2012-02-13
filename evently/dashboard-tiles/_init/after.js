@@ -139,6 +139,9 @@ function(){
             current_clinic = "",
             current_clinic_indexp;
         all_dates = all_dates.filter(function(date){
+          if (view.match(/retention/) || view.match(/insurance/)){
+            date = date.split(",").slice(1).join(",");
+          }
           return (date >= startkey) && (date <= endkey);
         });
         layout_data = nested_data.map(function(d){
@@ -337,52 +340,37 @@ function(){
          }
     }
 
+    $("#key").html("");
+
     var key = d3.select("#key")
         .append("svg:svg")
             .attr("class", "key")
-            .attr("width", w)
+            .attr("width", w+pr)
             .attr("height", 20 * clinics.length);
 
     key.selectAll("rect")
         .data(clinics)
         .enter().append("svg:rect")
             .attr("y", function(d,i){ return i * 20;})
-            .attr("width", 200)
+            .attr("x", 0)
+            .attr("width", 100)
             .attr("height", 20)
             .style("fill", function(d, i) { return color(i / (n - 1)); });
     key.selectAll("text")
         .data(clinics)
         .enter().append("svg:text")
-            .attr("x", 0)
+            .attr("x", 105)
             .attr("y", function(d,i){ return i * 20+20;})
             .attr("dx", 5)
             .attr("dy", -5)
             .text(function(d){return d;});
   };
 
-  app.dashboard.plot_insurance = function(data, view){
-    var w = app.dashboard.config.w,
-        pb = app.dashboard.config.pb,
-        pr = app.dashboard.config.pr,
-        h = app.dashboard.config.h,
-        r = w/2,
-        arc = d3.svg.arc().outerRadius(r);
-
-    debugger;
-    var vis = d3.select("#"+view+"-chart")
-        .append("svg:svg")
-        .data([data.rows])
-        .attr("class", "chart")
-        .attr("width", w+pr)
-        .attr("height", h+pb)
-        .append("svg:g").attr("transform", "translate("+r+" "+r+")");
-    var pie = d3.layout.pie()
-        .value(function(d){return d.row;});
-  };
-
   views.forEach(function(view){
-    var tile = $("<li class='tile-container'>").appendTo(".dashboard");
-    tile.evently("dashboard-tile", app);
-    tile.trigger("get_data", {"view":view});
+    if(!(view.match(/retention_by_clinic/) || view.match(/insurance_status_by_clinic/))){
+      var tile = $("<li class='tile-container'>").appendTo(".dashboard");
+      tile.evently("dashboard-tile", app);
+      tile.trigger("get_data", {"view":view});
+    }
   });
 }
