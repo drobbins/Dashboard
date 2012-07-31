@@ -14,6 +14,12 @@ function(data){
     });
     data_out['value_labels'] = first_row.value.labels.value_labels;
     data_out['rows'] = data.rows;
+    data_out.rows.forEach(function (row) {
+        row.value.values = row.value.values.map(function (value) {
+            if (value.toPrecision && !(parseInt(value) === parseFloat(value))) return value.toPrecision(3);
+            else return value;
+        });
+    });
     data_out['view'] = $$(this).app.current_view;
     data_out['url'] = $$(this).app.data_url;
     return data_out;

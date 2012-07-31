@@ -367,7 +367,8 @@ function(){
   };
 
   views.forEach(function(view){
-    if(!(view.match(/retention_by_clinic/) || view.match(/insurance_status_by_clinic/))){
+    if(!(view.match(/retention/) ||
+         view.match(/insurance/))){
       var tile = $("<li class='tile-container'>").appendTo(".dashboard");
       tile.evently("dashboard-tile", app);
       tile.trigger("get_data", {"view":view});
