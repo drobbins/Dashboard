@@ -41,6 +41,11 @@ IMCCP.populateFields = function () {
             //return false;
         }
     });
+
+    // Enter Data Date for new Forms
+    dataDateField = $("input[name=datadate]");
+    if (!dataDateField.val()) dataDateField.val((new Date()).toISOString());
+
     // Enable Autofill Fields
     $(".autofill").autocomplete({
         source : function(request, response){
