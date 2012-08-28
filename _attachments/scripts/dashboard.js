@@ -42,6 +42,34 @@ IMCCP.populateFields = function () {
         }
     });
 
+    var radios = ["#txsurg", "#txradonc", "#txmedonc", "#cltrial", "#refnav", "#appins", "#previns"],
+        i,
+        hidden_field,
+        selected_clinic,
+        $clinic,
+        id_of_correct_radio,
+        dataDateField, dataDate;
+
+    // Populate Radios
+    for (i=0; i<radios.length; i+=1){
+        hidden_field = $(radios[i]);
+        if (hidden_field.val() === ""){
+            hidden_field.val("ni");
+        }
+        id_of_correct_radio = radios[i]+"-"+hidden_field.val();
+        $(id_of_correct_radio).attr("checked","checked");
+        hidden_field.remove();
+    }
+
+    // Populate Clinic Select Box
+    $clinic = $("#clinic");
+    selected_clinic = $("#clinic_text").val();
+    if(selected_clinic){
+        $("[value='"+selected_clinic+"']", $clinic).attr("selected", "selected");
+        $("[value='']", $clinic).removeAttr("selected");
+        $("#clinic_text").remove();
+    }
+
     // Enter Data Date for new Forms
     dataDateField = $("input[name=datadate]");
     if (!dataDateField.val()) dataDateField.val((new Date()).toISOString());
