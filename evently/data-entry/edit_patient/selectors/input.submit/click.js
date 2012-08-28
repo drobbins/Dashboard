@@ -9,6 +9,12 @@ function(){
       alert("Please log in before submitting data");
       return;
     }
+    $(".datepicker").each(function(i){
+      var value;
+      value = $(this).val().match(/^[0-9]{2}-[0-9]{2}-[0-9]{4}/) ? $(this).datepicker('getDate').toISOString() : $(this).val();
+      $(this).val(value);
+    });
+
     form = $('form.dmf');
     fs=form.serializeArray();
     fo={};

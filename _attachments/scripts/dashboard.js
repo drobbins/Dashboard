@@ -46,6 +46,14 @@ IMCCP.populateFields = function () {
     dataDateField = $("input[name=datadate]");
     if (!dataDateField.val()) dataDateField.val((new Date()).toISOString());
 
+    // Enable Date Pickers and Format Values
+    $(".datepicker").each(function(i){
+      var date;
+      date = $(this).val().match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}/) ? $.datepicker.parseDate("yy-mm-dd", $(this).val()) : $(this).val();
+      $(this).datepicker({dateFormat:'mm-dd-yy'});
+      $(this).datepicker("setDate", date);
+    });
+
     // Enable Autofill Fields
     $(".autofill").autocomplete({
         source : function(request, response){
