@@ -105,4 +105,62 @@ IMCCP.populateFields = function () {
             });
         }
     });
+IMCCP.overviewAsync = function (el, callback, evt, args) {
+  var db, ddoc;
+  db = $$(el).app.db;
+  ddoc = $$($("#main")).app.ddoc._id.split("/")[1];
+
+  db.list(ddoc+"/patient_names", 'datadates', {
+    limit : 100,
+    include_docs : true,
+    descending : true
+    },{
+    success : function (response) {
+      callback(response);
+    }
+  });
+
+  $$(el).app.sidebar = $("#sidebar").detach();
+  $("#main").removeClass("span9").addClass("span12");
+};
+
+IMCCP.overviewData = function (el, data) {
+  var app = $$(el).app, drawTable;
+  $$(el).data = data;
+};
+
+IMCCP.overviewAfter = function (el) {
+  var data = $$(el).data, drawTable, firstRow, keys;
+
+  data.rows = data.rows.sort(function (a, b) {
+    if (a.doc.datadate < b.doc.datadate) return 1;
+    if (a.doc.datadate > b.doc.datadate) return -1;
+    return 0;
+  });
+
+  firstRow = data.rows[0];
+  keys = Object.keys(firstRow.doc);
+
+  var headRow = d3.select("table.results thead").append("tr");
+  var headers = headRow.selectAll(".tableheader")
+      .data(keys)
+    .enter().append("th")
+      .text(function (d) { return d; })
+      .attr("class", "tableheader");
+
+  var body = d3.select("table.results tbody");
+  var rows = body.selectAll("tr")
+      .data(data.rows)
+    .enter().append("tr");
+
+  rows.each( function (d, i) {
+    var row = d3.select(this);
+
+    var cells = row.selectAll("td")
+      .data(keys)
+    .enter().append("td")
+      .text(function (k) { return d.doc[k]; });
+  });
+
+
 };
