@@ -34,17 +34,12 @@ function app_load(scripts) {
 };
 
 app_load([
-  "scripts/jquery-ui.min.js",
+  "https://www.google.com/jsapi",
+  "scripts/jquery-1.8.1.js",
+  "scripts/jquery-ui-1.8.23.custom.min.js",
   "scripts/underscore.js",
   "scripts/dashboard.js",
-  "scripts/d3.min.js",
-  "scripts/d3.behavior.min.js",
-  "scripts/d3.chart.min.js",
-  "scripts/d3.csv.min.js",
-  "scripts/d3.geo.min.js",
-  "scripts/d3.geom.min.js",
-  "scripts/d3.layout.min.js",
-  "scripts/d3.time.min.js",
-  "scripts/bootstrap-tabs.js",
+  "scripts/d3.v2.min.js",
+  "scripts/bootstrap.js",
   "scripts/jquery.mustache.js" //my fixed version of mustache.js. Check for updates later.
 ]);
