@@ -18,6 +18,6 @@ function(data){
     };
 
     app.sidebar = $('#sidebar').detach();
-    $("#main").removeClass("span12").addClass("span16");
+    $("#main").removeClass("span9").addClass("span12");
     return data;
 }
