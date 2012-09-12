@@ -2,56 +2,68 @@
 <html>
   <head>
     <title>Dashboard</title>
-    <!--link rel="stylesheet" href="style/blueprint/screen.css" media="screen, projection" type="text/css"-->
-    <!--link rel="stylesheet" href="style/blueprint/print.css" media="print" type="text/css"-->
     <link rel="stylesheet" href="style/jquery-ui.css" type="text/css">
     <link rel="stylesheet" href="style/bootstrap.min.css">
+    <link rel="stylesheet" href="style/bootstrap-responsive.min.css">
     <link rel="stylesheet" href="style/main.css" type="text/css">
-    <!--[if lt IE 8]>
-      <link rel="stylesheet" href="style/blueprint/ie.css" type="text/css">
-    <![endif]-->
   </head>
   <body>
-    <div class="topbar">
-      <div class="fill">
+
+    <!-- Top Nav Bar -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
         <div class="container">
+
+          <!-- .btn-navbar is used when the screen is collapsed -->
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+
+          <!-- Brand Indicator -->
           <a class="brand" href="">IMCCP Dashboard</a>
-          <ul class="nav" id="navigation">
-          </ul>
-          <div class="pull-right" id="account"></div>
+
+          <div class="nav-collapse">
+            <ul class="nav" id="navigation">
+            </ul>
+
+            <div class="pull-right" id="account"></div>
+          </div>
+
         </div>
       </div>
     </div>
+
+    <!-- Main Content -->
     <div class="container">
       <div class="content">
         <div class="row">
-          <div id="main" class="span12">
-            <h2>Welcome</h2>
-            <p>Select an area of the application above.</p>
+          <div id="main" class="span9">
+            <div class="hero-unit">
+              <h1>Welcome</h1>
+              <p>Please log in and select an area of the application above.</p>
+            </div>
           </div>
-          <div id="sidebar" class="span4">
-            <h2>Sidebar</h2>
+          <div id="sidebar" class="span3">
           </div>
         </div>
       </div>
-      <footer>
-        <p>Div Informatics | Dept Pathology | UAB</p>
-        <p>&copy; 2011</p>
-      </footer>
-      <div class="well">
-        <strong>Module Loading: </strong>
-        <input type="text" placeholder="Script URI" id="uri"/>
-        or
-        <select id="script_select">
-          <option value="" selected="">Select a Script</option>
-        </select>
-        <button class="btn" id="loadScript">Load</button>
-      </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>Div Informatics | Dept Pathology | UAB</p>
+        <p>&copy; 2011-2012</p>
+      </div>
+    </footer>
+
   </body>
-  <script src="vendor/couchapp/loader.js"></script>
   <script src="loader.js"></script>
+  <script src="vendor/couchapp/loader.js"></script>
   <script type="text/javascript" charset="utf-8">
+    google.load('visualization', '1.0', {'packages':['corechart', 'table']});
     $.couch.app(function(app) {
       $("#account").evently("account", app);
       $("#navigation").evently("navigation", app);
