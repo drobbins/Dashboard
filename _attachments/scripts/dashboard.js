@@ -1,6 +1,6 @@
 'use strict';
 /*jshint browser:true jquery:true globalstrict:true*/
-/*globals $$:false */
+/*globals $$:false alert:false google:false d3:false*/
 
 var toggleSpinner = function() {
     var spinner = document.getElementById('spinner');
