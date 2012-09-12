@@ -10,6 +10,7 @@ function(callback, e, options){
     all_views.forEach(function(view){
       if(!(view.match(/^autofill/)) &&
          !(view.match(/icd9/)) &&
+         !(view.match(/medrec/)) &&
          !(view.match(/lib/)) &&
          !(view.match(/patient_names/))){
         views.push(view);
