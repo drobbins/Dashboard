@@ -192,13 +192,22 @@ IMCCP.lookupPatientByName = function (el) {
 };
 
 IMCCP.editPatientAsync = function (el, cb, e, patient_id){
-  if(patient_id){
+  if (patient_id.mrn) {
+    IMCCP.emmiPatientLookup(patient_id.mrn, cb);
+  }
+  else if(patient_id) {
     var db = $$(el).app.db;
     db.openDoc(patient_id.slice(1), {success : function(doc){cb(doc);}});
   }
-  else{
+  else {
     cb({});
   }
+};
+
+IMCCP.emmiPatientLookup = function (mrn, cb) {
+  $.getJSON("../../../patientLookup?mrn=" + encodeURIComponent(mrn), function (data) {
+    cb(data);
+  });
 };
 
 IMCCP.navigationClick = function (el) {
@@ -313,6 +322,8 @@ IMCCP.overviewAfter = function (el) {
     .enter().append("td")
       .text(function (k) { return d.doc[k]; });
   });
+};
 
-
+String.prototype.toProperCase = function () {
+    return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 };
