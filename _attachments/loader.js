@@ -30,13 +30,16 @@ function load_script(uri, callback) {
 function app_load(scripts) {
   for (var i=0; i < scripts.length; i++) {
     document.write('<script src="'+scripts[i]+'"><\/script>');
-  };
-};
+  }
+}
 
 app_load([
   "https://www.google.com/jsapi",
   "scripts/jquery-1.8.1.js",
   "scripts/jquery-ui-1.8.23.custom.min.js",
+  "scripts/sha1.js",
+  "scripts/json2.js",
+  "scripts/jquery.couch.js",
   "scripts/underscore.js",
   "scripts/dashboard.js",
   "scripts/d3.v2.min.js",
