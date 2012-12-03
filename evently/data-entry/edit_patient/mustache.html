@@ -4,7 +4,7 @@
   </div>
 {{/ok}}
 <div class="{{^ok}}hidden{{/ok}}">
-  <h2>
+  <h2 id="top">
     Data for {{ptname}}{{^ptname}}a New Patient{{/ptname}}
   </h2>
   <p class="text-error"><i class="icon-star-empty"></i> fields are required</p>
@@ -574,6 +574,7 @@
         </div>
         <input type="button" value="Submit" class="btn btn-primary submit">
         <input type="button" value="Save" class="btn submit">
+        <a href="#top">Back to Top</a>
       </div>
     </div>
     <input type="hidden" name="_id" value="{{_id}}">
