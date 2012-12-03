@@ -324,6 +324,15 @@ IMCCP.overviewAfter = function (el) {
   });
 };
 
+IMCCP.updateUserRoles = function (el) {
+  var users_db = $.couch.db("_users"),
+    user = $$(el).app.user,
+    roles = $("form.roles").serializeArray().map(function(role){return role.value;});
+  user.roles = roles;
+  users_db.saveDoc(user, {success : function(){alert("User updated");}});
+  return false;
+};
+
 String.prototype.toProperCase = function () {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 };
