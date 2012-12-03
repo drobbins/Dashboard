@@ -333,6 +333,48 @@ IMCCP.updateUserRoles = function (el) {
   return false;
 };
 
+IMCCP.usersClinic = function (roles) {
+  var i, clinics = [
+    "Breast",
+    "Gi",
+    "Gyn Onc",
+    "Head And Neck",
+    "Lymp And Leuk",
+    "Neuro Onc",
+    "Thoracic",
+    "Urology"
+  ];
+  for (i=0; i < roles.length; i++) {
+    if (clinics.indexOf(roles[i]) !== -1) return roles[i];
+  }
+  return false;
+};
+
+IMCCP.editPatientData = function editPatientData (patient) {
+  var user = $$("#navigation").userCtx;
+  if (patient.externalSystem === "IMCCP") { // this is a lookup based patient.
+      var newPatient = {
+          ptfstnm : patient.firstname.toProperCase(),
+          ptlstnm : patient.lastname.toProperCase(),
+          ptaddy : patient.city.toProperCase() + ", " + patient.state,
+          medrec : patient.mrn
+      };
+      patient = newPatient;
+  }
+  if (user.roles.indexOf("_admin") !== -1) {
+    patient._admin = true;
+    patient.ok = true;
+  } else if (user && user.roles) {
+    patient._clinic = IMCCP.usersClinic(user.roles);
+    patient.clinic = patient.clinic || patient._clinic;
+    if (patient._clinic) {
+      patient.ok = true;
+    }
+  }
+  patient.ptname = patient.ptfstnm && patient.ptlstnm ? patient.ptfstnm+" "+patient.ptlstnm : "";
+  return patient;
+};
+
 String.prototype.toProperCase = function () {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 };

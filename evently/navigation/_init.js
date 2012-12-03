@@ -5,7 +5,7 @@ function(){
 		var name = user.userCtx.name;
 			roles = user.userCtx.roles;
 		if(!name){
-			$(navbar).trigger("logged-out");
+			return $(navbar).trigger("logged-out");
 		}
 		else if(roles.indexOf("_admin") !== -1){
 			$(navbar).trigger("admin");
@@ -13,5 +13,6 @@ function(){
 		else{
 			$(navbar).trigger("user");
 		}
-	}})
+		$$(navbar).userCtx = user.userCtx;
+	}});
 }
