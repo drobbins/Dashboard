@@ -42,7 +42,7 @@ IMCCP.populateFields = function () {
         }
     });
 
-    var radios = ["#txsurg", "#txradonc", "#txmedonc", "#cltrial", "#refnav", "#appins", "#previns"],
+    var radios = ["#txsurg", "#txradonc", "#txmedonc", "#cltrial", "#refnav", "#appins", "#previns", "#selfrfer"],
         i,
         hidden_field,
         selected_clinic,

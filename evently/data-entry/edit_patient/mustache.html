@@ -125,7 +125,14 @@
         <div class="control-group">
           <label>Self-referral?</label>
           <div class="controls">
-            <input type="text" class="text" name="selfrfer" value="{{selfrfer}}">
+            <input type="hidden" class="text" id="selfrfer" name="selfrfer" value="{{selfrfer}}">
+            <label class="radio inline">
+              <input type="radio" name="selfrfer" id="selfrfer-Yes" value="Yes"> Yes
+            </label>
+            <label class="radio inline">
+              <input type="radio" name="selfrfer" id="selfrfer-No" value="No"> No
+            </label>
+            </ul>
           </div>
         </div>
         <div class="control-group">
