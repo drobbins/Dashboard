@@ -34,7 +34,7 @@ function app_load(scripts) {
 }
 
 app_load([
-  "https://www.google.com/jsapi",
+  //"https://www.google.com/jsapi",
   "scripts/jquery-1.8.1.js",
   "scripts/jquery-ui-1.8.23.custom.min.js",
   "scripts/sha1.js",
