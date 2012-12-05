@@ -293,6 +293,8 @@ IMCCP.overviewData = function (el, data) {
 IMCCP.overviewAfter = function (el) {
   var data = $$(el).data, drawTable, firstRow, keys;
 
+  var hiddenFields = {"_id":true, "_rev":true, "clinic_text":true};
+
   data.rows = data.rows.sort(function (a, b) {
     if (a.doc.datadate < b.doc.datadate) return 1;
     if (a.doc.datadate > b.doc.datadate) return -1;
@@ -300,7 +302,9 @@ IMCCP.overviewAfter = function (el) {
   });
 
   firstRow = data.rows[0];
-  keys = Object.keys(firstRow.doc);
+  keys = Object.keys(firstRow.doc).filter(function (key) {
+    return !hiddenFields[key];
+  });
 
   var headRow = d3.select("table.results thead").append("tr");
   var headers = headRow.selectAll(".tableheader")
