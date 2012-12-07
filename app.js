@@ -20,7 +20,7 @@ requirejs(['couchapp', 'path', 'fs'], function(couchapp, path, fs){
     }
     if(newDoc.type === "data_management_form"){
 
-      if(newDoc.opername !== userCtx.name){
+      if(newDoc.opername !== userCtx.name && userCtx.roles.indexOf("_admin") === -1){
         throw({forbidden : "opername required to match your username"});
       }
 
@@ -32,6 +32,7 @@ requirejs(['couchapp', 'path', 'fs'], function(couchapp, path, fs){
 
   var ddoc = {
     _id: '_design/dashboard',
+    language : 'javascript',
     views : couchapp.loadFiles('./views', loadFileOptions),
     evently : couchapp.loadFiles('./evently', loadFileOptions),
     lists : couchapp.loadFiles('./lists', loadFileOptions),

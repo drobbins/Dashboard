@@ -1,5 +1,6 @@
 <h1>Data Overview</h1>
 <p>We found {{records.total_rows}} records.</p>
+<p><a href="_list/exportAll/datadates?include_docs=true">Download All Records</a></p>
 <select ng-model="clinic" class="medium" multiple="multiple">
   <option value="" selected="selected">
     All
@@ -29,12 +30,28 @@
     Urology
   </option>
 </select>
+<table class="table">
+  <thead>
+    <tr><th>Date</th><th>Clinic</th><th>Lag</th><th>Insurance Status</th><th>Clinical Trial Enrollemnt</th></tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="record in records.rows | clinicFilter:clinic">
+      <td>{{record.key | date:shortDate }}</td>
+      <td>{{record.value.clinic}}</td>
+      <td>{{record.value.lag | number:2}}</td>
+      <td>{{record.value.insurance_status}}</td>
+      <td>{{record.value.clinical_trial_enrollments}}</td>
+    </tr>
+  </tbody>
+</table>
 <div ng-repeat="record in records.rows | clinicFilter:clinic" class="row-fluid">
-  <div class="pull-right head-align">
+  <div class="span11">
+    <h5>{{record.doc.ptfstnm}} {{record.doc.ptlstnm}}</h5>
+    <p>{{record.doc.datadate | date:shortDate }}</p>
+  </div>
+  <div class="span1">
     <p>{{record.doc.clinic}}</p>
     <p>{{record.doc.opername}}</p>
   </div>
-  <h5>{{record.doc.ptfstnm}} {{record.doc.ptlstnm}}</h5>
-  <p>{{record.doc.datadate | date:shortDate }}</p>
   <p>Other info goes here</p>
 </div>

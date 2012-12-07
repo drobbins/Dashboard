@@ -45,6 +45,8 @@ app_load([
   "scripts/underscore.js",
   "scripts/dashboard.js",
   "scripts/d3.v2.min.js",
+  "scripts/crossfilter.min.js",
+  "scripts/dc.min.js",
   "scripts/bootstrap.js",
   "scripts/jquery.mustache.js" //my fixed version of mustache.js. Check for updates later.
 ]);

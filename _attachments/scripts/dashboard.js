@@ -1,6 +1,6 @@
 'use strict';
 /*jshint browser:true jquery:true globalstrict:true*/
-/*globals $$:false alert:false google:false d3:false angular:false*/
+/*globals $$:false alert:false google:false d3:false angular:false crossfilter:false dc:false*/
 
 var toggleSpinner = function() {
     var spinner = document.getElementById('spinner');
@@ -330,20 +330,32 @@ IMCCP.overviewAfter = function overviewAfter (el) {
 };
 
 IMCCP.dataOverview = (function () {
+
   var overview = angular.module('overview', ['ngResource']);
 
   overview.factory("Records", function ($resource) {
-    return $resource("_list/patient_names/datadates", {"include_docs" : true}, {
+    return $resource("_list/patient_names/stats", {"include_docs" : true}, {
       getAll : {
         method : "GET",
-        params : {"limit" : 100}
+        params : {"limit" : 100, "descending" : true}
       }
     });
   });
 
   overview.controller("OverviewControl", function ($scope, Records) {
-    $scope.records = Records.getAll();
+    // Remove sidebar
+    $$("#navigation").app.sidebar = $("#sidebar").detach();
+    $("#main").removeClass("span9").addClass("span12");
     $scope.template = "templates/overview.html";
+
+    // Get Records
+    $scope.records = Records.getAll( function () {
+      $scope.records.forEach(function (r) { r.date = new Date(r.key); });
+      $scope.dmf = crossfilter($scope.records);
+      $scope.all = $scope.dmf.groupAll();
+      $scope.byClinic = $scope.dmf.dimension(function (d) {return d.value.clinic;});
+      $scope.visitsByClinic = $scope.byClinic.group().reduceCount();
+    });
   });
 
   overview.filter("clinicFilter", function () {
