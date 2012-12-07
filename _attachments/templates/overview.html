@@ -1,0 +1,40 @@
+<h1>Data Overview</h1>
+<p>We found {{records.total_rows}} records.</p>
+<select ng-model="clinic" class="medium" multiple="multiple">
+  <option value="" selected="selected">
+    All
+  </option>
+  <option value="Breast">
+    Breast
+  </option>
+  <option value="Gi">
+    Gi
+  </option>
+  <option value="Gyn Onc">
+    Gyn Onc
+  </option>
+  <option value="Head And Neck">
+    Head And Neck
+  </option>
+  <option value="Lymp And Leuk">
+    Lymp And Leuk
+  </option>
+  <option value="Neuro Onc">
+    Neuro Onc
+  </option>
+  <option value="Thoracic">
+    Thoracic
+  </option>
+  <option value="Urology">
+    Urology
+  </option>
+</select>
+<div ng-repeat="record in records.rows | clinicFilter:clinic" class="row-fluid">
+  <div class="pull-right head-align">
+    <p>{{record.doc.clinic}}</p>
+    <p>{{record.doc.opername}}</p>
+  </div>
+  <h5>{{record.doc.ptfstnm}} {{record.doc.ptlstnm}}</h5>
+  <p>{{record.doc.datadate | date:shortDate }}</p>
+  <p>Other info goes here</p>
+</div>

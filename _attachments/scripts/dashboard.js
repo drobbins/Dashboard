@@ -1,6 +1,6 @@
 'use strict';
 /*jshint browser:true jquery:true globalstrict:true*/
-/*globals $$:false alert:false google:false d3:false*/
+/*globals $$:false alert:false google:false d3:false angular:false*/
 
 var toggleSpinner = function() {
     var spinner = document.getElementById('spinner');
@@ -19,96 +19,98 @@ var toggleSpinner = function() {
     }
 };
 
-var IMCCP = {};
-
-IMCCP.populateFields = function () {
-
-    //Use Enters as Tabs
-    $('input, select, textarea').bind('keydown', function(e) {
-        var self, form, focusable, next;
-
-        self = $(this);
-        form = self.parents('form:eq(0)');
-
-        if (e.keyCode == 13) {
-            focusable = form.find('input,a,select,button,textarea').filter(':visible');
-            next = focusable.eq(focusable.index(this)+1);
-            if (next.length) {
-                next.focus();
-            } else {
-                form.submit();
-            }
-            //return false;
-        }
-    });
-
-    var radios = ["#txsurg", "#txradonc", "#txmedonc", "#cltrial", "#refnav", "#appins", "#previns", "#selfrfer"],
-        i,
-        hidden_field,
-        selected_clinic,
-        $clinic,
-        id_of_correct_radio,
-        dataDateField, dataDate;
-
-    // Populate Radios
-    for (i=0; i<radios.length; i+=1){
-        hidden_field = $(radios[i]);
-        if (hidden_field.val() === ""){
-            hidden_field.val("ni");
-        }
-        id_of_correct_radio = radios[i]+"-"+hidden_field.val();
-        $(id_of_correct_radio).attr("checked","checked");
-        hidden_field.remove();
-    }
-
-    // Populate Clinic Select Box
-    $clinic = $("#clinic");
-    selected_clinic = $("#clinic_text").val();
-    if(selected_clinic){
-        $("[value='"+selected_clinic+"']", $clinic).attr("selected", "selected");
-        $("[value='']", $clinic).removeAttr("selected");
-        $("#clinic_text").remove();
-    }
-
-    // Enter Data Date for new Forms
-    dataDateField = $("input[name=datadate]");
-    if (!dataDateField.val()) dataDateField.val((new Date()).toISOString());
-
-    // Enable Date Pickers and Format Values
-    $(".datepicker").each(function(i){
-      var date;
-      date = $(this).val().match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}/) ? $.datepicker.parseDate("yy-mm-dd", $(this).val().split("T")[0]) : $(this).val();
-      $(this).datepicker({dateFormat:'mm-dd-yy'});
-      $(this).datepicker("setDate", date);
-    });
-
-    // Enable Autofill Fields
-    $(".autofill").autocomplete({
-        source : function(request, response){
-            var db = $$($("#main")).app.db,
-                design_doc_name = $$($("#main")).app.ddoc._id.split("/")[1],
-                field_name = $(this.element).attr("name"),
-                term = $(this.element).val(),
-                nonce = Math.random(),
-                that = this;
-            $$(that).nonce = nonce;
-            db.view(design_doc_name+"/autofill_"+field_name, {
-                startkey : term,
-                endkey : term+"\u9999", //I don't know why only \u9999 works, not \uFFFF
-                limit : 10,
-                group : true,
-                success : function(results){
-                    if($$(that).nonce === nonce){
-                        response(results.rows.map(function(row){return row.key;}));
-                    }
-                }
-            });
-        }
-    });
-
+var toType = function(obj) {
+        return ({}).toString.call(obj).match(/\s([a-z|A-Z]+)/)[1].toLowerCase();
 };
 
-IMCCP.checkField = function (el, event) {
+var IMCCP = {};
+
+IMCCP.populateFields = function populateFields () {
+  //Use Enters as Tabs
+  $('input, select, textarea').bind('keydown', function(e) {
+    var self, form, focusable, next;
+
+    self = $(this);
+    form = self.parents('form:eq(0)');
+
+    if (e.keyCode == 13) {
+      focusable = form.find('input,a,select,button,textarea').filter(':visible');
+      next = focusable.eq(focusable.index(this)+1);
+      if (next.length) {
+          next.focus();
+      } else {
+          form.submit();
+      }
+      //return false;
+    }
+  });
+
+  var radios = ["#txsurg", "#txradonc", "#txmedonc", "#cltrial", "#refnav", "#appins", "#previns", "#selfrfer"],
+    i,
+    hidden_field,
+    selected_clinic,
+    $clinic,
+    id_of_correct_radio,
+    dataDateField, dataDate;
+
+  // Populate Radios
+  for (i=0; i<radios.length; i+=1){
+    hidden_field = $(radios[i]);
+    if (hidden_field.val() === ""){
+        hidden_field.val("ni");
+    }
+    id_of_correct_radio = radios[i]+"-"+hidden_field.val();
+    $(id_of_correct_radio).attr("checked","checked");
+    hidden_field.remove();
+  }
+
+  // Populate Clinic Select Box
+  $clinic = $("#clinic");
+  selected_clinic = $("#clinic_text").val();
+  if(selected_clinic){
+    $("[value='"+selected_clinic+"']", $clinic).attr("selected", "selected");
+    $("[value='']", $clinic).removeAttr("selected");
+    $("#clinic_text").remove();
+  }
+
+  // Enter Data Date for new Forms
+  dataDateField = $("input[name=datadate]");
+  if (!dataDateField.val()) dataDateField.val((new Date()).toISOString());
+
+  // Enable Date Pickers and Format Values
+  $(".datepicker").each(function(i){
+    var date;
+    date = $(this).val().match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}/) ? $.datepicker.parseDate("yy-mm-dd", $(this).val().split("T")[0]) : $(this).val();
+    $(this).datepicker({dateFormat:'mm-dd-yy'});
+    $(this).datepicker("setDate", date);
+  });
+
+  // Enable Autofill Fields
+  $(".autofill").autocomplete({
+    source : function(request, response){
+      var db = $$($("#main")).app.db,
+        design_doc_name = $$($("#main")).app.ddoc._id.split("/")[1],
+        field_name = $(this.element).attr("name"),
+        term = $(this.element).val(),
+        nonce = Math.random(),
+        that = this;
+      $$(that).nonce = nonce;
+      db.view(design_doc_name+"/autofill_"+field_name, {
+        startkey : term,
+        endkey : term+"\u9999", //I don't know why only \u9999 works, not \uFFFF
+        limit : 10,
+        group : true,
+        success : function(results){
+          if($$(that).nonce === nonce){
+            response(results.rows.map(function(row){return row.key;}));
+          }
+        }
+      });
+    }
+  });
+};
+
+IMCCP.checkField = function checkField (el, event) {
   var $el, $controlGroup, $controls, error;
 
   $el = $(el);
@@ -134,7 +136,7 @@ IMCCP.checkField = function (el, event) {
   }
 };
 
-IMCCP.legalDate = function (dateString) {
+IMCCP.legalDate = function legalDate (dateString) {
   // Ensures dates are legal in the MM-DD-YYYY format
   // Returns false for invalid dates, true otherwise
   var dateTokens, month, day, year;
@@ -153,7 +155,7 @@ IMCCP.legalDate = function (dateString) {
   return true;
 };
 
-IMCCP.lookupPatientByName = function (el) {
+IMCCP.lookupPatientByName = function lookupPatientByName (el) {
 
   var db, term, nonce, design_doc_name, view;
 
@@ -188,10 +190,9 @@ IMCCP.lookupPatientByName = function (el) {
       }
     }
   );
-
 };
 
-IMCCP.editPatientAsync = function (el, cb, e, patient_id){
+IMCCP.editPatientAsync = function editPatientAsync (el, cb, e, patient_id){
   if (patient_id.mrn) {
     IMCCP.emmiPatientLookup(patient_id.mrn, cb);
   }
@@ -204,13 +205,13 @@ IMCCP.editPatientAsync = function (el, cb, e, patient_id){
   }
 };
 
-IMCCP.emmiPatientLookup = function (mrn, cb) {
+IMCCP.emmiPatientLookup = function emmiPatientLookup (mrn, cb) {
   $.getJSON("../../../patientLookup?mrn=" + encodeURIComponent(mrn), function (data) {
     cb(data);
   });
 };
 
-IMCCP.navigationClick = function (el) {
+IMCCP.navigationClick = function navigationClick (el) {
   var app = $$(el).app;
   if (app.sidebar){
     $("#main").removeClass("span12").addClass("span9");
@@ -221,7 +222,7 @@ IMCCP.navigationClick = function (el) {
   $("#main").unbind().evently($(el).attr('href').slice(1), app);
 };
 
-IMCCP.submitPatient = function (el) {
+IMCCP.submitPatient = function submitPatient (el) {
   var db = $$(el).app.db;
   $.couch.session({success : function(session){
     var username = session.userCtx.name,
@@ -266,7 +267,7 @@ IMCCP.submitPatient = function (el) {
   }});
 };
 
-IMCCP.overviewAsync = function (el, callback, evt, args) {
+IMCCP.overviewAsync = function overviewAsync (el, callback, evt, args) {
   var db, ddoc;
   db = $$(el).app.db;
   ddoc = $$($("#main")).app.ddoc._id.split("/")[1];
@@ -285,12 +286,12 @@ IMCCP.overviewAsync = function (el, callback, evt, args) {
   $("#main").removeClass("span9").addClass("span12");
 };
 
-IMCCP.overviewData = function (el, data) {
+IMCCP.overviewData = function overviewData (el, data) {
   var app = $$(el).app, drawTable;
   $$(el).data = data;
 };
 
-IMCCP.overviewAfter = function (el) {
+IMCCP.overviewAfter = function overviewAfter (el) {
   var data = $$(el).data, drawTable, firstRow, keys;
 
   var hiddenFields = {"_id":true, "_rev":true, "clinic_text":true};
@@ -328,7 +329,41 @@ IMCCP.overviewAfter = function (el) {
   });
 };
 
-IMCCP.updateUserRoles = function (el) {
+IMCCP.dataOverview = (function () {
+  var overview = angular.module('overview', ['ngResource']);
+
+  overview.factory("Records", function ($resource) {
+    return $resource("_list/patient_names/datadates", {"include_docs" : true}, {
+      getAll : {
+        method : "GET",
+        params : {"limit" : 100}
+      }
+    });
+  });
+
+  overview.controller("OverviewControl", function ($scope, Records) {
+    $scope.records = Records.getAll();
+    $scope.template = "templates/overview.html";
+  });
+
+  overview.filter("clinicFilter", function () {
+    return function (data, clinicName) {
+      if (data && clinicName) {
+        var regex;
+        if (toType(clinicName) === "array") clinicName = clinicName.join("|");
+        regex = new RegExp("^"+clinicName, "i");
+        return data.filter(function (row) {
+          return row.doc.clinic.match(regex);
+        });
+      }
+      else return data;
+    };
+  });
+
+  return overview;
+})();
+
+IMCCP.updateUserRoles = function updateUserRoles (el) {
   var users_db = $.couch.db("_users"),
     user = $$(el).app.user,
     roles = $("form.roles").serializeArray().map(function(role){return role.value;});
@@ -337,7 +372,7 @@ IMCCP.updateUserRoles = function (el) {
   return false;
 };
 
-IMCCP.usersClinic = function (roles) {
+IMCCP.usersClinic = function usersClinic (roles) {
   var i, clinics = [
     "Breast",
     "Gi",
