@@ -334,10 +334,11 @@ IMCCP.dataOverview = (function () {
   var overview = angular.module('overview', ['ngResource']);
 
   overview.factory("Records", function ($resource) {
-    return $resource("_list/patient_names/stats", {"include_docs" : true}, {
+    return $resource("_list/authorize/stats", {"include_docs" : true}, {
       getAll : {
         method : "GET",
-        params : {"limit" : 100, "descending" : true}
+        params : {"limit" : 8000, "descending" : true},
+        isArray : true
       }
     });
   });
@@ -350,11 +351,107 @@ IMCCP.dataOverview = (function () {
 
     // Get Records
     $scope.records = Records.getAll( function () {
+      var dateFormat = d3.time.format("%m/%d/%Y");
+      var paddedExtent = function paddedExtent(array, accessor, padding) {
+        var extent = d3.extent(array, accessor);
+        extent[0] -= padding;
+        extent[1] += padding;
+        return extent;
+      };
       $scope.records.forEach(function (r) { r.date = new Date(r.key); });
       $scope.dmf = crossfilter($scope.records);
       $scope.all = $scope.dmf.groupAll();
       $scope.byClinic = $scope.dmf.dimension(function (d) {return d.value.clinic;});
       $scope.visitsByClinic = $scope.byClinic.group().reduceCount();
+      $scope.byLag = $scope.dmf.dimension(function (d) {
+        return d.value.lag < 100 ? d.value.lag : 100;
+      });
+      $scope.visitsByLag = $scope.byLag.group().reduceCount();
+      $scope.byDate = $scope.dmf.dimension(function (d) { return d3.time.month(d.date); });
+      $scope.visitsByDate = $scope.byDate.group().reduceCount();
+      $scope.byInsurance = $scope.dmf.dimension(function (d) { return d.value.insurance_status; });
+      $scope.visitsByInsurance = $scope.byInsurance.group().reduceCount();
+
+      // Data Table View
+      $scope.dataTable = dc.dataTable("#overview-data-table", "overviewCharts")
+        .dimension($scope.byClinic)
+        .group(function (d) {return d.value.clinic;})
+        .size(100)
+        .columns([
+          function (d) {return d.value.clinic;},
+          function (d) {return dateFormat(d.date);},
+          function (d) {return d.value.lag;}
+        ]);
+
+      // Data Count View
+      $scope.dataCount = dc.dataCount("#overview-data-count", "overviewCharts")
+        .dimension($scope.dmf)
+        .group($scope.all);
+
+      // Clinic Counts View
+      $scope.clinicChart = dc.pieChart("#overview-clinic-chart", "overviewCharts")
+        .width(220).height(220)
+        .colors(d3.scale.category10().range())
+        .radius(100)
+        .innerRadius(30)
+        .minAngleForLabel(0.25)
+        .dimension($scope.byClinic)
+        .group($scope.visitsByClinic)
+        .turnOnControls().filterAll()
+        .render();
+
+      // Insurance Counts View
+      $scope.clinicChart = dc.pieChart("#overview-insurance-chart", "overviewCharts")
+        .width(220).height(220)
+        .colors(d3.scale.category10().range())
+        .radius(100)
+        .innerRadius(30)
+        .minAngleForLabel(0.25)
+        .dimension($scope.byInsurance)
+        .group($scope.visitsByInsurance)
+        .turnOnControls().filterAll()
+        .render();
+
+      // Lag Bar Chart
+      var lagx = d3.scale.linear().domain(d3.extent($scope.visitsByLag.all(), function (d) { return d.key; }));
+      $scope.lagChart = dc.barChart("#overview-lag-chart", "overviewCharts")
+        .width(440).height(220)
+        .dimension($scope.byLag)
+        .group($scope.visitsByLag)
+        .x(lagx)
+        .elasticX(true)
+        .xAxisPadding(5)
+        .elasticY(true)
+        .filterAll()
+        .renderlet( function (chart) {
+          var g = chart.g();
+          g.attr("transform", "translate(10)");
+        })
+        .render();
+      $scope.lagChartReset = function lagChartReset(){
+        $scope.lagChart.filterAll();
+        dc.redrawAll("overviewCharts");
+      };
+
+      // Visits by Date
+      var datex = d3.time.scale().domain(d3.extent($scope.visitsByDate.all(), function (d) { return d.key; }));
+      $scope.dateChart = dc.barChart("#overview-date-chart", "overviewCharts")
+        .width(920).height(440)
+        .dimension($scope.byDate)
+        .group($scope.visitsByDate)
+        .centerBar(true)
+        .x(datex)
+        .elasticX(true)
+        .xAxisPadding(35)
+        .xUnits(d3.time.months)
+        .elasticY(true)
+        .filterAll()
+        .render();
+      $scope.dateChartReset = function dateChartReset(){
+        $scope.dateChart.filterAll();
+        dc.redrawAll("overviewCharts");
+      };
+
     });
   });
 

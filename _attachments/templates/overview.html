@@ -1,5 +1,4 @@
 <h1>Data Overview</h1>
-<p>We found {{records.total_rows}} records.</p>
 <p><a href="_list/exportAll/datadates?include_docs=true">Download All Records</a></p>
 <select ng-model="clinic" class="medium" multiple="multiple">
   <option value="" selected="selected">
@@ -30,28 +29,31 @@
     Urology
   </option>
 </select>
-<table class="table">
-  <thead>
-    <tr><th>Date</th><th>Clinic</th><th>Lag</th><th>Insurance Status</th><th>Clinical Trial Enrollemnt</th></tr>
-  </thead>
-  <tbody>
-    <tr ng-repeat="record in records.rows | clinicFilter:clinic">
-      <td>{{record.key | date:shortDate }}</td>
-      <td>{{record.value.clinic}}</td>
-      <td>{{record.value.lag | number:2}}</td>
-      <td>{{record.value.insurance_status}}</td>
-      <td>{{record.value.clinical_trial_enrollments}}</td>
-    </tr>
-  </tbody>
-</table>
-<div ng-repeat="record in records.rows | clinicFilter:clinic" class="row-fluid">
-  <div class="span11">
-    <h5>{{record.doc.ptfstnm}} {{record.doc.ptlstnm}}</h5>
-    <p>{{record.doc.datadate | date:shortDate }}</p>
+<div class="row-fluid">
+  <div id="overview-clinic-chart" class="span3">
+    <strong>Visits by Clinic</strong><span class="reset" style="display: none;">: <span class="filter"></span></span>
   </div>
-  <div class="span1">
-    <p>{{record.doc.clinic}}</p>
-    <p>{{record.doc.opername}}</p>
+  <div id="overview-insurance-chart" class="span3">
+    <strong>Visits by Insurance</strong><span class="reset" style="display: none;">: <span class="filter"></span></span>
   </div>
-  <p>Other info goes here</p>
+  <div id="overview-lag-chart" class="span6">
+    <strong>Lag</strong> <span class="reset">[<a ng-click="lagChartReset()">Reset</a>]</span>
+  </div>
+</div>
+<div id="overview-date-chart">
+  <strong>Visits by Date</strong> <span class="reset">[<a ng-click="dateChartReset()">Reset</a>]</span>
+</div>
+<div id="overview-data-count" class="pull-right">
+    <span class="filter-count"></span> selected out of <span class="total-count"></span> records
+</div>
+<table class="table" id="overview-data-table">
+    <!-- create a custom header -->
+    <thead class="header">
+      <tr>
+        <th>Clinic</th>
+        <th>Date</th>
+        <th>Lag</th>
+      </tr>
+    </thead>
+    <!-- data rows will filled in here -->
 </div>

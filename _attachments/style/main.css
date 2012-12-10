@@ -29,3 +29,36 @@ body {
 .head-align {
   margin-top : 10px;
 }
+
+.dc-table-group {
+  background-color : #eee;
+}
+
+.pie-slice {
+  fill : white;
+  font-size : 12px;
+  font-weight : lighter;
+}
+
+.selected path {
+  stroke : black;
+  stroke-width : 3px;
+}
+
+.bar {
+  fill : steelblue;
+}
+
+.dc-chart .axis path {
+  fill : none;
+  stroke : black;
+}
+
+.dc-chart .brush rect.extent {
+  fill: steelBlue;
+  fill-opacity: .5;
+}
+
+.axis text {
+  font-size : 12px;
+}
