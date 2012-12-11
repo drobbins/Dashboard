@@ -432,9 +432,9 @@ IMCCP.dataOverview = (function () {
           g.attr("transform", "translate(10)");
         })
         .render();
-      $scope.lagChartReset = function lagChartReset(){
+      $scope.lagChartReset = function lagChartReset () {
         $scope.lagChart.filterAll();
-        dc.redrawAll("overviewCharts");
+        $scope.redraw();
       };
 
       // Visits by Date
@@ -451,8 +451,12 @@ IMCCP.dataOverview = (function () {
         .elasticY(true)
         .filterAll()
         .render();
-      $scope.dateChartReset = function dateChartReset(){
+      $scope.dateChartReset = function dateChartReset () {
         $scope.dateChart.filterAll();
+        $scope.redraw();
+      };
+
+      $scope.redraw = function redraw () {
         dc.redrawAll("overviewCharts");
       };
 
@@ -462,6 +466,9 @@ IMCCP.dataOverview = (function () {
           $("#recordModal").modal('show');
         });
       });
+
+    });
+  });
 
   overview.controller("recordModal", function ($scope) {
     $scope.$on("UpdateModalRecord", function (event, record) {
