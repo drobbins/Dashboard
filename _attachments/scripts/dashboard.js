@@ -440,7 +440,7 @@ IMCCP.dataOverview = (function () {
       // Visits by Date
       var datex = d3.time.scale().domain(d3.extent($scope.visitsByDate.all(), function (d) { return d.key; }));
       $scope.dateChart = dc.barChart("#overview-date-chart", "overviewCharts")
-        .width(920).height(440)
+        .width(920).height(220)
         .dimension($scope.byDate)
         .group($scope.visitsByDate)
         .centerBar(true)
