@@ -452,6 +452,16 @@ IMCCP.dataOverview = (function () {
         dc.redrawAll("overviewCharts");
       };
 
+      dc.renderlet( function () {
+        d3.selectAll(".dc-table-row").on("click", function (d) {
+          $scope.$broadcast("UpdateModalRecord", d.doc);
+          $("#recordModal").modal('show');
+        });
+      });
+
+  overview.controller("recordModal", function ($scope) {
+    $scope.$on("UpdateModalRecord", function (event, record) {
+      $scope.$apply(function () {$scope.record = record;});
     });
   });
 
