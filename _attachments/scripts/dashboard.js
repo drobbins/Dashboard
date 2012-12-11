@@ -337,7 +337,10 @@ IMCCP.dataOverview = (function () {
     return $resource("_list/authorize/stats", {"include_docs" : true}, {
       getAll : {
         method : "GET",
-        params : {"limit" : 8000, "descending" : true},
+        params : {
+          //"limit" : 500,
+          "descending" : true
+        },
         isArray : true
       }
     });
