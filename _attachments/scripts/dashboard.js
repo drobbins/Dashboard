@@ -367,7 +367,7 @@ IMCCP.dataOverview = (function () {
       $scope.byClinic = $scope.dmf.dimension(function (d) {return d.value.clinic;});
       $scope.visitsByClinic = $scope.byClinic.group().reduceCount();
       $scope.byLag = $scope.dmf.dimension(function (d) {
-        return d.value.lag < 100 ? d.value.lag : 100;
+        return d.value.lag < 60 ? d.value.lag : 60;
       });
       $scope.visitsByLag = $scope.byLag.group().reduceCount();
       $scope.byDate = $scope.dmf.dimension(function (d) { return d3.time.month(d.date); });
