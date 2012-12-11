@@ -381,6 +381,7 @@ IMCCP.dataOverview = (function () {
         .group(function (d) {return d.value.clinic;})
         .size(100)
         .columns([
+          function (d) {return d.doc.opername;},
           function (d) {return d.value.clinic;},
           function (d) {return dateFormat(d.date);},
           function (d) {return d.value.lag;}
