@@ -24,6 +24,7 @@
           <label>Clinic</label>
           <div class="controls">
             {{^_admin}}
+            <input type="hidden" name="clinic" value="{{clinic}}">
             <input type="text" value="{{clinic}}" disabled>
             {{/_admin}}
             {{^_clinic}}
