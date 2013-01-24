@@ -401,8 +401,7 @@ IMCCP.dataOverview = (function () {
         .minAngleForLabel(0.25)
         .dimension($scope.byClinic)
         .group($scope.visitsByClinic)
-        .turnOnControls().filterAll()
-        .render();
+        .turnOnControls().filterAll();
 
       // Insurance Counts View
       $scope.clinicChart = dc.pieChart("#overview-insurance-chart", "overviewCharts")
@@ -413,8 +412,7 @@ IMCCP.dataOverview = (function () {
         .minAngleForLabel(0.25)
         .dimension($scope.byInsurance)
         .group($scope.visitsByInsurance)
-        .turnOnControls().filterAll()
-        .render();
+        .turnOnControls().filterAll();
 
       // Lag Bar Chart
       var lagx = d3.scale.linear().domain(d3.extent($scope.visitsByLag.all(), function (d) { return d.key; }));
@@ -430,8 +428,7 @@ IMCCP.dataOverview = (function () {
         .renderlet( function (chart) {
           var g = chart.g();
           g.attr("transform", "translate(10)");
-        })
-        .render();
+        });
       $scope.lagChartReset = function lagChartReset () {
         $scope.lagChart.filterAll();
         $scope.redraw();
@@ -449,8 +446,7 @@ IMCCP.dataOverview = (function () {
         .xAxisPadding(35)
         .xUnits(d3.time.months)
         .elasticY(true)
-        .filterAll()
-        .render();
+        .filterAll();
       $scope.dateChartReset = function dateChartReset () {
         $scope.dateChart.filterAll();
         $scope.redraw();
@@ -466,6 +462,8 @@ IMCCP.dataOverview = (function () {
           $("#recordModal").modal('show');
         });
       });
+      
+      dc.renderAll("overviewCharts");
 
     });
   });
