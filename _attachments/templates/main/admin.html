@@ -1,1 +1,27 @@
-Admin Place
+<div class="row-fluid" ng-controller="UserController">
+  <div class="span3">
+    <h4>Select a User</h4>
+    <select ng-model="selected" ng-options="user.name for user in users" ng-change="updateUserModel()"></select>
+  </div>
+  <div class="span9" ng-show="user">
+    <div class="row-fluid">
+      <div class="span6">
+        <form ng-submit="updateRoles()">
+          <legend>Roles for {{user.name}}</legend>
+          <select ng-model="clinic" ng-options="clinic for clinic in clinics"></select>
+          <label class="checkbox"><input type="checkbox" ng-model="dashboard"> Dashboard Access?</label>
+          <input type="submit" class="btn btn-primary">
+        </form>
+      </div>
+      <div class="span6">
+        <form ng-submit="updatePassword()" class="form-inline">
+          <legend>Reset {{user.name}}'s Password</legend>
+          <div class="input-append">
+            <input type="password" ng-model="password" placeholder="new password">
+            <input type="submit" value="Submit" class="btn btn-danger">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
