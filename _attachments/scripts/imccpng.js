@@ -10,6 +10,14 @@
 
   var imccp = angular.module("imccp", ["ngResource"]);
 
+  imccp.config(function ($routeProvider) {
+    $routeProvider.when("/", {templateUrl : "templates/main/home.html"}).
+      when("/patients", {templateUrl : "templates/main/patients.html"}).
+      when("/dashboard", {templateUrl : "templates/main/dashboard.html"}).
+      when("/admin", {templateUrl : "templates/main/admin.html"}).
+      otherwise({redirectTo:"/"});
+  });
+
   imccp.factory("Session", function ($resource) {
     return $resource('../../../_session');
   });
@@ -33,13 +41,16 @@
             name : name || this.name, // use this rather than $scope..
             password : password || this.password
           }, function () {
-            $scope.session = Session.get();
+            $scope.session = Session.get(function () {
+              $scope.$emit("updateNav");
+            });
           });
         };
 
         $scope.logout = function logout() {
           Session.remove(function () {
             $scope.session = {};
+            $scope.$emit("updateNav");
           });
         };
 
@@ -76,9 +87,29 @@
     };
   });
 
-  imccp.controller("NavController", function ($scope, Session) {
-    $scope.template = "";
-    $scope.session = Session.get();
+  imccp.controller("NavController", function ($scope, $rootScope, Session) {
+    $scope.navbar = "";
+    $scope.updateNav = function updateNav() {
+      var user, roles;
+      user = $scope.session.userCtx;
+      roles = user && user.roles;
+      if (!roles) {
+        $scope.navbar = "";
+        return;
+      }
+      if (roles.indexOf("_admin") !== -1) {
+        $scope.navbar = "templates/navbars/admin.html";
+      } else if (user.clinic) {
+        $scope.navbar = "templates/navbars/nurse.html";
+      } else if (roles.indexOf("dashboard") !== -1) {
+        $scope.navbar = "templates/navbars/dashboard.html";
+      } else {
+        $scope.navbar = "";
+      }
+    };
+    $scope.session = Session.get($scope.updateNav);
+    $scope.$on("updateNav", $scope.updateNav);
+    $rootScope.$on("updateNav", $scope.updateNav);
   });
 
 })();

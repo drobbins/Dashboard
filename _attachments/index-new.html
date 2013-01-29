@@ -26,7 +26,7 @@
           <a class="brand" href="">IMCCP Dashboard</a>
 
           <div class="nav-collapse" ng-controller="NavController">
-            <ul class="nav" id="navigation" ng-include="">
+            <ul class="nav" id="navigation" ng-include="navbar">
             </ul>
 
             <div class="pull-right">
@@ -39,20 +39,7 @@
     </div>
 
     <!-- Main Content -->
-    <div class="container">
-      <div class="content">
-        <div class="row">
-          <div id="main" class="span9">
-            <div class="hero-unit">
-              <h1>Welcome</h1>
-              <p>Please log in and select an area of the application above.</p>
-            </div>
-          </div>
-          <div id="sidebar" class="span3">
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="container" ng-view></div>
 
     <!-- Footer -->
     <footer class="footer">
