@@ -3,11 +3,6 @@
   /*jshint browser:true devel:true jquery:true*/
   /*global angular:true*/
 
-  var couch_url, db_url, ddoc_url, href;
-
-  href = document.location.href;
-  couch_url = href.split("/").slice(0,3).join("/");
-
   var imccp = angular.module("imccp", ["ngResource"]);
 
   imccp.config(function ($routeProvider) {
@@ -18,8 +13,39 @@
       otherwise({redirectTo:"/"});
   });
 
-  imccp.factory("Session", function ($resource) {
-    return $resource('../../../_session');
+  imccp.factory("Session", function ($http, $resource, $q) {
+    var currentSession, sessionService, sessionURL = "../../../_session";
+    sessionService = {
+      login : function login (username, password, callback) {
+        return $http.post(sessionURL, {name:username, password:password})
+          .then(function () {
+            return $http.get(sessionURL);
+          })
+          .then(function (response) {
+            currentSession = response.data;
+            return response.data;
+          });
+      },
+      logout : function logout () {
+        return $http({method : "DELETE", url : sessionURL});
+      },
+      loggedIn : function () {
+        if (currentSession) {
+          return currentSession;
+        } else {
+          return false;
+        }
+      },
+      getSession : function getSession() {
+        return $http.get(sessionURL).then(function (response) {
+          if (response.data.userCtx.name) {
+            currentSession = response.data;
+            return response.data;
+          }
+        });
+      }
+    };
+    return sessionService;
   });
 
   imccp.factory("User", function ($resource) {
@@ -37,18 +63,15 @@
       link : function ( $scope, element, attributes, controller) {
 
         $scope.login = function login(name, password) {
-          Session.save({
-            name : name || this.name, // use this rather than $scope..
-            password : password || this.password
-          }, function () {
-            $scope.session = Session.get(function () {
+          Session.login(name || this.name, password || this.password)
+            .then(function (session) {
+              $scope.session = session;
               $scope.$emit("updateNav");
             });
-          });
         };
 
         $scope.logout = function logout() {
-          Session.remove(function () {
+          Session.logout().then(function () {
             $scope.session = {};
             $scope.$emit("updateNav");
           });
@@ -70,10 +93,12 @@
           });
         };
 
-        $scope.session = Session.get();
+        Session.getSession().then(function (session) {
+          $scope.session = session;
+        });
 
-        $scope.$watch( function () { return $scope.session.userCtx; }, function (session) {
-          var user = $scope.session.userCtx;
+        $scope.$watch( function () { return $scope.session; }, function (session) {
+          var user = $scope.session && $scope.session.userCtx;
           if (user && user.name !== null) {
             $scope.template = "templates/account/loggedIn.html";
           } else {
@@ -90,24 +115,26 @@
   imccp.controller("NavController", function ($scope, $rootScope, Session) {
     $scope.navbar = "";
     $scope.updateNav = function updateNav() {
-      var user, roles;
-      user = $scope.session.userCtx;
-      roles = user && user.roles;
-      if (!roles) {
-        $scope.navbar = "";
-        return;
-      }
-      if (roles.indexOf("_admin") !== -1) {
-        $scope.navbar = "templates/navbars/admin.html";
-      } else if (user.clinic) {
-        $scope.navbar = "templates/navbars/nurse.html";
-      } else if (roles.indexOf("dashboard") !== -1) {
-        $scope.navbar = "templates/navbars/dashboard.html";
-      } else {
-        $scope.navbar = "";
+      var user, roles, session;
+      session = Session.loggedIn();
+      if (session) {
+        user = session.userCtx;
+        roles = user && user.roles;
+        if (!roles) {
+          $scope.navbar = "";
+          return;
+        }
+        if (roles.indexOf("_admin") !== -1) {
+          $scope.navbar = "templates/navbars/admin.html";
+        } else if (user.clinic) {
+          $scope.navbar = "templates/navbars/nurse.html";
+        } else if (roles.indexOf("dashboard") !== -1) {
+          $scope.navbar = "templates/navbars/dashboard.html";
+        } else {
+          $scope.navbar = "";
+        }
       }
     };
-    $scope.session = Session.get($scope.updateNav);
     $scope.$on("updateNav", $scope.updateNav);
     $rootScope.$on("updateNav", $scope.updateNav);
   });
