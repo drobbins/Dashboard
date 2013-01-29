@@ -48,5 +48,5 @@ app_load([
   "scripts/crossfilter.min.js",
   "scripts/dc.min.js",
   "scripts/bootstrap.js",
-  "scripts/jquery.mustache.js" //my fixed version of mustache.js. Check for updates later.
+  "scripts/imccpng.js"
 ]);
