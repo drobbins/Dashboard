@@ -1,14 +1,18 @@
 (function () {
   'use strict';
   /*jshint browser:true devel:true jquery:true*/
-  /*global angular:true*/
+  /*globals google:false d3:false angular:false crossfilter:false dc:false*/
+
+  var toType = function(obj) {
+    return ({}).toString.call(obj).match(/\s([a-z|A-Z]+)/)[1].toLowerCase();
+  };
 
   var imccp = angular.module("imccp", ["ngResource"]);
 
   imccp.config(function ($routeProvider) {
     $routeProvider.when("/", {templateUrl : "templates/main/home.html"}).
       when("/patients", {templateUrl : "templates/main/patients.html"}).
-      when("/dashboard", {templateUrl : "templates/main/dashboard.html"}).
+      when("/dashboard", {controller : "DashboardController", templateUrl : "templates/main/dashboard.html"}).
       when("/admin", {controller : "AdminController", templateUrl : "templates/main/admin.html"}).
       otherwise({redirectTo:"/"});
   });
@@ -53,6 +57,19 @@
     return $resource('../../../_users/:id', {id:"@id"}, {
       "put" : { method : "PUT"},
       "list" : { method : "GET", params : {id:"_all_docs"}}
+    });
+  });
+
+  imccp.factory("Records", function ($resource) {
+    return $resource("_list/authorize/stats", {"include_docs" : true}, {
+      getAll : {
+        method : "GET",
+        params : {
+          "limit" : 500,
+          "descending" : true
+        },
+        isArray : true
+      }
     });
   });
   
@@ -179,7 +196,7 @@
         $scope.updateUserModel();
       });
     };
-    
+
     $scope.updateUserModel = function updateUserModel () {
       $scope.user = User.get({ "id" : $scope.selected.id}, function () {
         $scope.dashboard = ($scope.user.roles.indexOf("dashboard") !== -1);
@@ -189,6 +206,144 @@
           })[0];
         })();
       });
+    };
+  });
+
+  imccp.controller("DashboardController", function ($scope, Records) {
+
+    // Get Records
+    $scope.records = Records.getAll( function () {
+      var dateFormat = d3.time.format("%m/%d/%Y");
+      var paddedExtent = function paddedExtent(array, accessor, padding) {
+        var extent = d3.extent(array, accessor);
+        extent[0] -= padding;
+        extent[1] += padding;
+        return extent;
+      };
+      $scope.records.forEach(function (r) { r.date = new Date(r.key); });
+      $scope.dmf = crossfilter($scope.records);
+      $scope.all = $scope.dmf.groupAll();
+      $scope.byClinic = $scope.dmf.dimension(function (d) {return d.value.clinic;});
+      $scope.visitsByClinic = $scope.byClinic.group().reduceCount();
+      $scope.byLag = $scope.dmf.dimension(function (d) {
+        return d.value.lag < 60 ? d.value.lag : 60;
+      });
+      $scope.visitsByLag = $scope.byLag.group().reduceCount();
+      $scope.byDate = $scope.dmf.dimension(function (d) { return d3.time.month(d.date); });
+      $scope.visitsByDate = $scope.byDate.group().reduceCount();
+      $scope.byInsurance = $scope.dmf.dimension(function (d) { return d.value.insurance_status; });
+      $scope.visitsByInsurance = $scope.byInsurance.group().reduceCount();
+
+      // Data Table View
+      $scope.dataTable = dc.dataTable("#overview-data-table", "overviewCharts")
+        .dimension($scope.byClinic)
+        .group(function (d) {return d.value.clinic;})
+        .size(100)
+        .columns([
+          function (d) {return d.doc.opername;},
+          function (d) {return d.value.clinic;},
+          function (d) {return dateFormat(d.date);},
+          function (d) {return d.value.lag;}
+        ]);
+
+      // Data Count View
+      $scope.dataCount = dc.dataCount("#overview-data-count", "overviewCharts")
+        .dimension($scope.dmf)
+        .group($scope.all);
+
+      // Clinic Counts View
+      $scope.clinicChart = dc.pieChart("#overview-clinic-chart", "overviewCharts")
+        .width(220).height(220)
+        .colors(d3.scale.category10().range())
+        .radius(100)
+        .innerRadius(30)
+        .minAngleForLabel(0.25)
+        .dimension($scope.byClinic)
+        .group($scope.visitsByClinic)
+        .turnOnControls().filterAll();
+
+      // Insurance Counts View
+      $scope.clinicChart = dc.pieChart("#overview-insurance-chart", "overviewCharts")
+        .width(220).height(220)
+        .colors(d3.scale.category10().range())
+        .radius(100)
+        .innerRadius(30)
+        .minAngleForLabel(0.25)
+        .dimension($scope.byInsurance)
+        .group($scope.visitsByInsurance)
+        .turnOnControls().filterAll();
+
+      // Lag Bar Chart
+      var lagx = d3.scale.linear().domain(d3.extent($scope.visitsByLag.all(), function (d) { return d.key; }));
+      $scope.lagChart = dc.barChart("#overview-lag-chart", "overviewCharts")
+        .width(440).height(220)
+        .dimension($scope.byLag)
+        .group($scope.visitsByLag)
+        .x(lagx)
+        .elasticX(true)
+        .xAxisPadding(5)
+        .elasticY(true)
+        .filterAll()
+        .renderlet( function (chart) {
+          var g = chart.g();
+          g.attr("transform", "translate(10)");
+        });
+      $scope.lagChartReset = function lagChartReset () {
+        $scope.lagChart.filterAll();
+        $scope.redraw();
+      };
+
+      // Visits by Date
+      var datex = d3.time.scale().domain(d3.extent($scope.visitsByDate.all(), function (d) { return d.key; }));
+      $scope.dateChart = dc.barChart("#overview-date-chart", "overviewCharts")
+        .width(920).height(220)
+        .dimension($scope.byDate)
+        .group($scope.visitsByDate)
+        .centerBar(true)
+        .x(datex)
+        .elasticX(true)
+        .xAxisPadding(35)
+        .xUnits(d3.time.months)
+        .elasticY(true)
+        .filterAll();
+      $scope.dateChartReset = function dateChartReset () {
+        $scope.dateChart.filterAll();
+        $scope.redraw();
+      };
+
+      $scope.redraw = function redraw () {
+        dc.redrawAll("overviewCharts");
+      };
+
+      dc.renderlet( function () {
+        d3.selectAll(".dc-table-row").on("click", function (d) {
+          $scope.$broadcast("UpdateModalRecord", d.doc);
+          $("#recordModal").modal('show');
+        });
+      });
+      
+      dc.renderAll("overviewCharts");
+
+    });
+  });
+
+  imccp.controller("recordModal", function ($scope) {
+    $scope.$on("UpdateModalRecord", function (event, record) {
+      $scope.$apply(function () {$scope.record = record;});
+    });
+  });
+
+  imccp.filter("clinicFilter", function () {
+    return function (data, clinicName) {
+      if (data && clinicName) {
+        var regex;
+        if (toType(clinicName) === "array") clinicName = clinicName.join("|");
+        regex = new RegExp("^"+clinicName, "i");
+        return data.filter(function (row) {
+          return row.doc.clinic.match(regex);
+        });
+      }
+      else return data;
     };
   });
 
