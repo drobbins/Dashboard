@@ -145,6 +145,7 @@
   });
 
   imccp.controller("UserController", function ($scope, User) {
+
     var response = User.list(function () {
       $scope.users = response.rows.map(function (row) {
         if (row.id !== "_design/_auth") {
@@ -157,6 +158,7 @@
     });
 
     $scope.clinics = ["", "Breast", "Gi", "Gyn Onc", "Head And Neck", "Lymp And Leuk", "Neuro Onc", "Thoracic", "Urology"];
+    
     $scope.updatePassword = function updatePassword () {
       var user = new User($scope.user);
       user.password = $scope.password;
@@ -164,6 +166,7 @@
         $scope.updateUserModel();
       });
     };
+
     $scope.updateRoles = function updateRoles () {
       var updatedRoles = [], user;
       if ($scope.dashboard) updatedRoles.push("dashboard");
@@ -176,6 +179,7 @@
         $scope.updateUserModel();
       });
     };
+    
     $scope.updateUserModel = function updateUserModel () {
       $scope.user = User.get({ "id" : $scope.selected.id}, function () {
         $scope.dashboard = ($scope.user.roles.indexOf("dashboard") !== -1);
