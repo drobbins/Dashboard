@@ -11,10 +11,11 @@
 
   imccp.config(function ($routeProvider) {
     $routeProvider.when("/", {templateUrl : "templates/main/home.html"}).
-      when("/patients", {templateUrl : "templates/main/patients.html"}).
+      when("/patients", {controller : "PatientController", templateUrl : "templates/main/patients.html"}).
+      when("/patients/:patientDocId", {controller : "PatientController", templateUrl : "templates/main/patients.html"}).
       when("/dashboard", {controller : "DashboardController", templateUrl : "templates/main/dashboard.html"}).
-      when("/admin", {controller : "AdminController", templateUrl : "templates/main/admin.html"}).
-      otherwise({redirectTo:"/"});
+      when("/admin", {controller : "AdminController", templateUrl : "templates/main/admin.html"});
+      //otherwise({redirectTo:"/"});
   });
 
   imccp.factory("Session", function ($http, $resource, $q) {
@@ -54,23 +55,78 @@
   });
 
   imccp.factory("User", function ($resource) {
-    return $resource('../../../_users/:id', {id:"@id"}, {
+    return $resource('../../../_users/:id', {"id":"@id"}, {
       "put" : { method : "PUT"},
-      "list" : { method : "GET", params : {id:"_all_docs"}}
+      "list" : { method : "GET", params : {"id":"_all_docs"}}
     });
   });
 
-  imccp.factory("Records", function ($resource) {
-    return $resource("_list/authorize/stats", {"include_docs" : true}, {
+  imccp.factory("Record", function ($resource) {
+    return $resource("_list/authorize/:view", {"include_docs" : true, "view" : "@view"}, {
       getAll : {
         method : "GET",
         params : {
+          "view" : "stats",
           "limit" : 500,
           "descending" : true
         },
         isArray : true
       }
     });
+  });
+
+  imccp.factory("Clinics", function ($http) {
+    var clinics = [];
+    $http.get("_view/autofill_clinic?group=true").then(function (response) {
+      angular.copy(response.data.rows.map(function (row) { return row.key; }), clinics);
+    });
+    return {
+      list : function () {
+        return clinics;
+      }
+    };
+  });
+
+  imccp.factory("Autofiller", function ($resource) {
+    //Based on http://jsfiddle.net/ZvXQD/
+  });
+
+  imccp.factory("Patient", function ($resource, Record, $filter) {
+    var patient, patientNames, patientMRNS, dateFields;
+
+    dateFields = ["tdysdate", "dtrefer", "medrecdt", "attmpdt", "actualdt", "offerdt", "accptdt", "surgdt", "mdoncdt", "radondt", "plsurdt", "bmtdt", "dentdt", "othdt", "dtltrfwd"];
+
+    patient = $resource("../../:id", {"id":"@id"}, {"put" : { method : "PUT"}});
+
+    patient.listByName = function listByName (name) {
+      return Record.query({
+        "startkey" : '"'+name+'"',
+        "endkey" : '"'+name+"\u9999"+'"',
+        "view" : "patient_names"
+      });
+    };
+
+    patient.listByMRN = function listByMRN (mrn) {
+      return Record.query({
+        "startkey" : '"'+mrn+'"',
+        "endkey" : '"'+mrn+"\u9999"+'"',
+        "view" : "medrecs"
+      });
+    };
+
+    patient.parseDates = function parseDates (patient) {
+      dateFields.forEach( function (field) {
+
+      });
+    };
+
+    patient.formatDates = function formatDates (patient) {
+      dateFields.forEach( function (field) {
+        patient[field] = $filter('date')(patient[field], "MM-dd-yyyy");
+      });
+    };
+
+    return patient;
   });
   
   imccp.directive("account", function (Session, User) {
@@ -161,7 +217,7 @@
   imccp.controller("AdminController", function ($scope) {
   });
 
-  imccp.controller("UserController", function ($scope, User) {
+  imccp.controller("UserController", function ($scope, User, Clinics) {
 
     var response = User.list(function () {
       $scope.users = response.rows.map(function (row) {
@@ -174,7 +230,7 @@
       });
     });
 
-    $scope.clinics = ["", "Breast", "Gi", "Gyn Onc", "Head And Neck", "Lymp And Leuk", "Neuro Onc", "Thoracic", "Urology"];
+    $scope.clinics = Clinics.list();
     
     $scope.updatePassword = function updatePassword () {
       var user = new User($scope.user);
@@ -209,10 +265,10 @@
     };
   });
 
-  imccp.controller("DashboardController", function ($scope, Records) {
+  imccp.controller("DashboardController", function ($scope, Record) {
 
-    // Get Records
-    $scope.records = Records.getAll( function () {
+    // Get Record
+    $scope.records = Record.getAll( function () {
       var dateFormat = d3.time.format("%m/%d/%Y");
       var paddedExtent = function paddedExtent(array, accessor, padding) {
         var extent = d3.extent(array, accessor);
@@ -344,6 +400,88 @@
         });
       }
       else return data;
+    };
+  });
+
+  imccp.controller("PatientController", function ($scope, Patient, $routeParams, $window, Clinics) {
+
+    $scope.editForm = "templates/forms/editPatientForm.html";
+    $scope.clinics = Clinics.list();
+
+    $scope.updatePatientList = function updatePatientList() {
+      if (!$scope.queryterm) return;
+      if ($scope.queryterm.match(/^[0-9]+$/)) {
+        $scope.patients = Patient.listByMRN($scope.queryterm);
+      }
+      else {
+        $scope.patients = Patient.listByName($scope.queryterm);
+      }
+    };
+
+    $scope.newPatient = function newPatient() {
+      $scope.patient = new Patient();
+    };
+
+    if ($routeParams.patientDocId) {
+      $scope.patient = Patient.get({"id":$routeParams.patientDocId}, function () {
+        Patient.formatDates($scope.patient);
+      });
+    }
+
+    $scope.savePatient = function savePatient() {
+      console.log(this);
+    };
+
+    $scope.scrollTop = function scrollTop() {
+      $window.scrollTo(0,0);
+    };
+
+  });
+
+  imccp.directive("datefield", function () {
+    return {
+      restrict : "A",
+      terminal : "true",
+      link : function ($scope, element, attributes, controller) {
+        $(element).datepicker({
+          format : "mm-dd-yyyy"
+        });
+      }
+    };
+  });
+
+  imccp.directive("entersaretabs", function () {
+    return {
+      restrict : "A",
+      link : function ($scope, element) {
+        //Use Enters as Tabs
+        $('input, select, textarea', element).bind('keydown', function(e) {
+          var self, form, focusable, next;
+
+          self = $(this);
+          form = self.parents('form:eq(0)');
+
+          if (e.keyCode == 13) {
+            focusable = form.find('input,a,select,button,textarea').filter(':visible');
+            next = focusable.eq(focusable.index(this)+1);
+            if (next.length) {
+                next.focus();
+            } else {
+                form.submit();
+            }
+            //return false;
+          }
+        });
+      }
+    };
+  });
+
+  imccp.directive("autofill", function (Autofiller) {
+    return {
+      restrict : "A",
+      link : function ($scope, element) {
+
+      }
     };
   });
 

@@ -1,1 +1,28 @@
-Patients Place!
+<div class="row-fluid">
+
+  <div class="span9">
+    <div ng-show="patient">
+
+      <h3 id="top">Data for {{patient.ptfstnm || "a new patient"}} {{patient.ptlstnm}}</h3>
+
+      <div ng-include="editForm"></div>
+
+    </div>
+  </div>
+
+  <div class="span3" ng-class="offset">
+    <h3>Patient Lookup</h3>
+    <div class="input-append">
+      <input ng-model="queryterm" type="text" ng-change="updatePatientList()">
+      <button class="btn btn-success" ng-click="newPatient()">New</button>
+    </div>
+    <table class="table table-hover">
+      <tbody>
+        <tr ng-repeat="patient in patients">
+          <td><a href="#patients/{{patient.id}}">{{patient.value.name}} ({{patient.value.medrec}})</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
