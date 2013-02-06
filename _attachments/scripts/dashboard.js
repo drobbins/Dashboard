@@ -496,7 +496,13 @@ IMCCP.dataOverview = (function () {
 IMCCP.updateUserRoles = function updateUserRoles (el) {
   var users_db = $.couch.db("_users"),
     user = $$(el).app.user,
-    roles = $("form.roles").serializeArray().map(function(role){return role.value;});
+    roles = [];
+  $("form select").serializeArray().forEach(function (role) {
+    return roles.push(role.value);
+  });
+  if ($("form input[name='dashboard']").attr("checked")) {
+    roles.push("dashboard");
+  }
   user.roles = roles;
   users_db.saveDoc(user, {success : function(){alert("User updated");}});
   return false;

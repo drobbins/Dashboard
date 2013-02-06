@@ -10,7 +10,10 @@ function(){
 		else if(roles.indexOf("_admin") !== -1){
 			$(navbar).trigger("admin");
 		}
-		else{
+		else if(roles.indexOf("dashboard") !== -1) {
+			$(navbar).trigger("dashboard");
+		}
+		else {
 			$(navbar).trigger("user");
 		}
 		$$(navbar).userCtx = user.userCtx;

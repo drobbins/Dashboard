@@ -1,7 +1,6 @@
 <form class="roles form-stacked">
   <fieldset>
     <legend>Clinics for {{#user}}{{name}}{{/user}}</legend>
-    <div class="clearfix">
     <label for="multiSelect">Clinics</label>
     <div class="input">
       <select class="medium" size="8" multiple="multiple" name="roles" id="roles">
@@ -10,7 +9,9 @@
         {{/clinics}}
       </select>
     </div>
-    </div>
+    <label class="checkbox">
+      <input type="checkbox" name="dashboard"> Dashboard Access?
+    </label>
   </fieldset>
   <div class="actions">
     <button id="updateUserRoles" type="submit" class="btn btn-primary">Save changes</button>&nbsp;<button type="reset" class="btn">Cancel</button>

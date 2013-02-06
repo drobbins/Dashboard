@@ -1,0 +1,3 @@
+function(){
+  IMCCP.navigationClick(this);
+}
