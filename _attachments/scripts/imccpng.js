@@ -429,7 +429,9 @@
     }
 
     $scope.savePatient = function savePatient() {
-      console.log(this);
+      $scope.patient.$save( function () {
+        alert("Patient Saved");
+      });
     };
 
     $scope.scrollTop = function scrollTop() {
