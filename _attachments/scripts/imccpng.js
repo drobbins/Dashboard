@@ -444,8 +444,8 @@
     return {
       restrict : "A",
       terminal : "true",
-      link : function ($scope, element, attributes, controller) {
-        $(element).datepicker({
+      link : function ($scope, $element, attributes, controller) {
+        $element.datepicker({
           format : "mm-dd-yyyy"
         });
       }
