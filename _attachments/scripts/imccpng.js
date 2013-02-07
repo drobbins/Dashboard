@@ -87,8 +87,17 @@
     };
   });
 
-  imccp.factory("Autofiller", function ($resource) {
-    //Based on http://jsfiddle.net/ZvXQD/
+  imccp.factory("Autofiller", function ($http, $resource) {
+    return {
+      getTerms : function getTerms (options) {
+        var term = options.term;
+        options.startkey = '"'+term+'"';
+        options.endkey = '"'+term+"\u9999"+'"';
+        options.group = true;
+        options.limit = 8;
+        return $http.get("_view/autofill_"+options.field, {"params" : options});
+      }
+    };
   });
 
   imccp.factory("Patient", function ($resource, Record, $filter) {
@@ -481,8 +490,21 @@
   imccp.directive("autofill", function (Autofiller) {
     return {
       restrict : "A",
-      link : function ($scope, element) {
-
+      link : function ($scope, $element, $attributes) {
+        var field = $attributes.ngModel.split(".")[1];
+        $element.typeahead({
+          source : function (query, process) {
+            Autofiller.getTerms({
+              "field" : field,
+              "term" : query
+            }).then(function (results) {
+              var rows = results && results.data && results.data.rows;
+              process(rows.map(function (row) {
+                return row.key;
+              }));
+            });
+          }
+        });
       }
     };
   });
