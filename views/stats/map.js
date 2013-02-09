@@ -1,7 +1,7 @@
 function (doc) {
   /*jshint couch:true*/
   "use strict";
-  if (doc.type === "data_management_form"){
+  if (doc.type === "data_management_form" && !doc.deleted){
     var lib, visitDate, value;
     lib = {
       extractVisitDate : function (dataManagementForm) {

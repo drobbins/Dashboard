@@ -100,7 +100,7 @@
     };
   });
 
-  imccp.factory("Patient", function ($resource, Record, $filter) {
+  imccp.factory("Patient", function ($resource, Record, $filter, $http) {
     var patient, patientNames, patientMRNS, dateFields;
 
     dateFields = ["tdysdate", "dtrefer", "medrecdt", "attmpdt", "actualdt", "offerdt", "accptdt", "surgdt", "mdoncdt", "radondt", "plsurdt", "bmtdt", "dentdt", "othdt", "dtltrfwd"];
@@ -120,6 +120,15 @@
         "startkey" : '"'+mrn+'"',
         "endkey" : '"'+mrn+"\u9999"+'"',
         "view" : "medrecs"
+      });
+    };
+
+    patient.listDeleted = function deleted () {
+      return $http.get("_view/deleted", {
+        "params" : {
+          "descending" : true,
+          "include_docs" : true
+        }
       });
     };
 
@@ -438,10 +447,21 @@
       });
     }
 
-    $scope.savePatient = function savePatient() {
+    $scope.savePatient = function savePatient(message) {
       $scope.patient.$save( function () {
-        alert("Patient Saved");
+        alert(message || "Patient Saved");
+        $scope.patient.$get();
       });
+    };
+
+    $scope.deletePatient = function deletePatient() {
+      $scope.patient.deleted = (new Date()).toISOString();
+      $scope.savePatient("Patient Record Deleted");
+    };
+
+    $scope.undeletePatient = function undeletePatient() {
+      $scope.patient.deleted = null;
+      $scope.savePatient("Patient Record Restored");
     };
 
     $scope.scrollTop = function scrollTop() {
@@ -521,6 +541,13 @@
         });
       }
     };
+  });
+
+  imccp.controller("DeletedPatientsController", function ($scope, Patient) {
+    $scope.deletedPatients = {};
+    Patient.listDeleted().then(function (response) {
+      $scope.deletedPatients = response.data;
+    });
   });
 
 })();

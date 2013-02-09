@@ -5,6 +5,10 @@
 
       <h3 id="top">Data for {{patient.ptfstnm || "a new patient"}} {{patient.ptlstnm}}</h3>
 
+      <div class="alert" ng-show="patient.deleted">
+        This patient record has been deleted. <a ng-click="undeletePatient()">Restore</a>
+      </div>
+
       <div ng-include="editForm"></div>
 
     </div>

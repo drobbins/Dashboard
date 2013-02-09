@@ -25,3 +25,24 @@
     </div>
   </div>
 </div>
+<hr>
+<div class="row-fluid" ng-controller="DeletedPatientsController">
+  <h4>Restore Deleted Patient Records</h4>
+  <p>Total Deleted Patient Records: {{deletedPatients.total_rows}}</p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Date Deleted</th>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="patient in deletedPatients.rows">
+        <td>{{patient.key | date:"MM-dd-yyyy"}}</td>
+        <td>{{patient.doc.ptfstnm}} {{patient.doc.ptlstnm}}</td>
+        <td><a href="#/patients/{{patient.id}}" class="btn btn-small">View</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
