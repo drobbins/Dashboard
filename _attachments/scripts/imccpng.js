@@ -111,7 +111,8 @@
       return Record.query({
         "startkey" : '"'+name+'"',
         "endkey" : '"'+name+"\u9999"+'"',
-        "view" : "patient_names"
+        "view" : "patient_names",
+        "limit" : 25
       });
     };
 
@@ -119,7 +120,8 @@
       return Record.query({
         "startkey" : '"'+mrn+'"',
         "endkey" : '"'+mrn+"\u9999"+'"',
-        "view" : "medrecs"
+        "view" : "medrecs",
+        "limit" : 25
       });
     };
 
