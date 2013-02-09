@@ -465,7 +465,6 @@
     return {
       restrict : "A",
       link : function ($scope, element) {
-        //Use Enters as Tabs
         $('input, select, textarea', element).bind('keydown', function(e) {
           var self, form, focusable, next;
 
@@ -480,7 +479,6 @@
             } else {
                 form.submit();
             }
-            //return false;
           }
         });
       }
