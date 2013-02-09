@@ -413,7 +413,6 @@
   });
 
   imccp.controller("PatientController", function ($scope, Patient, $routeParams, $window, Clinics) {
-
     $scope.editForm = "templates/forms/editPatientForm.html";
     $scope.clinics = Clinics.list();
 
@@ -448,7 +447,6 @@
     $scope.scrollTop = function scrollTop() {
       $window.scrollTo(0,0);
     };
-
   });
 
   imccp.directive("datefield", function () {
