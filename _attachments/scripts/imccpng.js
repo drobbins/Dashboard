@@ -452,10 +452,18 @@
   imccp.directive("datefield", function () {
     return {
       restrict : "A",
-      terminal : "true",
+      require : "?ngModel",
       link : function ($scope, $element, attributes, controller) {
         $element.datepicker({
           format : "mm-dd-yyyy"
+        }).on("changeDate", function (ev) {
+          var date = ev.date;
+          if (controller) {
+            $scope.$apply(function () {
+              controller.$setViewValue(date);
+            });
+          }
+          $element.datepicker('hide');
         });
       }
     };
@@ -488,7 +496,8 @@
   imccp.directive("autofill", function (Autofiller) {
     return {
       restrict : "A",
-      link : function ($scope, $element, $attributes) {
+      require : "?ngModel",
+      link : function ($scope, $element, $attributes, controller) {
         var field = $attributes.ngModel.split(".")[1];
         $element.typeahead({
           source : function (query, process) {
@@ -501,6 +510,13 @@
                 return row.key;
               }));
             });
+          },
+          updater : function (value) {
+            if (controller) {
+              $scope.$apply(function () {
+                controller.$setViewValue(value);
+              });
+            } return value;
           }
         });
       }
