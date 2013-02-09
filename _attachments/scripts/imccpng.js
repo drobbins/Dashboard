@@ -429,6 +429,8 @@
 
     $scope.newPatient = function newPatient() {
       $scope.patient = new Patient();
+      $scope.patient.type = "data_management_form";
+      $scope.patient.datadate = (new Date()).toISOString();
     };
 
     if ($routeParams.patientDocId) {
