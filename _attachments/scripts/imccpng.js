@@ -476,6 +476,7 @@
           form = self.parents('form:eq(0)');
 
           if (e.keyCode == 13) {
+            e.preventDefault();
             focusable = form.find('input,a,select,button,textarea').filter(':visible');
             next = focusable.eq(focusable.index(this)+1);
             if (next.length) {
