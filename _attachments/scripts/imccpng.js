@@ -7,6 +7,8 @@
     return ({}).toString.call(obj).match(/\s([a-z|A-Z]+)/)[1].toLowerCase();
   };
 
+  /* App Initialization */
+
   var imccp = angular.module("imccp", ["ngResource"]);
 
   imccp.config(function ($routeProvider) {
@@ -17,6 +19,8 @@
       when("/admin", {controller : "AdminController", templateUrl : "templates/main/admin.html"});
       //otherwise({redirectTo:"/"});
   });
+
+  /* Services */
 
   imccp.factory("Session", function ($http, $resource, $q) {
     var currentSession, sessionService, sessionURL = "../../../_session";
@@ -148,65 +152,22 @@
 
     return patient;
   });
-  
-  imccp.directive("account", function (Session, User) {
-    return {
-      restrict : "E",
-      replace : true,
-      scope : true,
-      transclude : false,
-      link : function ( $scope, element, attributes, controller) {
 
-        $scope.login = function login(name, password) {
-          Session.login(name || this.name, password || this.password)
-            .then(function (session) {
-              $scope.session = session;
-              $scope.$emit("updateNav");
-            });
-        };
-
-        $scope.logout = function logout() {
-          Session.logout().then(function () {
-            $scope.session = {};
-            $scope.$emit("updateNav");
-          });
-        };
-
-        $scope.signup = function signup() {
-          var user, username, password;
-          username = this.name;
-          password = this.password;
-          user = new User({
-            name : username,
-            password : password,
-            _id : "org.couchdb.user:"+username,
-            roles : [],
-            type : "user"
-          });
-          user.$put(function () {
-            $scope.login(username, password);
-          });
-        };
-
-        Session.getSession().then(function (session) {
-          $scope.session = session;
-          $scope.$emit("updateNav");
+  imccp.filter("clinicFilter", function () {
+    return function (data, clinicName) {
+      if (data && clinicName) {
+        var regex;
+        if (toType(clinicName) === "array") clinicName = clinicName.join("|");
+        regex = new RegExp("^"+clinicName, "i");
+        return data.filter(function (row) {
+          return row.doc.clinic.match(regex);
         });
-
-        $scope.$watch( function () { return $scope.session; }, function (session) {
-          var user = $scope.session && $scope.session.userCtx;
-          if (user && user.name !== null) {
-            $scope.template = "templates/account/loggedIn.html";
-          } else {
-            $scope.template = "templates/account/loggedOut.html";
-          }
-        });
-      },
-      template : [
-        "<div ng-include=\"template\"></div>"
-      ].join("")
+      }
+      else return data;
     };
   });
+
+  /* Controllers */
 
   imccp.controller("NavController", function ($scope, $rootScope, Session) {
     $scope.navbar = "";
@@ -409,18 +370,11 @@
     });
   });
 
-  imccp.filter("clinicFilter", function () {
-    return function (data, clinicName) {
-      if (data && clinicName) {
-        var regex;
-        if (toType(clinicName) === "array") clinicName = clinicName.join("|");
-        regex = new RegExp("^"+clinicName, "i");
-        return data.filter(function (row) {
-          return row.doc.clinic.match(regex);
-        });
-      }
-      else return data;
-    };
+  imccp.controller("DeletedPatientsController", function ($scope, Patient) {
+    $scope.deletedPatients = {};
+    Patient.listDeleted().then(function (response) {
+      $scope.deletedPatients = response.data;
+    });
   });
 
   imccp.controller("PatientController", function ($scope, Patient, $routeParams, $window, Clinics) {
@@ -471,6 +425,8 @@
     };
   });
 
+  /* Directives */
+  
   imccp.directive("datefield", function () {
     return {
       restrict : "A",
@@ -545,11 +501,63 @@
     };
   });
 
-  imccp.controller("DeletedPatientsController", function ($scope, Patient) {
-    $scope.deletedPatients = {};
-    Patient.listDeleted().then(function (response) {
-      $scope.deletedPatients = response.data;
-    });
+  imccp.directive("account", function (Session, User) {
+    return {
+      restrict : "E",
+      replace : true,
+      scope : true,
+      transclude : false,
+      link : function ( $scope, element, attributes, controller) {
+
+        $scope.login = function login(name, password) {
+          Session.login(name || this.name, password || this.password)
+            .then(function (session) {
+              $scope.session = session;
+              $scope.$emit("updateNav");
+            });
+        };
+
+        $scope.logout = function logout() {
+          Session.logout().then(function () {
+            $scope.session = {};
+            $scope.$emit("updateNav");
+          });
+        };
+
+        $scope.signup = function signup() {
+          var user, username, password;
+          username = this.name;
+          password = this.password;
+          user = new User({
+            name : username,
+            password : password,
+            _id : "org.couchdb.user:"+username,
+            roles : [],
+            type : "user"
+          });
+          user.$put(function () {
+            $scope.login(username, password);
+          });
+        };
+
+        Session.getSession().then(function (session) {
+          $scope.session = session;
+          $scope.$emit("updateNav");
+        });
+
+        $scope.$watch( function () { return $scope.session; }, function (session) {
+          var user = $scope.session && $scope.session.userCtx;
+          if (user && user.name !== null) {
+            $scope.template = "templates/account/loggedIn.html";
+          } else {
+            $scope.template = "templates/account/loggedOut.html";
+          }
+        });
+      },
+      template : [
+        "<div ng-include=\"template\"></div>"
+      ].join("")
+    };
   });
 
 })();
