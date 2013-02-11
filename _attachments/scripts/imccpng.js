@@ -560,4 +560,34 @@
     };
   });
 
+  imccp.directive("alerts", function () {
+    return {
+      "restrict" : "E",
+      replace : true,
+      transclude : false,
+      link : function ($scope, $element, attributes) {
+        var toaster;
+        toaster = function (type, message, duration) {
+          var alert;
+          duration = duration || 2000;
+          alert = $("<div></div>").addClass("alert").addClass("alert-"+type).hide();
+          alert.append(
+            $("<div></div>").addClass("container").text(message)
+          );
+          $element.append(alert);
+          alert.fadeIn("slow");
+          setTimeout(function () {
+            alert.fadeOut("slow", function () {
+              $(this).remove();
+            });
+          }, duration);
+        };
+        $scope.$on("alert", function (e, options) {
+          toaster(options.type, options.message, options.duration);
+        });
+      },
+      template : "<div class=\"alerts\"></div>"
+    };
+  });
+
 })();
