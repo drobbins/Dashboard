@@ -22,7 +22,9 @@
       <div class="control-group">
         <label for="">Clinic</label>
         <div class="controls">
-          <select ng-model="patient.clinic" ng-options="clinic for clinic in clinics"></select>
+          <select ng-model="patient.clinic" ng-options="clinic for clinic in clinics" ng-show="user.admin"></select>
+          <input type="hidden" ng-model="patient.clinic">
+          <input type="text" ng-model="patient.clinic" disabled ng-hide="user.admin">
         </div>
       </div>
     </div>
