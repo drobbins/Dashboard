@@ -230,7 +230,16 @@
       }));
       user = new User($scope.user);
       user.$put({id : user._id}, function () {
+        $scope.$emit("alert", {
+          "message" : "User Saved",
+          "type" : "success"
+        });
         $scope.updateUserModel();
+      }, function (response) {
+        $scope.$emit("alert", {
+          "message" : "Unable to save user:" + response.data.reason,
+          "type" : "error"
+        });
       });
     };
 
@@ -378,6 +387,12 @@
   });
 
   imccp.controller("PatientController", function ($scope, Patient, $routeParams, $window, Clinics) {
+    var errorHandler = function errorHandler(response) {
+      $scope.$emit("alert", {
+        "message" : response.data.reason,
+        "type" : "error"
+      });
+    };
     $scope.editForm = "templates/forms/editPatientForm.html";
     $scope.clinics = Clinics.list();
 
@@ -403,11 +418,14 @@
       });
     }
 
-    $scope.savePatient = function savePatient(message) {
+    $scope.savePatient = function savePatient(successMessage) {
       $scope.patient.$save( function () {
-        alert(message || "Patient Saved");
+        $scope.$emit("alert", {
+          "message" : successMessage || "Patient Record Saved",
+          "type" : "success"
+        });
         $scope.patient.$get();
-      });
+      }, errorHandler);
     };
 
     $scope.deletePatient = function deletePatient() {
@@ -509,12 +527,19 @@
       transclude : false,
       link : function ( $scope, element, attributes, controller) {
 
+        var errorHandler = function errorHandler(response) {
+          $scope.$emit("alert", {
+            "message" : response.data.reason,
+            "type" : "error"
+          });
+        };
+
         $scope.login = function login(name, password) {
           Session.login(name || this.name, password || this.password)
             .then(function (session) {
               $scope.session = session;
               $scope.$emit("updateNav");
-            });
+            }, errorHandler);
         };
 
         $scope.logout = function logout() {
@@ -537,7 +562,7 @@
           });
           user.$put(function () {
             $scope.login(username, password);
-          });
+          }, errorHandler);
         };
 
         Session.getSession().then(function (session) {
