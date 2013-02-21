@@ -17,7 +17,7 @@ if (!id || !password) {
 
 var emmiClient, options;
 options = {
-	"url" : "https://" + authString + "@test.horizon.hs.uab.edu/smemmi/EmmiRpcServlet",
+	"url" : "https://" + authString + "@horizon.hs.uab.edu/smemmi/EmmiRpcServlet",
 	"id" : id,
 	"password" : password,
 	"externalSystem" : "IMCCP"
