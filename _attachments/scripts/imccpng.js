@@ -7,6 +7,13 @@
     return ({}).toString.call(obj).match(/\s([a-z|A-Z]+)/)[1].toLowerCase();
   };
 
+  var arrayIntersection = function (a, b) {
+    return a.filter(function (el) {
+      if (b.indexOf(el) === -1) return false;
+      else return true;
+    });
+  };
+
   /* App Initialization */
 
   var imccp = angular.module("imccp", ["ngResource"]);
