@@ -24,6 +24,8 @@
 
   var imccp = angular.module("imccp", ["ngResource"]);
 
+  /* Configure the App */
+
   imccp.config(function ($routeProvider) {
     $routeProvider.when("/", {templateUrl : "templates/main/home.html"}).
       when("/patients", {controller : "PatientController", templateUrl : "templates/main/patients.html"}).
