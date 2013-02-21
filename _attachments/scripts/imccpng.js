@@ -237,28 +237,31 @@
     $scope.updateNav = function updateNav() {
       $scope.navbar = "";
       var user, roles, session;
-      session = Session.loggedIn();
-      if (session) {
-        user = session.userCtx;
-        roles = user && user.roles;
-        if (!roles) {
-          $scope.navbar = "";
-          return;
+      session = Session.getSession().then(function (session) {
+        if (session) {
+          user = session.userCtx;
+          roles = user && user.roles;
+          if (!roles) {
+            $scope.navbar = "";
+            return;
+          }
+          if (user.admin) {
+            $scope.navbar = "templates/navbars/admin.html";
+          } else if (user.dashboard) {
+            $scope.navbar = "templates/navbars/dashboard.html";
+          } else if (user.clinic) {
+            $scope.navbar = "templates/navbars/nurse.html";
+          }
         }
-        if (roles.indexOf("_admin") !== -1) {
-          $scope.navbar = "templates/navbars/admin.html";
-        } else if (roles.indexOf("nurse") !== -1) {
-          $scope.navbar = "templates/navbars/nurse.html";
-        } else if (roles.indexOf("dashboard") !== -1) {
-          $scope.navbar = "templates/navbars/dashboard.html";
-        }
-      }
+      });
     };
     $scope.$on("updateNav", $scope.updateNav);
     $rootScope.$on("updateNav", $scope.updateNav);
+    $rootScope.$on("logout", $scope.updateNav);
+    $rootScope.$on("login", $scope.updateNav);
   });
 
-  imccp.controller("AdminController", function ($scope) {
+  imccp.controller("AdminController", function ($scope, currentSession) {
   });
 
   imccp.controller("UserController", function ($scope, User, Clinics) {
@@ -318,7 +321,7 @@
     };
   });
 
-  imccp.controller("DashboardController", function ($scope, Record) {
+  imccp.controller("DashboardController", function ($scope, Record, currentSession) {
 
     // Get Record
     $scope.records = Record.getAll( function () {
@@ -449,15 +452,17 @@
     });
   });
 
-  imccp.controller("PatientController", function ($scope, Patient, $routeParams, $window, Clinics) {
+  imccp.controller("PatientController", function ($scope, $routeParams, $window, Clinics, Patient, Session, currentSession) {
     var errorHandler = function errorHandler(response) {
       $scope.$emit("alert", {
         "message" : response.data.reason,
         "type" : "error"
       });
     };
+
     $scope.editForm = "templates/forms/editPatientForm.html";
     $scope.clinics = Clinics.list();
+    $scope.user = currentSession.userCtx;
 
     $scope.updatePatientList = function updatePatientList() {
       if (!$scope.queryterm) return;
@@ -470,9 +475,15 @@
     };
 
     $scope.newPatient = function newPatient() {
-      $scope.patient = new Patient();
+      if ($scope.queryterm) {
+        $scope.patient = Patient.lookup($scope.queryterm);
+      } else {
+        $scope.patient = new Patient();
+      }
       $scope.patient.type = "data_management_form";
       $scope.patient.datadate = (new Date()).toISOString();
+      $scope.patient.opername = $scope.user.name;
+      $scope.patient.clinic = $scope.user.clinic;
     };
 
     if ($routeParams.patientDocId) {
@@ -602,14 +613,12 @@
           Session.login(name || this.name, password || this.password)
             .then(function (session) {
               $scope.session = session;
-              $scope.$emit("updateNav");
             }, errorHandler);
         };
 
         $scope.logout = function logout() {
           Session.logout().then(function () {
             $scope.session = {};
-            $scope.$emit("updateNav");
           });
         };
 
@@ -631,17 +640,20 @@
 
         Session.getSession().then(function (session) {
           $scope.session = session;
-          $scope.$emit("updateNav");
         });
 
-        $scope.$watch( function () { return $scope.session; }, function (session) {
-          var user = $scope.session && $scope.session.userCtx;
+        var updateUi = function (session) {
+          var user = session && session.userCtx;
           if (user && user.name !== null) {
             $scope.template = "templates/account/loggedIn.html";
           } else {
             $scope.template = "templates/account/loggedOut.html";
           }
-        });
+        };
+
+        $scope.$watch("session", updateUi);
+        $scope.$on("login", updateUi);
+        $scope.$on("logout", updateUi);
       },
       template : [
         "<div ng-include=\"template\"></div>"
