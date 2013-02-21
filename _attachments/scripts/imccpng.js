@@ -27,11 +27,38 @@
   /* Configure the App */
 
   imccp.config(function ($routeProvider) {
+    var sessionResolver = {
+      "currentSession" : ["Session", "$q", function (Session, $q) {
+        return Session.getSession().then(function (session) {
+          if (!session || !session.userCtx || !session.userCtx.name) {
+            return $q.reject("Must be logged in to do that.");
+          } else {
+            return session;
+          }
+        });
+      }]
+    };
     $routeProvider.when("/", {templateUrl : "templates/main/home.html"}).
-      when("/patients", {controller : "PatientController", templateUrl : "templates/main/patients.html"}).
-      when("/patients/:patientDocId", {controller : "PatientController", templateUrl : "templates/main/patients.html"}).
-      when("/dashboard", {controller : "DashboardController", templateUrl : "templates/main/dashboard.html"}).
-      when("/admin", {controller : "AdminController", templateUrl : "templates/main/admin.html"});
+      when("/patients", {
+        "controller" : "PatientController",
+        "templateUrl" : "templates/main/patients.html",
+        "resolve" : sessionResolver
+      }).
+      when("/patients/:patientDocId", {
+        "controller" : "PatientController",
+        "templateUrl" : "templates/main/patients.html",
+        "resolve" : sessionResolver
+      }).
+      when("/dashboard", {
+        "controller" : "DashboardController",
+        "templateUrl" : "templates/main/dashboard.html",
+        "resolve" : sessionResolver
+      }).
+      when("/admin", {
+        "controller" : "AdminController",
+        "templateUrl" : "templates/main/admin.html",
+        "resolve" : sessionResolver
+      });
       //otherwise({redirectTo:"/"});
   });
 
