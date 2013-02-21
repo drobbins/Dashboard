@@ -185,7 +185,22 @@
       });
     };
 
-    patient.parseDates = function parseDates (patient) {
+    Patient.lookup = function lookup (mrn) {
+      if (!mrn) return;
+      return $http.get("../../../patientLookup", {
+        "params" : {
+          "mrn" : mrn
+        }
+      }).then(function (response) {
+        return new Patient({
+          ptfstnm : response.data.firstname.toProperCase(),
+          ptlstnm : response.data.lastname.toProperCase(),
+          ptaddy : response.data.city.toProperCase() + ", " + response.data.state,
+          medrec : response.data.mrn
+        });
+      });
+    };
+
     Patient.parseDates = function parseDates (patient) {
       dateFields.forEach( function (field) {
 
