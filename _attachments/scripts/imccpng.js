@@ -37,37 +37,41 @@
 
   /* Services */
 
-  imccp.factory("Session", function ($http, $resource, $q) {
+  imccp.factory("Session", function ($http, $resource, $rootScope, $location, Clinics) {
     var currentSession, sessionService, sessionURL = "../../../_session";
     sessionService = {
       login : function login (username, password, callback) {
         return $http.post(sessionURL, {name:username, password:password})
-          .then(function () {
-            return $http.get(sessionURL);
-          })
-          .then(function (response) {
-            currentSession = response.data;
-            return response.data;
-          });
+          .then(sessionService.getSession);
       },
       logout : function logout () {
         currentSession = null;
+        $rootScope.$broadcast("logout");
         return $http({method : "DELETE", url : sessionURL});
       },
-      loggedIn : function () {
-        if (currentSession) {
-          return currentSession;
-        } else {
-          return false;
-        }
-      },
       getSession : function getSession() {
-        return $http.get(sessionURL).then(function (response) {
-          if (response.data.userCtx.name) {
-            currentSession = response.data;
-            return response.data;
-          }
-        });
+        return $http.get(sessionURL)
+          .then(function (response) {
+            if (response.data.userCtx.name) {
+              var session, userClinics;
+              if (!currentSession) $rootScope.$broadcast("login");
+              currentSession = session = response.data;
+              userClinics = arrayIntersection(session.userCtx.roles, Clinics.list());
+              if (session.userCtx.roles.indexOf("_admin") !== -1) {
+                session.userCtx.admin = true;
+              }
+              if (session.userCtx.roles.indexOf("dashboard") !== -1) {
+                session.userCtx.dashboard = true;
+              }
+              if (userClinics.length > 0) {
+                session.userCtx.clinic = userClinics[0];
+              }
+              return session;
+            } else if (currentSession) {
+              currentSession = null;
+              $rootScope.$broadcast("logout");
+            }
+          });
       }
     };
     return sessionService;
