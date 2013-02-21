@@ -620,7 +620,7 @@
           user = new User({
             name : username,
             password : password,
-            _id : "org.couchdb.user:"+username,
+            id : "org.couchdb.user:"+username,
             roles : [],
             type : "user"
           });
