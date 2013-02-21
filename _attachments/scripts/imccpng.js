@@ -152,13 +152,13 @@
   });
 
   imccp.factory("Patient", function ($resource, Record, $filter, $http) {
-    var patient, patientNames, patientMRNS, dateFields;
+    var Patient, patientNames, patientMRNS, dateFields;
 
     dateFields = ["tdysdate", "dtrefer", "medrecdt", "attmpdt", "actualdt", "offerdt", "accptdt", "surgdt", "mdoncdt", "radondt", "plsurdt", "bmtdt", "dentdt", "othdt", "dtltrfwd"];
 
-    patient = $resource("../../:id", {"id":"@id"}, {"put" : { method : "PUT"}});
+    Patient = $resource("../../:id", {"id":"@id"}, {"put" : { method : "PUT"}});
 
-    patient.listByName = function listByName (name) {
+    Patient.listByName = function listByName (name) {
       return Record.query({
         "startkey" : '"'+name+'"',
         "endkey" : '"'+name+"\u9999"+'"',
@@ -167,7 +167,7 @@
       });
     };
 
-    patient.listByMRN = function listByMRN (mrn) {
+    Patient.listByMRN = function listByMRN (mrn) {
       return Record.query({
         "startkey" : '"'+mrn+'"',
         "endkey" : '"'+mrn+"\u9999"+'"',
@@ -176,7 +176,7 @@
       });
     };
 
-    patient.listDeleted = function deleted () {
+    Patient.listDeleted = function deleted () {
       return $http.get("_view/deleted", {
         "params" : {
           "descending" : true,
@@ -186,18 +186,19 @@
     };
 
     patient.parseDates = function parseDates (patient) {
+    Patient.parseDates = function parseDates (patient) {
       dateFields.forEach( function (field) {
 
       });
     };
 
-    patient.formatDates = function formatDates (patient) {
+    Patient.formatDates = function formatDates (patient) {
       dateFields.forEach( function (field) {
         patient[field] = $filter('date')(patient[field], "MM-dd-yyyy");
       });
     };
 
-    return patient;
+    return Patient;
   });
 
   imccp.filter("clinicFilter", function () {
