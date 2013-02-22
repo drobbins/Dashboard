@@ -33,9 +33,8 @@ body {
 }
 
 .pie-slice {
-  fill : white;
+  fill : black;
   font-size : 12px;
-  font-weight : lighter;
 }
 
 .selected path {
