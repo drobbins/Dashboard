@@ -117,7 +117,7 @@
         method : "GET",
         params : {
           "view" : "stats",
-          "limit" : 500,
+          "limit" : 1500,
           "descending" : true
         },
         isArray : true
