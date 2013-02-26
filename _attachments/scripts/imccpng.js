@@ -434,7 +434,7 @@
 
       dc.renderlet( function () {
         d3.selectAll(".dc-table-row").on("click", function (d) {
-          $scope.$broadcast("UpdateModalRecord", d.doc);
+          $scope.$broadcast("UpdateModalRecord", d);
           $("#recordModal").modal('show');
         });
       });
