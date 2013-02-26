@@ -475,7 +475,6 @@
       });
     };
 
-    $scope.editForm = "templates/forms/editPatientForm.html";
     $scope.clinics = Clinics.list();
     $scope.user = currentSession.userCtx;
 
