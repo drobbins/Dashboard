@@ -5,8 +5,7 @@ function (doc) {
     var lib, visitDate, value;
     lib = {
       extractVisitDate : function (dataManagementForm) {
-        var visitDate = dataManagementForm.tdysdate ||
-          dataManagementForm.accptdt ||
+        var visitDate = dataManagementForm.accptdt ||
           dataManagementForm.offerdt ||
           dataManagementForm.surgdt ||
           dataManagementForm.mdoncdt ||
@@ -15,7 +14,8 @@ function (doc) {
           dataManagementForm.bmtdt ||
           dataManagementForm.dentdt ||
           dataManagementForm.othdt ||
-          dataManagementForm.actualdt ||
+          dataManagementForm.offerdt ||
+          dataManagementForm.tdysdate ||
           dataManagementForm.datadate;
         return new Date(visitDate);
       },
@@ -64,10 +64,11 @@ function (doc) {
       }
 
       //Lag between contact and appointment dates
-      var contactDate = new Date(doc.actualdt),
-          lag = lib.daysBetweenDates(contactDate,visitDate);
-      lag = lag > 0 ? lag : 0;
-      value.lag = lag;
+      if (doc.dtrefer !== null && doc.offerdt !== null) {
+        var referal_to_appointment = lib.daysBetweenDates(new Date(doc.dtrefer), new Date(doc.offerdt));
+        referal_to_appointment = referal_to_appointment > 0 ? referal_to_appointment : null;
+        value.referal_to_appointment = referal_to_appointment;
+      }
 
       //Patient Insurance Status
       if(!doc.previns && !doc.appins){

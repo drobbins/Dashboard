@@ -337,10 +337,10 @@
       $scope.all = $scope.dmf.groupAll();
       $scope.byClinic = $scope.dmf.dimension(function (d) {return d.value.clinic;});
       $scope.visitsByClinic = $scope.byClinic.group().reduceCount();
-      $scope.byLag = $scope.dmf.dimension(function (d) {
-        return d.value.lag < 60 ? d.value.lag : 60;
+      $scope.byreferalToAppointment = $scope.dmf.dimension(function (d) {
+        return d.value.referal_to_appointment < 60 ? d.value.referal_to_appointment : 60;
       });
-      $scope.visitsByLag = $scope.byLag.group().reduceCount();
+      $scope.visitsByreferalToAppointment = $scope.byreferalToAppointment.group().reduceCount();
       $scope.byDate = $scope.dmf.dimension(function (d) { return d3.time.month(d.date); });
       $scope.visitsByDate = $scope.byDate.group().reduceCount();
       $scope.byInsurance = $scope.dmf.dimension(function (d) { return d.value.insurance_status; });
@@ -355,7 +355,7 @@
           function (d) {return d.doc.opername;},
           function (d) {return d.value.clinic;},
           function (d) {return dateFormat(d.date);},
-          function (d) {return d.value.lag;}
+          function (d) {return d.value.referal_to_appointment;},
         ]);
 
       // Data Count View
@@ -386,11 +386,11 @@
         .turnOnControls().filterAll();
 
       // Lag Bar Chart
-      var lagx = d3.scale.linear().domain(d3.extent($scope.visitsByLag.all(), function (d) { return d.key; }));
-      $scope.lagChart = dc.barChart("#overview-lag-chart", "overviewCharts")
+      var lagx = d3.scale.linear().domain(d3.extent($scope.visitsByreferalToAppointment.all(), function (d) { return d.key; }));
+      $scope.referalToAppointmentChart = dc.barChart("#overview-lag-chart", "overviewCharts")
         .width(440).height(220)
-        .dimension($scope.byLag)
-        .group($scope.visitsByLag)
+        .dimension($scope.byreferalToAppointment)
+        .group($scope.visitsByreferalToAppointment)
         .x(lagx)
         .elasticX(true)
         .xAxisPadding(5)
@@ -401,7 +401,7 @@
           g.attr("transform", "translate(10)");
         });
       $scope.lagChartReset = function lagChartReset () {
-        $scope.lagChart.filterAll();
+        $scope.referalToAppointmentChart.filterAll();
         $scope.redraw();
       };
 
