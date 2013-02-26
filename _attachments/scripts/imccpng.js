@@ -380,7 +380,7 @@
         .turnOnControls().filterAll();
 
       // Insurance Counts View
-      $scope.clinicChart = dc.pieChart("#overview-insurance-chart", "overviewCharts")
+      $scope.insuranceChart = dc.pieChart("#overview-insurance-chart", "overviewCharts")
         .width(220).height(220)
         .colors(d3.scale.category10().range())
         .radius(100)
