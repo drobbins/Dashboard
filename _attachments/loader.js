@@ -45,6 +45,7 @@ app_load([
   "scripts/underscore.js",
   "scripts/dashboard.js",
   "scripts/d3.v2.min.js",
+  "scripts/topojson.js",
   "scripts/crossfilter.min.js",
   "scripts/dc.min.js",
   "scripts/bootstrap.js",
