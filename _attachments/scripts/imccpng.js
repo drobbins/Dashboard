@@ -345,6 +345,8 @@
       $scope.visitsByDate = $scope.byDate.group().reduceCount();
       $scope.byInsurance = $scope.dmf.dimension(function (d) { return d.value.insurance_status; });
       $scope.visitsByInsurance = $scope.byInsurance.group().reduceCount();
+      $scope.byTrials = $scope.dmf.dimension(function (d) { return d.value.clinical_trial_enrollments; });
+      $scope.visitsByTrials = $scope.byTrials.group().reduceCount();
 
       // Data Table View
       $scope.dataTable = dc.dataTable("#overview-data-table", "overviewCharts")
@@ -356,6 +358,7 @@
           function (d) {return d.value.clinic;},
           function (d) {return dateFormat(d.date);},
           function (d) {return d.value.referal_to_appointment;},
+          function (d) {return d.value.clinical_trial_enrollments;}
         ]);
 
       // Data Count View
@@ -435,6 +438,18 @@
       });
       
       dc.renderAll("overviewCharts");
+
+      $scope.trialFiltered = false;
+      $scope.filterByTrials = function filterByTrials() {
+        if ($scope.trialFiltered) {
+          $scope.trialFiltered = false;
+          $scope.byTrials.filterAll();
+        } else {
+          $scope.trialFiltered = true;
+          $scope.byTrials.filter(1);
+        }
+        $scope.redraw();
+      };
 
     });
   });

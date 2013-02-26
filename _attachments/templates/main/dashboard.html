@@ -17,7 +17,8 @@
   <strong>Visits by Date</strong> <span class="reset">[<a ng-click="dateChartReset()">Reset</a>]</span>
 </div>
 <div id="overview-data-count" class="pull-right">
-    <span class="filter-count"></span> selected out of <span class="total-count"></span> records
+  <button class="btn btn-mini" ng-class="{'btn-success' : trialFiltered}" ng-click="filterByTrials()">Clinical Trials</button> 
+  <span class="filter-count"></span> selected out of <span class="total-count"></span> records
 </div>
 <table class="table" id="overview-data-table">
     <thead class="header">
@@ -26,6 +27,7 @@
         <th>Clinic</th>
         <th>Date</th>
         <th>Lag</th>
+        <th>Clinical Trial Enrollments</th>
       </tr>
     </thead>
 </table>
