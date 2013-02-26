@@ -345,6 +345,8 @@
       $scope.visitsByDate = $scope.byDate.group().reduceCount();
       $scope.byInsurance = $scope.dmf.dimension(function (d) { return d.value.insurance_status; });
       $scope.visitsByInsurance = $scope.byInsurance.group().reduceCount();
+      $scope.byCounty = $scope.dmf.dimension(function (d) { return d.value.county; });
+      $scope.visitsByCounty = $scope.byCounty.group().reduceCount();
       $scope.byTrials = $scope.dmf.dimension(function (d) { return d.value.clinical_trial_enrollments; });
       $scope.visitsByTrials = $scope.byTrials.group().reduceCount();
 
