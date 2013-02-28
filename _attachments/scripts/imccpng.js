@@ -359,7 +359,10 @@
           function (d) {return d.value.clinic;},
           function (d) {return dateFormat(d.date);},
           function (d) {return d.value.referal_to_appointment;},
-          function (d) {return d.value.clinical_trial_enrollments;}
+          function (d) {return d.value.clinical_trial_enrollments;},
+          function (d) {
+            return "<a target=\"_blank\" href=\"#/patients/"+d.id+"\" class=\"btn btn-mini\">View</a>";
+          }
         ]);
 
       // Data Count View
