@@ -853,8 +853,13 @@ function (doc) {
       }
 
       //Lag between contact and appointment dates
-      if (doc.dtrefer !== null && doc.offerdt !== null) {
-        var referal_to_appointment = lib.daysBetweenDates(new Date(doc.dtrefer), new Date(doc.offerdt));
+      if (doc.dtrefer !== null) {
+        var referal_to_appointment;
+        if (doc.offerdt !== null) {
+          referal_to_appointment = lib.daysBetweenDates(new Date(doc.dtrefer), new Date(doc.offerdt));
+        } else {
+          referal_to_appointment = lib.daysBetweenDates(new Date(doc.dtrefer), visitDate);
+        }
         referal_to_appointment = referal_to_appointment > 0 ? referal_to_appointment : null;
         value.referal_to_appointment = referal_to_appointment;
       }
