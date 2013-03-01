@@ -1,6 +1,19 @@
 function (head, req) {
     /*jshint couch:true*/
-    var labels, now, row, sendWithTab;
+    var labels, now, row, sendWithTab, user;
+
+    user = req.userCtx;
+
+    if (!req.userCtx.name && !(user.roles.indexOf("_admin") >= 0 || user.roles.indexOf("dashboard") >= 0)) {
+      start({
+        "code" : 401
+      });
+      send(JSON.stringify({
+          "error" : "unauthorized",
+          "reason" : "You are not authorized to perform that action."
+      }));
+      return;
+    }
 
     now = (new Date()).toLocaleFormat("%m-%d-%Y");
 

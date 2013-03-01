@@ -1,24 +1,26 @@
 {
-  "name" : "DashboardPatientLookup",
-  "version" : "0.0.1",
-  "description" : "Proxy and Patient lookup for the IMCCP Dashboard.",
-  "author" : {
-    "name" : "David Robbins",
-    "email" : "robbins.david@gmail.com"
+  "name": "DashboardPatientLookup",
+  "version": "0.0.1",
+  "description": "Proxy and Patient lookup for the IMCCP Dashboard.",
+  "author": {
+    "name": "David Robbins",
+    "email": "robbins.david@gmail.com"
   },
-  "engines" : {
-    "node" : " >= 0.6.0 < 0.8.4",
-    "npm" : " >= 1.0.4 < 1.1.5"
+  "engines": {
+    "node": " >= 0.6.0 < 0.8.4",
+    "npm": " >= 1.0.4 < 1.1.5"
   },
-  "dependencies" : {
-    "request" : "2.9.x",
-    "http-proxy" : "0.8.x"
+  "dependencies": {
+    "request": "2.9.x",
+    "http-proxy": "0.8.x",
+    "nano": "~3.3.7",
+    "underscore": "~1.4.4"
   },
   "devDependencies": {
-      "mocha": "1.0.x",
-      "expect.js": "0.1.x"
+    "mocha": "1.0.x",
+    "expect.js": "0.1.x"
   },
   "scripts": {
-      "test": "./node_modules/.bin/mocha"
+    "test": "./node_modules/.bin/mocha"
   }
 }
