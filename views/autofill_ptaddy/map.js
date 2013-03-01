@@ -1,1 +1,1 @@
-function(doc){if(doc.type === 'data_management_form' && doc.ptaddy){emit(doc.ptaddy, null);}}
+function(doc){if(doc.type === 'data_management_form' && !doc.deleted && doc.ptaddy){emit(doc.ptaddy, null);}}

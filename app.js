@@ -16,12 +16,12 @@ requirejs(['couchapp', 'path', 'fs'], function(couchapp, path, fs){
     }
 
     if(!userCtx.name){
-      throw({forbidden : "You must be logged in to enter patient records"});
+      throw({forbidden : "You must be logged in to complete that action."});
     }
     if(newDoc.type === "data_management_form"){
 
       if(newDoc.opername !== userCtx.name && userCtx.roles.indexOf("_admin") === -1){
-        throw({forbidden : "opername required to match your username"});
+        throw({forbidden : "You may only edit records you entered."});
       }
 
       required("medrec", "Medical Record Number required");

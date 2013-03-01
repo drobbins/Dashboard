@@ -24,6 +24,7 @@
           <label>Clinic</label>
           <div class="controls">
             {{^_admin}}
+            <input type="hidden" name="clinic" value="{{clinic}}">
             <input type="text" value="{{clinic}}" disabled>
             {{/_admin}}
             {{^_clinic}}
@@ -235,7 +236,13 @@
             </label>
           </div>
         </div>
-
+        <div class="control-group">
+          <label>Type of insurance applied for</label>
+          <div class="controls">
+            <input type="text" class="text autofill" name="typeinsapp" value=
+            "{{typeinsapp}}">
+          </div>
+        </div>
         <div class="control-group">
           <label>How did the patient hear about the Multidisciplinary Clinic at
           UAB?</label>

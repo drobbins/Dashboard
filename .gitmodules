@@ -1,6 +1,0 @@
-[submodule "vendor/crumbs"]
-	path = vendor/crumbs
-	url = https://github.com/drobbins/Crumbs.git
-[submodule "proxy"]
-	path = proxy
-	url = https://drobbins@github.com/drobbins/couchappproxy.git

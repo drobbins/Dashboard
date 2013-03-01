@@ -1,0 +1,72 @@
+<div class="pull-right head-align">
+  <a href="_list/exportAll/datadates?include_docs=true">Download All Records</a>
+</div>
+<h1>Data Overview</h1>
+<div class="row-fluid">
+  <div id="overview-clinic-chart" class="span3">
+    <strong>Visits by Clinic</strong> <span class="reset" style="display: none;">: <span class="filter"></span></span>
+  </div>
+  <div id="overview-insurance-chart" class="span3">
+    <strong>Visits by Insurance</strong> <span class="reset" style="display: none;">: <span class="filter"></span></span>
+  </div>
+  <div id="overview-lag-chart" class="span6">
+    <strong>Days between Referall and Offered Appointment Date</strong> <span class="reset">[<a ng-click="lagChartReset()">Reset</a>]</span>
+  </div>
+</div>
+<div id="overview-date-chart">
+  <strong>Visits by Date of Appointment</strong> <span class="reset">[<a ng-click="dateChartReset()">Reset</a>]</span>
+</div>
+<div id="overview-data-count" class="pull-right">
+  <button class="btn btn-mini" ng-class="{'btn-success' : trialFiltered}" ng-click="filterByTrials()">Clinical Trials</button> 
+  <span class="filter-count"></span> selected out of <span class="total-count"></span> records
+</div>
+<table class="table" id="overview-data-table">
+    <thead class="header">
+      <tr>
+        <th>Operator</th>
+        <th>Clinic</th>
+        <th>Date</th>
+        <th>Lag</th>
+        <th>Clinical Trial Enrollments</th>
+      </tr>
+    </thead>
+</table>
+
+<div id="recordModal" class="modal hide fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="recordModal">
+
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <div class="pull-right head-align">
+      <p>Entered {{record.doc.datadate.slice(0,10)}} by {{record.doc.opername}}</p>
+    </div>
+    <h3 id="myModalLabel">{{record.doc.ptfstnm}} {{record.doc.ptlstnm}} ({{record.doc.clinic}})</h3>
+  </div>
+
+  <div class="modal-body">
+    <h4>Parsed Values</h4>
+    <table class="table table-condensed">
+      <thead><tr><th>Key</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr ng-repeat="(key, value) in record.value">
+          <td><strong>{{key}}</strong></td>
+          <td>{{value}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <h4>Raw Data</h4>
+    <table class="table table-condensed">
+      <thead><tr><th>Key</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr ng-repeat="(key, value) in record.doc">
+          <td><strong>{{key}}</strong></td>
+          <td>{{value}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="modal-footer">
+    <a href="#/patients/{{record.doc._id}}" data-dismiss="modal" class="btn">View Patient</a>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>

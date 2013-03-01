@@ -1,1 +1,1 @@
-function(doc){if(doc.type === 'data_management_form' && doc.plsurloc){emit(doc.plsurloc, null);}}
+function(doc){if(doc.type === 'data_management_form' && !doc.deleted && doc.plsurloc){emit(doc.plsurloc, null);}}
