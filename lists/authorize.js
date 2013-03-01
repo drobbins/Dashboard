@@ -20,7 +20,7 @@ function (head, req){
       });
       send(JSON.stringify({
           "error" : "unauthorized",
-          "reason" : "You are not authorized to view that document."
+          "reason" : "You are not authorized to perform that action."
       }));
     } else {
       while ((row = getRow()) !== null){
