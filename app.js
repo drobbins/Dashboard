@@ -27,6 +27,7 @@ requirejs(['couchapp', 'path', 'fs'], function(couchapp, path, fs){
       required("medrec", "Medical Record Number required");
       required("ptfstnm", "Patient First Name Required");
       required("ptlstnm", "Patient Last Name Required");
+      required("dtrefer", "Patient Last Name Required");
     }
   };
 
