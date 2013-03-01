@@ -1,4 +1,4 @@
-function(head, req){
+function (head, req){
   var rows = [],
       row,
       user = req.userCtx,
@@ -14,11 +14,21 @@ function(head, req){
       };
 
   provides('json', function(){
-    while(row = getRow()){
-      if(has_permission(row)){
-        rows.push(row);
+    if (!req.userCtx.name) {
+      start({
+        "code" : 401
+      });
+      send(JSON.stringify({
+          "error" : "unauthorized",
+          "reason" : "You are not authorized to view that document."
+      }));
+    } else {
+      while ((row = getRow()) !== null){
+        if(has_permission(row)){
+          rows.push(row);
+        }
       }
+      send(JSON.stringify(rows));
     }
-    send(JSON.stringify(rows));
   });
 }
