@@ -553,7 +553,7 @@
         <button class="btn btn-primary" type="submit" ng-disabled="isClean() || patientForm.$invalid">Submit</button>
         <button class="btn" type="submit" ng-disabled="isClean() || patientForm.$invalid">Save</button>
         <button class="btn" type="button" ng-click="scrollTop()">Top</button>
-        <button class="btn btn-danger" type="button" ng-click="deletePatient()">Delete</button>
+        <button class="btn btn-danger" type="button" ng-click="deletePatient()" ng-show="user.admin">Delete</button>
       </form>
 
     </div>
