@@ -39,7 +39,6 @@ httpProxy.createServer( function (req, res, proxy) {
 	var url = req.url;
 
 	function sendToCouch() {
-		console.log("Proxied to CouchDB:"+req.url);
 		proxy.proxyRequest(req, res, {
 			host : 'localhost',
 			port : 5984
