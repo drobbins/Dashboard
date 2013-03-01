@@ -1,4 +1,4 @@
-function(head, req){
+function (head, req){
   var rows = [],
       row,
       user = req.userCtx,
@@ -10,14 +10,24 @@ function(head, req){
       };
 
   provides('json', function(){
+    if (!req.userCtx.name) {
+      start({
+        "code" : 401
+      });
+      send(JSON.stringify({
+          "error" : "unauthorized",
+          "reason" : "You are not authorized to perform that action."
+      }));
+    } else {
     var response = {};
-    while(row = getRow()){
-      if(has_permission(row)){
-        rows.push(row);
+      while((row = getRow()) !== null){
+        if(has_permission(row)){
+          rows.push(row);
+        }
       }
+      response.total_rows = rows.length;
+      response.rows = rows;
+      send(JSON.stringify(response));
     }
-    response.total_rows = rows.length;
-    response.rows = rows;
-    send(JSON.stringify(response));
   });
 }
