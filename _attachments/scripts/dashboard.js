@@ -23,6 +23,18 @@ var toType = function(obj) {
         return ({}).toString.call(obj).match(/\s([a-z|A-Z]+)/)[1].toLowerCase();
 };
 
+var parseISODates = function (format) {
+  var formatter = d3.time.format(format);
+  $(".datepicker").each(function(i){
+    var date, value;
+    value = $(this).val();
+    if (value.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}/)) {
+      date = new Date(value);
+      $(this).val(formatter(date));
+    }
+  });
+};
+
 var IMCCP = {};
 
 IMCCP.populateFields = function populateFields () {
@@ -79,10 +91,10 @@ IMCCP.populateFields = function populateFields () {
 
   // Enable Date Pickers and Format Values
   $(".datepicker").each(function(i){
-    var date;
-    date = $(this).val().match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}/) ? $.datepicker.parseDate("yy-mm-dd", $(this).val().split("T")[0]) : $(this).val();
-    $(this).datepicker({dateFormat:'mm-dd-yy'});
-    $(this).datepicker("setDate", date);
+    parseISODates("%m-%d-%Y");
+    $(this).datepicker({
+      format : "mm-dd-yyyy"
+    });
   });
 
   // Enable Autofill Fields
@@ -224,6 +236,7 @@ IMCCP.navigationClick = function navigationClick (el) {
 
 IMCCP.submitPatient = function submitPatient (el) {
   var db = $$(el).app.db;
+  var date = d3.time.format("%m-%d-%Y");
   $.couch.session({success : function(session){
     var username = session.userCtx.name,
         form, fs, fo, field;
@@ -235,7 +248,7 @@ IMCCP.submitPatient = function submitPatient (el) {
 
     $(".datepicker").each(function(i){
       var value;
-      value = $(this).val().match(/^[0-9]{2}-[0-9]{2}-[0-9]{4}/) ? $(this).datepicker('getDate').toISOString() : $(this).val();
+      value = $(this).val().match(/^[0-9]{2}-[0-9]{2}-[0-9]{4}/) ? date.parse($(this).val()).toISOString() : $(this).val();
       $(this).val(value);
     });
 
@@ -254,6 +267,7 @@ IMCCP.submitPatient = function submitPatient (el) {
       success : function (doc) {
         alert("Patient Saved");
         $(el).trigger('edit_patient', "#"+doc.id);
+        parseISODates("%m-%d-%Y");
       },
       error : function (code, type, message) {
         var $el, field;
@@ -261,6 +275,7 @@ IMCCP.submitPatient = function submitPatient (el) {
         $el = $("input[name='"+field+"']");
         $el.parents(".control-group").addClass("error");
         $el.parents(".controls").append($("<span>").addClass("help-block").text(message));
+        parseISODates("%m-%d-%Y");
       }
     });
 
