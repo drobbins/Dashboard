@@ -1,7 +1,7 @@
 (function () {
   'use strict';
-  /*jshint browser:true devel:true jquery:true*/
-  /*globals google:false d3:false angular:false crossfilter:false dc:false*/
+  /* jshint browser:true, devel:true, jquery:true*/
+  /* globals google:false, d3:false, angular:false, crossfilter:false, dc:false*/
 
   var toType = function(obj) {
     return ({}).toString.call(obj).match(/\s([a-z|A-Z]+)/)[1].toLowerCase();
