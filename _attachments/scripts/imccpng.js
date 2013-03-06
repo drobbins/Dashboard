@@ -1,7 +1,7 @@
 (function () {
   'use strict';
-  /* jshint browser:true, devel:true, jquery:true*/
-  /* globals google:false, d3:false, angular:false, crossfilter:false, dc:false*/
+  /*jshint browser:true, devel:true, jquery:true*/
+  /*globals google:false, d3:false, angular:false, crossfilter:false, dc:false*/
 
   var toType = function(obj) {
     return ({}).toString.call(obj).match(/\s([a-z|A-Z]+)/)[1].toLowerCase();
@@ -494,7 +494,10 @@
 
     $scope.newPatient = function newPatient() {
       if ($scope.queryterm) {
-        $scope.patient = Patient.lookup($scope.queryterm);
+        $scope.patient = {};
+        Patient.lookup($scope.queryterm).then(function (pt) {
+          angular.extend($scope.patient, pt);
+        });
       } else {
         $scope.patient = new Patient();
       }
@@ -536,7 +539,7 @@
   });
 
   /* Directives */
-  
+
   imccp.directive("datefield", function () {
     return {
       restrict : "A",
