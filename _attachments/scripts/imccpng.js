@@ -494,7 +494,10 @@
 
     $scope.newPatient = function newPatient() {
       if ($scope.queryterm) {
-        $scope.patient = Patient.lookup($scope.queryterm);
+        $scope.patient = {};
+        Patient.lookup($scope.queryterm).then(function (pt) {
+          angular.extend($scope.patient, pt);
+        });
       } else {
         $scope.patient = new Patient();
       }
