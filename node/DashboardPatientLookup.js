@@ -114,9 +114,7 @@ httpProxy.createServer( function (req, res, proxy) {
 				}
 			});
 			return;
-		}
-
-		if (url.match(/^\/[a-zA-Z0-9]+\/[^_\/]+/)) {
+		} else if (url.match(/^\/[a-zA-Z0-9]+\/[^_\/]+/)) {
 			// Matches any /dbname/docname, except for docs beginning in "_", such as _design/docs.
 			// An attempt to directly access a data document is forced to pass through the authorize
 			// show function.
@@ -138,7 +136,7 @@ httpProxy.createServer( function (req, res, proxy) {
 				.join("/");
 			sendToCouch();
 			return;
-		} else if (url.match(/(?:_all_docs|_changes)/)) {
+		} else if (url.match(/dashboard\/(?:_all_docs|_changes)/)) {
 			// Matches any attempt to directly access CouchDB's _all_docs or _changes feeds.
 			// These should be blocked through to proxy; access only permitted from the remote
 			// desktop environment connecting directly to CouchDB.
