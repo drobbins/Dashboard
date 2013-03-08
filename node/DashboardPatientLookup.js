@@ -36,7 +36,7 @@ emmiClient = emmi.EMMIClient(options);
 // Setup the proxy server
 
 httpProxy.createServer( function (req, res, proxy) {
-	var url = req.url;
+	var url = req.url, db, buffer, auth, cookie;
 
 	function sendToCouch() {
 		proxy.proxyRequest(req, res, {
@@ -56,14 +56,15 @@ httpProxy.createServer( function (req, res, proxy) {
 	if (url.match(/\/patientLookup/)) {
 		// Patient Lookups are proxied directly to the EMMI server.
 		// Need to check the session before this.
-		var buffer = httpProxy.buffer(req);
+		buffer = httpProxy.buffer(req);
 		// Check the Session
-		var auth = req.headers.cookie.match(/AuthSession=[^;]+/)[0].split("=")[1];
+		cookie = req.headers.cookie.match(/AuthSession=[^;]+/);
+		auth = cookie && cookie[0].split("=")[1];
 		if (!auth) {
 			unauthorized();
 			return;
 		}
-		var db = nano({
+		db = nano({
 			url : "http://localhost:5984",
 			cookie : "AuthSession=" + auth
 		});
@@ -87,8 +88,31 @@ httpProxy.createServer( function (req, res, proxy) {
 
 	} else if (req.method === "GET") {
 
-		if (!url.match(/^\/dashboard/)) { // Pass through calls to other DB's
-			sendToCouch();
+		if (!url.match(/^\/(?:dashboard|_users|_session)/)) { // Pass through calls to other DB's, if authorized.
+			buffer = httpProxy.buffer(req);
+			// Check the Session
+			cookie = req.headers.cookie.match(/AuthSession=[^;]+/);
+			auth = cookie && cookie[0].split("=")[1];
+			if (!auth) {
+				unauthorized();
+				return;
+			}
+			db = nano({
+				url : "http://localhost:5984",
+				cookie : "AuthSession=" + auth
+			});
+			db.request({ db : "_session", method : "get" }, function (err, body) {
+				if (err || !body.userCtx.name) {
+					unauthorized();
+					return;
+				}
+				if (_.intersection(["_admin"], body.userCtx.roles).length > 0) {
+					sendToCouch();
+				} else {
+					unauthorized();
+					return;
+				}
+			});
 			return;
 		}
 
@@ -114,12 +138,19 @@ httpProxy.createServer( function (req, res, proxy) {
 				.join("/");
 			sendToCouch();
 			return;
+		} else if (url.match(/(?:_all_docs|_changes)/)) {
+			// Matches any attempt to directly access CouchDB's _all_docs or _changes feeds.
+			// These should be blocked through to proxy; access only permitted from the remote
+			// desktop environment connecting directly to CouchDB.
+			unauthorized();
 		} else {
 			sendToCouch();
 			return;
 		}
 
 	} else {
+		// Non GET methods are passed on, since write validation is handled in the
+		// validate_doc_update function, and DB creation requires an _admin session.
 		sendToCouch();
 	}
 
