@@ -138,12 +138,19 @@ httpProxy.createServer( function (req, res, proxy) {
 				.join("/");
 			sendToCouch();
 			return;
+		} else if (url.match(/(?:_all_docs|_changes)/)) {
+			// Matches any attempt to directly access CouchDB's _all_docs or _changes feeds.
+			// These should be blocked through to proxy; access only permitted from the remote
+			// desktop environment connecting directly to CouchDB.
+			unauthorized();
 		} else {
 			sendToCouch();
 			return;
 		}
 
 	} else {
+		// Non GET methods are passed on, since write validation is handled in the
+		// validate_doc_update function, and DB creation requires an _admin session.
 		sendToCouch();
 	}
 
