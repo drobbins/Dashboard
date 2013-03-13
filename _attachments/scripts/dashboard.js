@@ -25,7 +25,7 @@ var toType = function(obj) {
 
 var parseISODates = function (format) {
   var formatter = d3.time.format(format);
-  $(".datepicker").each(function(i){
+  $(".makedatepicker").each(function(i){
     var date, value;
     value = $(this).val();
     if (value.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}/)) {
@@ -90,9 +90,10 @@ IMCCP.populateFields = function populateFields () {
   if (!dataDateField.val()) dataDateField.val((new Date()).toISOString());
 
   // Enable Date Pickers and Format Values
-  $(".datepicker").each(function(i){
+  $(".datepicker").remove(); // Get rid of old datepickers..
+  $(".makedatepicker").each(function(i){
     parseISODates("%m-%d-%Y");
-    $(this).datepicker({
+    $(this).datepicker('remove').datepicker({
       format : "mm-dd-yyyy"
     });
   });
@@ -246,7 +247,7 @@ IMCCP.submitPatient = function submitPatient (el) {
       return;
     }
 
-    $(".datepicker").each(function(i){
+    $(".makedatepicker").each(function(i){
       var value;
       value = $(this).val().match(/^[0-9]{2}-[0-9]{2}-[0-9]{4}/) ? date.parse($(this).val()).toISOString() : $(this).val();
       $(this).val(value);
@@ -266,6 +267,7 @@ IMCCP.submitPatient = function submitPatient (el) {
     db.saveDoc(fo, {
       success : function (doc) {
         alert("Patient Saved");
+        $(".makedatepicker").datepicker("remove");
         $(el).trigger('edit_patient', "#"+doc.id);
         parseISODates("%m-%d-%Y");
       },
