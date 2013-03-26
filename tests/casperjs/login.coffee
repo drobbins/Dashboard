@@ -1,21 +1,16 @@
 settings = casper.settings
 
-# Admin Login
-casper.then ->
-    #Attempt to login
-    @fill "#account form", settings.users.admin, false
-    @click "#account form input[value='Login']"
+# Test a user by logging them in, checking for their name in the logged in
+# field, and logging them back out.
+testLogin = (user) ->
+    casper.d.login user
+    casper.d.logout()
 
-casper.then ->
-    @test.assertSelectorHasText "#account span a", settings.users.admin.name, "login is good"
-    #@test.assert @getHTML "#account span a" == "robbinsd", "login is good"
+casper.thenOpen settings.url
 
-casper.then ->
-    @click "a[href='#logout']"
-
-casper.then ->
-    #Ensure the login form is back in place.
-    @test.assertSelectorExists "#account form", "logout is good"
+# Test Logins
+testLogin settings.users.admin
+testLogin settings.users.gi
 
 casper.run ->
     @test.done()
