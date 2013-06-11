@@ -384,7 +384,7 @@ IMCCP.dataOverview = (function () {
       $scope.byClinic = $scope.dmf.dimension(function (d) {return d.value.clinic;});
       $scope.visitsByClinic = $scope.byClinic.group().reduceCount();
       $scope.byLag = $scope.dmf.dimension(function (d) {
-        return d.value.lag < 60 ? d.value.lag : 60;
+        return d.value.referral_to_appointment < 60 ? d.value.referral_to_appointment : 60;
       });
       $scope.visitsByLag = $scope.byLag.group().reduceCount();
       $scope.byDate = $scope.dmf.dimension(function (d) { return d3.time.month(d.date); });
@@ -401,7 +401,7 @@ IMCCP.dataOverview = (function () {
           function (d) {return d.doc.opername;},
           function (d) {return d.value.clinic;},
           function (d) {return dateFormat(d.date);},
-          function (d) {return d.value.lag;}
+          function (d) {return d.value.referral_to_appointment;}
         ]);
 
       // Data Count View
