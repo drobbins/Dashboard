@@ -11,7 +11,7 @@ var port = process.argv[2] || 8080,
     id = process.argv[3] || "",
     password = process.argv[4] || "",
     authString = encodeURIComponent(id) + ":" + encodeURIComponent(password),
-    authorizedRoles = ["_admin", "dashboard", "Breast", "Gi", "Gyn Onc", "Head And Neck", "Lymp And Leuk", "Neuro Onc", "Thoracic", "Urology"];
+    authorizedRoles = ["_admin", "dashboard", "Breast", "Gi", "Gyn Onc", "Head And Neck", "Lung", "Lymp And Leuk", "Neuro Onc", "Thoracic", "Urology"];
 
 if (!id || !password) {
   console.log("ID and Password for EMMI service are required");
