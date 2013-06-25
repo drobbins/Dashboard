@@ -336,10 +336,10 @@
       $scope.all = $scope.dmf.groupAll();
       $scope.byClinic = $scope.dmf.dimension(function (d) {return d.value.clinic;});
       $scope.visitsByClinic = $scope.byClinic.group().reduceCount();
-      $scope.byreferalToAppointment = $scope.dmf.dimension(function (d) {
-        return d.value.referal_to_appointment < 60 ? d.value.referal_to_appointment : 60;
+      $scope.byreferralToAppointment = $scope.dmf.dimension(function (d) {
+        return d.value.referral_to_appointment < 60 ? d.value.referral_to_appointment : 60;
       });
-      $scope.visitsByreferalToAppointment = $scope.byreferalToAppointment.group().reduceCount();
+      $scope.visitsByreferralToAppointment = $scope.byreferralToAppointment.group().reduceCount();
       $scope.byDate = $scope.dmf.dimension(function (d) { return d3.time.month(d.date); });
       $scope.visitsByDate = $scope.byDate.group().reduceCount();
       $scope.byInsurance = $scope.dmf.dimension(function (d) { return d.value.insurance_status; });
@@ -358,7 +358,7 @@
           function (d) {return d.doc.opername;},
           function (d) {return d.value.clinic;},
           function (d) {return dateFormat(d.date);},
-          function (d) {return d.value.referal_to_appointment;},
+          function (d) {return d.value.referral_to_appointment;},
           function (d) {return d.value.clinical_trial_enrollments;},
           function (d) {
             return "<a target=\"_blank\" href=\"#/patients/"+d.id+"\" class=\"btn btn-mini\">View</a>";
@@ -393,11 +393,11 @@
         .turnOnControls().filterAll();
 
       // Lag Bar Chart
-      var lagx = d3.scale.linear().domain(d3.extent($scope.visitsByreferalToAppointment.all(), function (d) { return d.key; }));
-      $scope.referalToAppointmentChart = dc.barChart("#overview-lag-chart", "overviewCharts")
+      var lagx = d3.scale.linear().domain(d3.extent($scope.visitsByreferralToAppointment.all(), function (d) { return d.key; }));
+      $scope.referralToAppointmentChart = dc.barChart("#overview-lag-chart", "overviewCharts")
         .width(440).height(220)
-        .dimension($scope.byreferalToAppointment)
-        .group($scope.visitsByreferalToAppointment)
+        .dimension($scope.byreferralToAppointment)
+        .group($scope.visitsByreferralToAppointment)
         .x(lagx)
         .elasticX(true)
         .xAxisPadding(5)
@@ -408,7 +408,7 @@
           g.attr("transform", "translate(10)");
         });
       $scope.lagChartReset = function lagChartReset () {
-        $scope.referalToAppointmentChart.filterAll();
+        $scope.referralToAppointmentChart.filterAll();
         $scope.redraw();
       };
 
