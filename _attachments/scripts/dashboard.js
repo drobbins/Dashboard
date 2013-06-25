@@ -529,6 +529,7 @@ IMCCP.usersClinic = function usersClinic (roles) {
     "Gi",
     "Gyn Onc",
     "Head And Neck",
+    "Lung",
     "Lymp And Leuk",
     "Neuro Onc",
     "Thoracic",

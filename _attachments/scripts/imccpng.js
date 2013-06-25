@@ -129,7 +129,7 @@
     // $http.get("_view/autofill_clinic?group=true").then(function (response) {
     //   angular.copy(response.data.rows.map(function (row) { return row.key; }), clinics);
     // });
-    clinics = ["Breast", "Gi", "Gyn Onc", "Head And Neck", "Lymp And Leuk", "Neuro Onc", "Thoracic", "Urology"];
+    clinics = ["Breast", "Gi", "Gyn Onc", "Head And Neck", "Lung", "Lymp And Leuk", "Neuro Onc", "Thoracic", "Urology"];
     return {
       list : function () {
         return clinics;

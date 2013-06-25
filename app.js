@@ -12,7 +12,7 @@ requirejs(['couchapp', 'path', 'fs'], function(couchapp, path, fs){
 
     // List of roles authorized to submit documents to the database. Roles must be added
     // by an admin to new accounts.
-    var authorizedRoles = ["_admin", "Breast", "Gi", "Gyn Onc", "Head And Neck", "Lymp And Leuk", "Neuro Onc", "Thoracic", "Urology"];
+    var authorizedRoles = ["_admin", "Breast", "Gi", "Gyn Onc", "Head And Neck", "Lung", "Lymp And Leuk", "Neuro Onc", "Thoracic", "Urology"];
 
     function required (field, message /* optional */) {
       message = message || "Document must have a " + field;
