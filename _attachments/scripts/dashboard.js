@@ -37,6 +37,20 @@ var parseISODates = function (format) {
 
 var IMCCP = {};
 
+IMCCP.data = {};
+
+IMCCP.data.clinics = [
+    "Breast",
+    "Gi",
+    "Gyn Onc",
+    "Head And Neck",
+    "Lung",
+    "Lymp And Leuk",
+    "Neuro Onc",
+    "Thoracic",
+    "Urology"
+  ];
+
 IMCCP.populateFields = function populateFields () {
   //Use Enters as Tabs
   $('input, select, textarea').bind('keydown', function(e) {
@@ -524,19 +538,9 @@ IMCCP.updateUserRoles = function updateUserRoles (el) {
 };
 
 IMCCP.usersClinic = function usersClinic (roles) {
-  var i, clinics = [
-    "Breast",
-    "Gi",
-    "Gyn Onc",
-    "Head And Neck",
-    "Lung",
-    "Lymp And Leuk",
-    "Neuro Onc",
-    "Thoracic",
-    "Urology"
-  ];
+  var i;
   for (i=0; i < roles.length; i++) {
-    if (clinics.indexOf(roles[i]) !== -1) return roles[i];
+    if (IMCCP.data.clinics.indexOf(roles[i]) !== -1) return roles[i];
   }
   return false;
 };
