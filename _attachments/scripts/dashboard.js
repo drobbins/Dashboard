@@ -44,7 +44,7 @@ IMCCP.data.clinics = [
     "Gi",
     "Gyn Onc",
     "Head And Neck",
-    "Lung",
+    "Liver",
     "Lymp And Leuk",
     "Neuro Onc",
     "Thoracic",
