@@ -54,6 +54,11 @@
                 "templateUrl" : "templates/main/dashboard.html",
                 "resolve" : sessionResolver
             }).
+            when("/profile", {
+                "controller" : "ProfileController",
+                "templateUrl" : "templates/main/profile.html",
+                "resolve" : sessionResolver
+            }).
             when("/admin", {
                 "controller" : "AdminController",
                 "templateUrl" : "templates/main/admin.html",
@@ -318,6 +323,22 @@
                 })();
             });
         };
+    });
+
+    imccp.controller("ProfileController", function ($scope, User, Session) {
+        $scope.updatePassword = function updatePassword() {
+            User.get({ id: "org.couchdb.user:"+$scope.session.userCtx.name }, function (user) {
+                user.password = $scope.password;
+                user.$put({ id: "org.couchdb.user:"+$scope.session.userCtx.name }, function () {
+                    $scope.$emit("alert", {
+                        "message" : "Password Updated. Please log in with your new password.",
+                        "type" : "success"
+                    });
+                    Session.logout();
+                });
+            });
+        };
+        $scope.session = Session.getSession().then(function (session) { return $scope.session = session});
     });
 
     imccp.controller("DashboardController", function ($scope, Record, currentSession) {

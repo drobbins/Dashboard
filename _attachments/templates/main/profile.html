@@ -1,0 +1,8 @@
+<h3>You are currently logged in as {{ session.userCtx.name }}</h3>
+<form ng-submit="updatePassword()" class="form-inline">
+  <legend>Change Password</legend>
+  <div class="input-append">
+    <input type="password" ng-model="password" placeholder="new password">
+    <input type="submit" value="Submit" class="btn btn-danger">
+  </div>
+</form>
