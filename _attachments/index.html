@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" ng-app="imccp">
+
   <head>
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="style/jquery-ui.css" type="text/css">
+    <title>IMCCP Dashboard</title>
     <link rel="stylesheet" href="style/bootstrap.min.css">
     <link rel="stylesheet" href="style/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="style/datepicker.css">
     <link rel="stylesheet" href="style/main.css" type="text/css">
   </head>
+
   <body>
 
     <!-- Top Nav Bar -->
@@ -24,64 +26,39 @@
           <!-- Brand Indicator -->
           <a class="brand" href="">IMCCP Dashboard</a>
 
-          <div class="nav-collapse">
-            <ul class="nav" id="navigation">
+          <div class="nav-collapse" ng-controller="NavController">
+            <ul class="nav" id="navigation" ng-include="navbar">
             </ul>
 
-            <div class="pull-right" id="account"></div>
+            <div class="pull-right">
+              <account></account>
+            </div>
           </div>
 
         </div>
       </div>
+      <alerts></alerts>
     </div>
 
     <!-- Main Content -->
-    <div class="container">
-      <div class="content">
-        <div class="row">
-          <div id="main" class="span9">
-            <div class="hero-unit">
-              <h1>Welcome</h1>
-              <p>Please log in and select an area of the application above.</p>
-            </div>
-          </div>
-          <div id="sidebar" class="span3">
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="container" ng-view></div>
 
     <!-- Footer -->
     <footer class="footer">
       <div class="container">
-        <p>Div Informatics | Dept Pathology | UAB</p>
-        <p>&copy; 2011-2012</p>
+        <h5>Built for the IMCCP by:</h5>
+        <p> 
+            Division of Informatics<br>
+            Department of Pathology<br>
+            University of Alabama at Birmingham<br>
+            <a href="http://uab.mathbiol.org/informatics">http://uab.mathbiol.org/informatics</a>
+        </p>
+        <p>
+            Contact: <a href="mailto:robbinsd@uab.edu">David Robbins</a>
+        </p>
       </div>
     </footer>
 
   </body>
   <script src="loader.js"></script>
-  <script src="vendor/couchapp/loader.js"></script>
-  <script type="text/javascript" charset="utf-8">
-    // google.load('visualization', '1.0', {'packages':['corechart', 'table']});
-    $.couch.app(function(app) {
-      $("#account").evently("account", app);
-      $("#navigation").evently("navigation", app);
-      //$("#main").evently("main", app);
-    });
-
-    $("#loadScript").click(function(e){
-      var uri,
-          callback = function(){};
-      uri = $("#uri").val() || $("#script_select").val();
-      if(uri){
-        load_script(uri,callback);
-      }
-    });
-    window.onload = function(){
-      var uri = document.location.search,
-          callback = function(){};
-      if (uri.length>1){load_script(uri.slice(1),callback);}
-    };
-  </script>
 </html>
