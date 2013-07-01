@@ -802,10 +802,7 @@ function (doc) {
           dataManagementForm.plsurdt ||
           dataManagementForm.bmtdt ||
           dataManagementForm.dentdt ||
-          dataManagementForm.othdt ||
-          dataManagementForm.offerdt ||
-          dataManagementForm.tdysdate ||
-          dataManagementForm.datadate;
+          dataManagementForm.othdt;
         return new Date(visitDate);
       },
       daysBetweenDates : function (date1, date2){
