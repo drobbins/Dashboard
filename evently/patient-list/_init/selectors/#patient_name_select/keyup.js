@@ -1,3 +1,0 @@
-function(){
-  IMCCP.lookupPatientByName(this);
-}
