@@ -1,1 +1,0 @@
-function(){$(this).trigger('doLogout');}
