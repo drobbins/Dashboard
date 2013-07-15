@@ -42,7 +42,7 @@ requirejs(['couchapp', 'path', 'fs'], function(couchapp, path, fs){
       required("medrec", "Medical Record Number required");
       required("ptfstnm", "Patient First Name Required");
       required("ptlstnm", "Patient Last Name Required");
-      required("dtrefer", "Patient Last Name Required");
+      required("dtrefer", "Referral Date Required");
     }
 
   };
@@ -51,10 +51,8 @@ requirejs(['couchapp', 'path', 'fs'], function(couchapp, path, fs){
     _id: '_design/dashboard',
     language : 'javascript',
     views : couchapp.loadFiles('./views', loadFileOptions),
-    evently : couchapp.loadFiles('./evently', loadFileOptions),
     lists : couchapp.loadFiles('./lists', loadFileOptions),
     shows : couchapp.loadFiles('./shows', loadFileOptions),
-    vendor : couchapp.loadFiles('./vendor', loadFileOptions),
     validate_doc_update : validateDocUpdate
   };
 
