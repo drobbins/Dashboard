@@ -790,6 +790,7 @@ function (doc) {
                 "york" : "Sumter"
             },
             extractCounty : function (city) {
+                if (!city) return "";
                 var cs = city.split(",")[0].toLowerCase();
                 return lib.counties[cs];
             },
