@@ -338,7 +338,7 @@
                 });
             });
         };
-        $scope.session = Session.getSession().then(function (session) { return $scope.session = session});
+        $scope.session = Session.getSession().then(function (session) { return $scope.session = session;});
     });
 
     imccp.controller("DashboardController", function ($scope, Record, currentSession) {
