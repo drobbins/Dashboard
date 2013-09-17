@@ -123,8 +123,7 @@
                 params : {
                     "view" : "stats",
                     "descending" : true
-                },
-                isArray : true
+                }
             }
         });
     });
@@ -338,14 +337,44 @@
                 });
             });
         };
-        $scope.session = Session.getSession().then(function (session) { return $scope.session = session});
+        $scope.session = Session.getSession().then(function (session) { return $scope.session = session;});
     });
 
-    imccp.controller("DashboardController", function ($scope, Record, currentSession) {
+    imccp.controller("DashboardController", function ($scope, Record, currentSession, $window) {
+        var currentOffset, batchSize, total;
 
-        // Get Record
-        $scope.records = Record.getAll( function () {
-            var dateFormat = d3.time.format("%m/%d/%Y");
+        batchSize = 1500;
+        currentOffset = 0;
+
+        $scope.percentage = 1;
+        $scope.message = "Loading records...";
+
+        $scope.getMore = function () {
+            var records = Record.getAll({limit: batchSize, skip: currentOffset}, function () {
+                records = records.rows;
+                currentOffset += batchSize;
+                $scope.percentage = currentOffset/total * 100;
+                records.forEach(function (r) { r.date = new Date(r.key); });
+                $scope.dmf.add(records);
+                if (records.length >= batchSize) {
+                    $scope.getMore();
+                } else {
+                    $scope.message = "All records loaded";
+                 // Refocusing forces the chart to re-size the bars.
+                    $scope.dateChart.x().domain(d3.extent($scope.visitsByDate.all(), function (d) { return d.key; }));
+                    $scope.dateChart.focus($scope.dateChart.x().domain());
+                    dc.redrawAll("overviewCharts");
+                }
+            });
+        };
+
+        // Get Initial Records
+        $scope.records = Record.getAll({limit: 3*batchSize}, function () {
+            total = $scope.records.total_rows;
+            $scope.records = $scope.records.rows;
+            currentOffset = 3*batchSize;
+            $scope.percentage = currentOffset/total * 100;
+             var dateFormat = d3.time.format("%m/%d/%Y");
             var paddedExtent = function paddedExtent(array, accessor, padding) {
                 var extent = d3.extent(array, accessor);
                 extent[0] -= padding;
@@ -353,6 +382,7 @@
                 return extent;
             };
             $scope.records.forEach(function (r) { r.date = new Date(r.key); });
+
             $scope.dmf = crossfilter($scope.records);
             $scope.all = $scope.dmf.groupAll();
             $scope.byClinic = $scope.dmf.dimension(function (d) {return d.value.clinic;});
@@ -414,7 +444,7 @@
                 .turnOnControls().filterAll();
 
             // Lag Bar Chart
-            var lagx = d3.scale.linear().domain(d3.extent($scope.visitsByreferralToAppointment.all(), function (d) { return d.key; }));
+            var lagx = d3.scale.linear(); //.domain(d3.extent($scope.visitsByreferralToAppointment.all(), function (d) { return d.key; }));
             $scope.referralToAppointmentChart = dc.barChart("#overview-lag-chart", "overviewCharts")
                 .width(440).height(220)
                 .dimension($scope.byreferralToAppointment)
@@ -461,10 +491,11 @@
                     $("#recordModal").modal('show');
                 });
             });
-            
+
             dc.renderAll("overviewCharts");
 
             $scope.trialFiltered = false;
+
             $scope.filterByTrials = function filterByTrials() {
                 if ($scope.trialFiltered) {
                     $scope.trialFiltered = false;
@@ -476,6 +507,7 @@
                 $scope.redraw();
             };
 
+            $scope.getMore(); // Get the next batch of records
         });
     });
 
@@ -732,6 +764,17 @@
                 });
             },
             template : "<div class=\"alerts\"></div>"
+        };
+    });
+
+    imccp.directive("progressBar", function ($window) {
+        return {
+            restrict: "E",
+            scope: {
+                message: "=",
+                percentage: "="
+            },
+            template: '<div class="progress"><div class="bar" style="width: {{ percentage }}%">{{ message }}</div></div>'
         };
     });
 
