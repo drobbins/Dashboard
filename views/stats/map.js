@@ -804,7 +804,7 @@ function (doc) {
                     dataManagementForm.bmtdt ||
                     dataManagementForm.dentdt ||
                     dataManagementForm.othdt;
-                return new Date(visitDate);
+                return visitDate ? new Date(visitDate) : null;
             },
             daysBetweenDates : function (date1, date2){
                 var msInDay = 86400000;

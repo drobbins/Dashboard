@@ -37,7 +37,7 @@ app_load([
   "scripts/jquery-1.8.1.js",
   "scripts/angular.js",
   "scripts/angular-resource.min.js",
-  "scripts/d3.v2.min.js",
+  "scripts/d3.v3.min.js",
   "scripts/topojson.js",
   "scripts/crossfilter.min.js",
   "scripts/dc.min.js",
