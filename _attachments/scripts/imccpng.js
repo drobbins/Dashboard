@@ -342,9 +342,26 @@
     });
 
     imccp.controller("DashboardController", function ($scope, Record, currentSession) {
+        var currentOffset, batchSize;
+
+        batchSize = 2500;
+        currentOffset = 0;
+
+        $scope.getMore = function () {
+            var records = Record.getAll({limit: batchSize, skip: currentOffset}, function () {
+                currentOffset += batchSize;
+                records.forEach(function (r) { r.date = new Date(r.key); });
+                $scope.dmf.add(records);
+                dc.redrawAll("overviewCharts");
+                if (records.length >= batchSize) {
+                    $scope.getMore();
+                }
+            });
+        };
 
         // Get Record
-        $scope.records = Record.getAll( function () {
+        $scope.records = Record.getAll({limit: batchSize}, function () {
+            currentOffset = batchSize;
             var dateFormat = d3.time.format("%m/%d/%Y");
             var paddedExtent = function paddedExtent(array, accessor, padding) {
                 var extent = d3.extent(array, accessor);
@@ -353,6 +370,7 @@
                 return extent;
             };
             $scope.records.forEach(function (r) { r.date = new Date(r.key); });
+
             $scope.dmf = crossfilter($scope.records);
             $scope.all = $scope.dmf.groupAll();
             $scope.byClinic = $scope.dmf.dimension(function (d) {return d.value.clinic;});
@@ -461,10 +479,11 @@
                     $("#recordModal").modal('show');
                 });
             });
-            
+
             dc.renderAll("overviewCharts");
 
             $scope.trialFiltered = false;
+
             $scope.filterByTrials = function filterByTrials() {
                 if ($scope.trialFiltered) {
                     $scope.trialFiltered = false;
@@ -476,6 +495,7 @@
                 $scope.redraw();
             };
 
+            $scope.getMore(); // Get the next batch of records
         });
     });
 
