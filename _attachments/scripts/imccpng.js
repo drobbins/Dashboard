@@ -162,7 +162,7 @@
         Patient = $resource("../../:id", {"id":"@id"}, {"put" : { method : "PUT"}});
 
         Patient.listByName = function listByName (name) {
-            return Record.query({
+            return Record.get({
                 "startkey" : '"'+name+'"',
                 "endkey" : '"'+name+"\u9999"+'"',
                 "view" : "patient_names",
@@ -171,7 +171,7 @@
         };
 
         Patient.listByMRN = function listByMRN (mrn) {
-            return Record.query({
+            return Record.get({
                 "startkey" : '"'+mrn+'"',
                 "endkey" : '"'+mrn+"\u9999"+'"',
                 "view" : "medrecs",

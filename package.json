@@ -1,6 +1,6 @@
 {
   "name": "Dashboard",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Dashboard is a data collection and admin app built for the IMCCP, a component of UAB's Comprehensive Cancer Center.",
   "dependencies": {
     "couchapp": "~0.9.0"
