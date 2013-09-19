@@ -567,7 +567,7 @@
     </div>
     <table class="table table-hover">
       <tbody>
-        <tr ng-repeat="patient in patients">
+        <tr ng-repeat="patient in patients.rows">
           <td><a href="#patients/{{patient.id}}">{{patient.value.name}} ({{patient.value.medrec}})</a></td>
         </tr>
       </tbody>
