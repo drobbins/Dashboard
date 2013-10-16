@@ -22,14 +22,6 @@
         <div class="row-fluid">
           <div class="span6">
             <div class="control-group">
-              <label class="control-label">Today's Date</label>
-              <div class="controls">
-                <input type="text" ng-model="patient.tdysdate" datefield>
-              </div>
-            </div>
-          </div>
-          <div class="span6">
-            <div class="control-group">
               <label for="">Clinic</label>
               <div class="controls">
                 <select ng-model="patient.clinic" ng-options="clinic for clinic in clinics" ng-show="user.admin"></select>
@@ -560,10 +552,18 @@
   </div>
 
   <div class="span3" ng-class="offset">
+    <h3>New Patients</h3>
+        <div class="controls controls-row">
+            <button class="btn span12" ng-click="newPatient()">New Patient</button>
+        </div>
+        or
+        <div class="controls controls-row">
+            <input ng-model="lookupterm" type="text" placeholder="Patient's Full MRN" class="ng-pristine ng-valid span8">
+            <button class="btn btn-inverse span4" ng-click="newPatient()">Lookup</button>
+        </div>
     <h3>Patient Lookup</h3>
     <div class="controls controls-row">
-        <input ng-model="queryterm" type="text" ng-change="updatePatientList()" placeholder="Patient Name or MRN" class="ng-pristine ng-valid span8">
-        <button class="btn btn-success span4" ng-click="newPatient()">New</button>
+        <input ng-model="queryterm" type="text" ng-change="updatePatientList()" placeholder="Patient Name or MRN" class="ng-pristine ng-valid span12">
     </div>
     <table class="table table-hover">
       <tbody>
