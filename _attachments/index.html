@@ -1,65 +1,70 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="imccp">
 
-  <head>
-    <title>IMCCP Dashboard</title>
-    <link rel="stylesheet" href="style/bootstrap.min.css">
-    <link rel="stylesheet" href="style/bootstrap-responsive.min.css">
-    <link rel="stylesheet" href="style/datepicker.css">
-    <link rel="stylesheet" href="style/main.css" type="text/css">
-  </head>
+    <head>
+        <title>IMCCP Dashboard</title>
+        <link rel="stylesheet" href="style/bootstrap.min.css">
+        <link rel="stylesheet" href="style/bootstrap-responsive.min.css">
+        <link rel="stylesheet" href="style/datepicker.css">
+        <link rel="stylesheet" href="style/main.css" type="text/css">
+    </head>
 
-  <body>
+    <body>
 
-    <!-- Top Nav Bar -->
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
+        <!-- Top Nav Bar -->
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
 
-          <!-- .btn-navbar is used when the screen is collapsed -->
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
+                    <!-- .btn-navbar is used when the screen is collapsed -->
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
 
-          <!-- Brand Indicator -->
-          <a class="brand" href="">IMCCP Dashboard</a>
+                    <!-- Brand Indicator -->
+                    <a class="brand" href="">IMCCP Dashboard</a>
 
-          <div class="nav-collapse" ng-controller="NavController">
-            <ul class="nav" id="navigation" ng-include="navbar">
-            </ul>
+                    <div class="nav-collapse" ng-controller="NavController">
+                        <ul class="nav" id="navigation" ng-include="navbar">
+                        </ul>
 
-            <div class="pull-right">
-              <account></account>
+                        <div class="pull-right">
+                            <account></account>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-          </div>
-
+            <alerts></alerts>
         </div>
-      </div>
-      <alerts></alerts>
-    </div>
 
-    <!-- Main Content -->
-    <div class="container" ng-view></div>
+        <!-- Main Content -->
+        <div class="container" ng-view></div>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <h5>Built for the IMCCP by:</h5>
-        <p>
-            David Robbins<br>
-            Division of Informatics<br>
-            Department of Pathology<br>
-            University of Alabama at Birmingham<br>
-            <a href="http://uab.mathbiol.org/informatics">http://uab.mathbiol.org/informatics</a>
-        </p>
-        <p>
-            Help: <a href="https://docs.google.com/forms/d/1h76QXcwDPEYpvyVbut-mdTvvKGY8yd0NAzxHhpDfrGk/viewform">Help Form</a>
-        </p>
-      </div>
-    </footer>
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row-fluid">
+                    <div class="span9">
+                    <h5>Built for the IMCCP by:</h5>
+                    <p>
+                        David Robbins<br>
+                        Division of Informatics<br>
+                        Department of Pathology<br>
+                        University of Alabama at Birmingham<br>
+                        <a href="http://uab.mathbiol.org/informatics">http://uab.mathbiol.org/informatics</a>
+                    </p>
+                    </div>
+                    <div class="span3">
+                        <h5>Click here for help: <a class="btn btn-danger" href="https://docs.google.com/forms/d/1h76QXcwDPEYpvyVbut-mdTvvKGY8yd0NAzxHhpDfrGk/viewform">Help!</a></h5>
+                    </div>
+                </div>
 
-  </body>
-  <script src="loader.js"></script>
+            </div>
+        </footer>
+
+    </body>
+    <script src="loader.js"></script>
 </html>
