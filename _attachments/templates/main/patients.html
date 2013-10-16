@@ -22,14 +22,6 @@
         <div class="row-fluid">
           <div class="span6">
             <div class="control-group">
-              <label class="control-label">Today's Date</label>
-              <div class="controls">
-                <input type="text" ng-model="patient.tdysdate" datefield>
-              </div>
-            </div>
-          </div>
-          <div class="span6">
-            <div class="control-group">
               <label for="">Clinic</label>
               <div class="controls">
                 <select ng-model="patient.clinic" ng-options="clinic for clinic in clinics" ng-show="user.admin"></select>
