@@ -53,15 +53,6 @@
               Required</span>
             </div>
 
-            <div class="control-group" ng-class="{error: patientForm.medrec.$invalid}">
-              <label class="control-label">MRN <i class="icon-star-empty"></i></label>
-              <div class="controls">
-                <input type="text" ng-model="patient.medrec" name="medrec" required>
-              </div>
-              <span ng-show="patientForm.medrec.$error.required" class="help-inline">
-              Required</span>
-            </div>
-
             <div class="control-group">
               <label class="control-label">Referring Physician</label>
               <div class="controls">
@@ -90,15 +81,6 @@
               </div>
             </div>
 
-            <div class="control-group" ng-class="{error: patientForm.dtrefer.$invalid}">
-              <label class="control-label">Date of Referral <i class="icon-star-empty"></i></label>
-              <div class="controls">
-                <input type="text" ng-model="patient.dtrefer" name="dtrefer" datefield required>
-              </div>
-              <span ng-show="patientForm.dtrefer.$error.required" class="help-inline">
-              Required</span>
-            </div>
-
             <div class="control-group">
               <label class="control-label">Self Referral?</label>
               <div class="controls">
@@ -123,8 +105,7 @@
                 <label class="radio inline"><input type="radio" ng-model="patient.refnav" value="">  N/A</label>
               </div>
             </div>
-          </div>
-          <div class="span6">
+
             <div class="control-group">
               <label class="control-label">ICD-9</label>
               <div class="controls">
@@ -137,6 +118,26 @@
               <div class="controls">
                 <input type="text" ng-model="patient.clinstg" autofill>
               </div>
+            </div>
+          </div>
+          <div class="span6">
+
+            <div class="control-group" ng-class="{error: patientForm.medrec.$invalid}">
+              <label class="control-label">MRN <i class="icon-star-empty"></i></label>
+              <div class="controls">
+                <input type="text" ng-model="patient.medrec" name="medrec" required>
+              </div>
+              <span ng-show="patientForm.medrec.$error.required" class="help-inline">
+              Required</span>
+            </div>
+
+            <div class="control-group" ng-class="{error: patientForm.dtrefer.$invalid}">
+              <label class="control-label">Date of Referral <i class="icon-star-empty"></i></label>
+              <div class="controls">
+                <input type="text" ng-model="patient.dtrefer" name="dtrefer" datefield required>
+              </div>
+              <span ng-show="patientForm.dtrefer.$error.required" class="help-inline">
+              Required</span>
             </div>
 
             <div class="control-group">
@@ -555,11 +556,6 @@
     <h3>New Patients</h3>
         <div class="controls controls-row">
             <button class="btn span12" ng-click="newPatient()">New Patient</button>
-        </div>
-        or
-        <div class="controls controls-row">
-            <input ng-model="lookupterm" type="text" placeholder="Patient's Full MRN" class="ng-pristine ng-valid span8">
-            <button class="btn btn-inverse span4" ng-click="newPatient()">Lookup</button>
         </div>
     <h3>Patient Lookup</h3>
     <div class="controls controls-row">
