@@ -107,6 +107,15 @@
             </div>
 
             <div class="control-group">
+              <label class="control-label">Referral to Pastoral Care Services?</label>
+              <div class="controls">
+                <label class="radio inline"><input type="radio" ng-model="patient.refpastoral" value="Yes"> Yes</label>
+                <label class="radio inline"><input type="radio" ng-model="patient.refpastoral" value="No"> No</label>
+                <label class="radio inline"><input type="radio" ng-model="patient.refpastoral" value="">  N/A</label>
+              </div>
+            </div>
+
+            <div class="control-group">
               <label class="control-label">ICD-9</label>
               <div class="controls">
                 <input type="text" ng-model="patient.icd9" autofill>
