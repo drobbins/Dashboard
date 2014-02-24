@@ -3,6 +3,10 @@
     <div class="span9">
         <div ng-show="patient">
 
+            <span class="pull-right">
+                <p class="text-error"><i class="icon-star-empty"></i> fields are required</p>
+            </span>
+
             <h3 id="top">Data for {{patient.ptfstnm || "a new patient"}} {{patient.ptlstnm}}</h3>
 
             <div class="alert" ng-show="patient.deleted">
@@ -20,11 +24,17 @@
                 <!-- First row of inputs -->
                 <div class="row-fluid">
                     <div class="span6">
-                        <p class="text-error"><i class="icon-star-empty"></i> fields are required</p>
+                        <div class="control-group">
+                            <label for="">Clinic</label>
+                            <div class="controls">
+                                <input type="text" ng-model="patient.opername" ng-show="user.admin"></select>
+                                <input type="text" ng-model="patient.opername" disabled ng-hide="user.admin">
+                            </div>
+                        </div>
                     </div>
                     <div class="span6">
                         <div class="control-group">
-                            <label for="">Clinic</label>
+                            <label for="">Operator</label>
                             <div class="controls">
                                 <select ng-model="patient.clinic" ng-options="clinic for clinic in clinics" ng-show="user.admin"></select>
                                 <input type="hidden" ng-model="patient.clinic">
@@ -43,8 +53,6 @@
                             <div class="controls">
                                 <input type="text" ng-model="patient.ptfstnm" name="ptfstnm" required>
                             </div>
-                            <span ng-show="patientForm.ptfstnm.$error.required" class="help-inline">
-                            Required</span>
                         </div>
 
                         <div class="control-group" ng-class="{error: patientForm.ptlstnm.$invalid}">
@@ -52,8 +60,6 @@
                             <div class="controls">
                                 <input type="text" ng-model="patient.ptlstnm" name="ptlstnm" required>
                             </div>
-                            <span ng-show="patientForm.ptlstnm.$error.required" class="help-inline">
-                            Required</span>
                         </div>
                     </div>
                     <div class="span6">
@@ -62,25 +68,23 @@
                             <div class="controls">
                                 <input type="text" ng-model="patient.medrec" name="medrec" required>
                             </div>
-                            <span ng-show="patientForm.medrec.$error.required" class="help-inline">
-                            Required</span>
                         </div>
-                        <div class="control-group">
-                            <label class="control-label">Proposed Treament to Occur At UAB?</label>
+                        <div class="control-group" ng-class="{error: patientForm.txloc.$invalid}">
+                            <label class="control-label">Proposed Treament to Occur at UAB?</label>
                             <div class="controls">
-                                <label class="radio inline"><input type="radio" ng-model="patient.txloc" value="Yes"> Yes</label>
-                                <label class="radio inline"><input type="radio" ng-model="patient.txloc" value="No"> No</label>
-                                <label class="radio inline"><input type="radio" ng-model="patient.txloc" value=""> Unknown</label>
+                                <label class="radio inline"><input type="radio" name="txloc" ng-model="patient.txloc" value="Yes" required> Yes</label>
+                                <label class="radio inline"><input type="radio" name="txloc" ng-model="patient.txloc" value="No" required> No</label>
+                                <label class="radio inline"><input type="radio" name="txloc" ng-model="patient.txloc" value="" required> Unknown</label>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row-fluid">
                     <div class="span12">
-                        <div class="control-group">
-                            <label class="control-label">Treatment Plan</label>
+                        <div class="control-group" ng-class="{error: patientForm.txplan.$invalid}">
+                            <label class="control-label">Treatment Plan <i class="icon-star-empty"></i></label>
                             <div class="controls">
-                                <textarea type="text" ng-model="patient.txplan" autofill class="span12"></textarea>
+                                <textarea type="text" ng-model="patient.txplan" name="txplan" autofill class="span12" required></textarea>
                             </div>
                         </div>
                     </div>
@@ -98,21 +102,21 @@
                             </div>
                         </div>
 
-                        <div class="control-group">
-                            <label class="control-label">Referral to Navigation Services?</label>
+                        <div class="control-group" ng-class="{error: patientForm.refnav.$invalid}">
+                            <label class="control-label">Referral to Navigation Services? <i class="icon-star-empty"></i></label>
                             <div class="controls">
-                                <label class="radio inline"><input type="radio" ng-model="patient.refnav" value="Yes"> Yes</label>
-                                <label class="radio inline"><input type="radio" ng-model="patient.refnav" value="No"> No</label>
-                                <label class="radio inline"><input type="radio" ng-model="patient.refnav" value="">    N/A</label>
+                                <label class="radio inline"><input type="radio" name="refnav" ng-model="patient.refnav" value="Yes" required> Yes</label>
+                                <label class="radio inline"><input type="radio" name="refnav" ng-model="patient.refnav" value="No" required> No</label>
+                                <label class="radio inline"><input type="radio" name="refnav" ng-model="patient.refnav" value="" required>    N/A</label>
                             </div>
                         </div>
 
-                        <div class="control-group">
-                            <label class="control-label">Referral to Pastoral Care Services?</label>
+                        <div class="control-group" ng-class="{error: patientForm.refpastoral.$invalid}">
+                            <label class="control-label">Referral to Pastoral Care Services? <i class="icon-star-empty"></i></label>
                             <div class="controls">
-                                <label class="radio inline"><input type="radio" ng-model="patient.refpastoral" value="Yes"> Yes</label>
-                                <label class="radio inline"><input type="radio" ng-model="patient.refpastoral" value="No"> No</label>
-                                <label class="radio inline"><input type="radio" ng-model="patient.refpastoral" value="">    N/A</label>
+                                <label class="radio inline"><input type="radio" name="refpastoral" ng-model="patient.refpastoral" value="Yes" required> Yes</label>
+                                <label class="radio inline"><input type="radio" name="refpastoral" ng-model="patient.refpastoral" value="No" required> No</label>
+                                <label class="radio inline"><input type="radio" name="refpastoral" ng-model="patient.refpastoral" value="" required>    N/A</label>
                             </div>
                         </div>
                     </div>
@@ -181,13 +185,11 @@
                             </div>
                         </div>
                         <div class="span6">
-                            <div class="control-group" ng-class="{error: patientForm.dtrefer.$invalid}">
+                            <div class="control-group">
                                 <label class="control-label">Date of Referral <i class="icon-star-empty"></i></label>
                                 <div class="controls">
-                                    <input type="text" ng-model="patient.dtrefer" name="dtrefer" datefield required>
+                                    <input type="text" ng-model="patient.dtrefer" name="dtrefer" datefield>
                                 </div>
-                                <span ng-show="patientForm.dtrefer.$error.required" class="help-inline">
-                                Required</span>
                             </div>
 
                             <div class="control-group">
@@ -586,11 +588,10 @@
     </div>
 
     <div class="span3" ng-class="offset">
-        <h3>New Patients</h3>
-                <div class="controls controls-row">
-                        <button class="btn span12" ng-click="newPatient()">New Patient</button>
-                </div>
-        <h3>Patient Lookup</h3>
+        <div class="controls controls-row">
+                <button class="btn span12" ng-click="newPatient()">New Patient</button>
+        </div>
+        <h5>Patient Lookup</h5>
         <div class="controls controls-row">
                 <input ng-model="queryterm" type="text" ng-change="updatePatientList()" placeholder="Patient Name or MRN" class="ng-pristine ng-valid span12">
         </div>
