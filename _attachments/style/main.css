@@ -20,8 +20,10 @@ table.nostripes tbody tr td{
   background-color: whiteSmoke;
 }
 
-body {
-  padding-top : 60px;
+@media (min-width: 980px) {
+    body {
+        padding-top : 60px;
+    }
 }
 
 .head-align {
