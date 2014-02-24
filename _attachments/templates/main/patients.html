@@ -10,7 +10,6 @@
             </div>
 
             <form name="patientForm" ng-submit="savePatient()" entersaretabs>
-                <p class="text-error"><i class="icon-star-empty"></i> fields are required</p>
 
                 <!-- Hidden Inputs -->
                 <input type="hidden" ng-model="patient._id">
@@ -20,6 +19,9 @@
 
                 <!-- First row of inputs -->
                 <div class="row-fluid">
+                    <div class="span6">
+                        <p class="text-error"><i class="icon-star-empty"></i> fields are required</p>
+                    </div>
                     <div class="span6">
                         <div class="control-group">
                             <label for="">Clinic</label>
@@ -33,6 +35,7 @@
                 </div>
 
                 <!-- General Patient Information -->
+                <legend>Basic Patient Information</legend>
                 <div class="row-fluid">
                     <div class="span6">
                         <div class="control-group" ng-class="{error: patientForm.ptfstnm.$invalid}">
@@ -52,48 +55,46 @@
                             <span ng-show="patientForm.ptlstnm.$error.required" class="help-inline">
                             Required</span>
                         </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Referring Physician</label>
+                    </div>
+                    <div class="span6">
+                        <div class="control-group" ng-class="{error: patientForm.medrec.$invalid}">
+                            <label class="control-label">MRN <i class="icon-star-empty"></i></label>
                             <div class="controls">
-                                <input type="text" ng-model="patient.refermd" autofill>
+                                <input type="text" ng-model="patient.medrec" name="medrec" required>
+                            </div>
+                            <span ng-show="patientForm.medrec.$error.required" class="help-inline">
+                            Required</span>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Proposed Treament to Occur At UAB?</label>
+                            <div class="controls">
+                                <label class="radio inline"><input type="radio" ng-model="patient.txloc" value="Yes"> Yes</label>
+                                <label class="radio inline"><input type="radio" ng-model="patient.txloc" value="No"> No</label>
+                                <label class="radio inline"><input type="radio" ng-model="patient.txloc" value=""> Unknown</label>
                             </div>
                         </div>
-
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
                         <div class="control-group">
-                            <label class="control-label">Referring Physician's Phone</label>
+                            <label class="control-label">Treatment Plan</label>
                             <div class="controls">
-                                <input type="text" ng-model="patient.mdphone">
+                                <textarea type="text" ng-model="patient.txplan" autofill class="span12"></textarea>
                             </div>
                         </div>
+                    </div>
+                </div>
 
+                <legend>Patient Referrals</legend>
+                <div class="row-fluid">
+                    <div class="span12">
                         <div class="control-group">
-                            <label class="control-label">Referring Physician's Address</label>
+                            <label class="control-label">Clinical Trials</label>
                             <div class="controls">
-                                <input type="text" ng-model="patient.mdaddy">
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Referring UAB Multidisciplinary MD</label>
-                            <div class="controls">
-                                <input type="text" ng-model="patient.refuabmd" autofill>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Self Referral?</label>
-                            <div class="controls">
-                                <label class="radio inline"><input type="radio" ng-model="patient.selfrfer" value="Yes"> Yes</label>
-                                <label class="radio inline"><input type="radio" ng-model="patient.selfrfer" value="No"> No</label>
-                                <label class="radio inline"><input type="radio" ng-model="patient.selfrfer" value="">    N/A</label>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">List Other Referral</label>
-                            <div class="controls">
-                                <input type="text" ng-model="patient.other">
+                                <label class="radio inline"><input type="radio" ng-model="patient.cltrial" value="Yes"> Yes</label>
+                                <label class="radio inline"><input type="radio" ng-model="patient.cltrial" value="Declined"> Declined</label>
+                                <label class="radio inline"><input type="radio" ng-model="patient.cltrial" value="Ineligible"> Ineligible</label>
                             </div>
                         </div>
 
@@ -114,438 +115,465 @@
                                 <label class="radio inline"><input type="radio" ng-model="patient.refpastoral" value="">    N/A</label>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="control-group">
-                            <label class="control-label">ICD-9</label>
-                            <div class="controls">
-                                <input type="text" ng-model="patient.icd9" autofill>
+                <!-- Admin Only Views -->
+                <div ng-show="user.admin">
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="control-group">
+                                <label class="control-label">Referring Physician</label>
+                                <div class="controls">
+                                    <input type="text" ng-model="patient.refermd" autofill>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">Referring Physician's Phone</label>
+                                <div class="controls">
+                                    <input type="text" ng-model="patient.mdphone">
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">Referring Physician's Address</label>
+                                <div class="controls">
+                                    <input type="text" ng-model="patient.mdaddy">
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">Referring UAB Multidisciplinary MD</label>
+                                <div class="controls">
+                                    <input type="text" ng-model="patient.refuabmd" autofill>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">Self Referral?</label>
+                                <div class="controls">
+                                    <label class="radio inline"><input type="radio" ng-model="patient.selfrfer" value="Yes"> Yes</label>
+                                    <label class="radio inline"><input type="radio" ng-model="patient.selfrfer" value="No"> No</label>
+                                    <label class="radio inline"><input type="radio" ng-model="patient.selfrfer" value="">    N/A</label>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">List Other Referral</label>
+                                <div class="controls">
+                                    <input type="text" ng-model="patient.other">
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">ICD-9</label>
+                                <div class="controls">
+                                    <input type="text" ng-model="patient.icd9" autofill>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">Clinical Stage at Presentation</label>
+                                <div class="controls">
+                                    <input type="text" ng-model="patient.clinstg" autofill>
+                                </div>
                             </div>
                         </div>
+                        <div class="span6">
+                            <div class="control-group" ng-class="{error: patientForm.dtrefer.$invalid}">
+                                <label class="control-label">Date of Referral <i class="icon-star-empty"></i></label>
+                                <div class="controls">
+                                    <input type="text" ng-model="patient.dtrefer" name="dtrefer" datefield required>
+                                </div>
+                                <span ng-show="patientForm.dtrefer.$error.required" class="help-inline">
+                                Required</span>
+                            </div>
 
-                        <div class="control-group">
-                            <label class="control-label">Clinical Stage at Presentation</label>
-                            <div class="controls">
-                                <input type="text" ng-model="patient.clinstg" autofill>
+                            <div class="control-group">
+                                <label class="control-label">Date Medical Records Received</label>
+                                <div class="controls">
+                                    <input type="text" ng-model="patient.medrecdt" datefield>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">Date of Attempted Initial Patient Contact</label>
+                                <div class="controls">
+                                    <input type="text" ng-model="patient.attmpdt" datefield>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">Date of Actual Patient Contact</label>
+                                <div class="controls">
+                                    <input type="text" ng-model="patient.actualdt" datefield>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">Appointment Date Offered</label>
+                                <div class="controls">
+                                    <input type="text" ng-model="patient.offerdt" datefield>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">Appointment Date Accepted</label>
+                                <div class="controls">
+                                    <input type="text" ng-model="patient.accptdt" datefield>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">Did patient previously have insurance?</label>
+                                <div class="controls">
+                                    <label class="radio inline"><input type="radio" ng-model="patient.previns" value="Yes"> Yes</label>
+                                    <label class="radio inline"><input type="radio" ng-model="patient.previns" value="No"> No</label>
+                                    <label class="radio inline"><input type="radio" ng-model="patient.previns" value="">    N/A</label>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">Type of Insurance</label>
+                                <div class="controls">
+                                    <input type="text" ng-model="patient.typeins" autofill>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">If no, did patient apply for insurance?</label>
+                                <div class="controls">
+                                    <label class="radio inline"><input type="radio" ng-model="patient.appins" value="Yes"> Yes</label>
+                                    <label class="radio inline"><input type="radio" ng-model="patient.appins" value="No"> No</label>
+                                    <label class="radio inline"><input type="radio" ng-model="patient.appins" value="">    N/A</label>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">Type of Insurance Applied For</label>
+                                <div class="controls">
+                                    <input type="text" ng-model="patient.typeinsapp">
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">How did the patient hear about the Multidisciplinary Clinic at UAB?</label>
+                                <div class="controls">
+                                    <input type="text" ng-model="patient.pthowinf">
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">Patient Home Town</label>
+                                <div class="controls">
+                                    <input type="text" ng-model="patient.ptaddy" autofill>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="span6">
-                        <div class="control-group" ng-class="{error: patientForm.medrec.$invalid}">
-                            <label class="control-label">MRN <i class="icon-star-empty"></i></label>
-                            <div class="controls">
-                                <input type="text" ng-model="patient.medrec" name="medrec" required>
-                            </div>
-                            <span ng-show="patientForm.medrec.$error.required" class="help-inline">
-                            Required</span>
-                        </div>
+                    <!-- Consultation Info -->
+                    <legend>Consultations</legend>
+                    <div class="row-fluid">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#tab1" data-toggle="tab">Surgery</a></li>
+                            <li><a href="#tab2" data-toggle="tab">MedOnc</a></li>
+                            <li><a href="#tab3" data-toggle="tab">RadOnc</a></li>
+                            <li><a href="#tab4" data-toggle="tab">Plastic Surg</a></li>
+                            <li><a href="#tab5" data-toggle="tab">BMT</a></li>
+                            <li><a href="#tab6" data-toggle="tab">Dent</a></li>
+                            <li><a href="#tab7" data-toggle="tab">Other</a></li>
+                        </ul>
 
-                        <div class="control-group" ng-class="{error: patientForm.dtrefer.$invalid}">
-                            <label class="control-label">Date of Referral <i class="icon-star-empty"></i></label>
-                            <div class="controls">
-                                <input type="text" ng-model="patient.dtrefer" name="dtrefer" datefield required>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab1">
+                                <div class="span6">
+                                    <div class="control-group">
+                                        <label class="control-label">Date</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.surgdt" datefield>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">Time</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.surgtm">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="span6">
+                                    <div class="control-group">
+                                        <label class="control-label">Location</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.surgloc">
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">Consulting Physician</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.surgmd" autofill>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <span ng-show="patientForm.dtrefer.$error.required" class="help-inline">
-                            Required</span>
-                        </div>
 
-                        <div class="control-group">
-                            <label class="control-label">Date Medical Records Received</label>
-                            <div class="controls">
-                                <input type="text" ng-model="patient.medrecdt" datefield>
+                            <div class="tab-pane" id="tab2">
+                                <div class="span6">
+                                    <div class="control-group">
+                                        <label class="control-label">Date</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.mdoncdt" datefield>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">Time</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.mdonctm">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="span6">
+                                    <div class="control-group">
+                                        <label class="control-label">Location</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.mdoncloc" autofill>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label">Consulting Physician</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.medoncmd" autofill>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="tab3">
+                                <div class="span6">
+                                    <div class="control-group">
+                                        <label class="control-label">Date</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.radondt" datefield>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">Time</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.radontm">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="span6">
+                                    <div class="control-group">
+                                        <label class="control-label">Location</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.radonloc" autofill>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">Consulting Physician</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.radoncmd" autofill>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="tab4">
+                                <div class="span6">
+                                    <div class="control-group">
+                                        <label class="control-label">Date</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.plsurdt" datefield>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">Time</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.plsurtm">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="span6">
+                                    <div class="control-group">
+                                        <label class="control-label">Location</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.plsurloc" autofill>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">Consulting Physician</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.plsurgmd" autofill>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="tab5">
+                                <div class="span6">
+                                    <div class="control-group">
+                                        <label class="control-label">Date</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.bmtdt" datefield>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">Time</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.bmttm">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="span6">
+                                    <div class="control-group">
+                                        <label class="control-label">Location</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.bmtloc" autofill>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">Consulting Physician</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.bmtmd" autofill>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="tab6">
+                                <div class="span6">
+                                    <div class="control-group">
+                                        <label class="control-label">Date</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.dentdt" datefield>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label">Time</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.denttm">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="span6">
+                                    <div class="control-group">
+                                        <label class="control-label">Location</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.dentloc" autofill>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label">Consulting Physician</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.dentmd" autofill>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="tab7">
+                                <div class="span6">
+                                    <div class="control-group">
+                                        <label class="control-label">Date</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.othdt" datefield>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label">Time</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.othtm">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="span6">
+                                    <div class="control-group">
+                                        <label class="control-label">Location</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.othloc" autofill>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label">Consulting Physician</label>
+                                        <div class="controls">
+                                            <input type="text" ng-model="patient.othmd" autofill>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <hr>
+                    </div>
 
-                        <div class="control-group">
-                            <label class="control-label">Date of Attempted Initial Patient Contact</label>
-                            <div class="controls">
-                                <input type="text" ng-model="patient.attmpdt" datefield>
+                    <!-- Treatment and Diagnosis Info -->
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="control-group">
+                                <label class="control-label">Surgery Location</label>
+                                <div class="controls">
+                                    <label class="radio inline"><input type="radio" ng-model="patient.txsurg" value="UAB"> UAB</label>
+                                    <label class="radio inline"><input type="radio" ng-model="patient.txsurg" value="Elsewhere"> Elsewhere</label>
+                                    <label class="radio inline"><input type="radio" ng-model="patient.txsurg" value=""> Not Indicated</label>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">Medical Oncology Location</label>
+                                <div class="controls">
+                                    <label class="radio inline"><input type="radio" ng-model="patient.txmedonc" value="UAB"> UAB</label>
+                                    <label class="radio inline"><input type="radio" ng-model="patient.txmedonc" value="Elsewhere"> Elsewhere</label>
+                                    <label class="radio inline"><input type="radio" ng-model="patient.txmedonc" value=""> Not Indicated</label>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">Radiation Oncology Location</label>
+                                <div class="controls">
+                                    <label class="radio inline"><input type="radio" ng-model="patient.txradonc" value="UAB"> UAB</label>
+                                    <label class="radio inline"><input type="radio" ng-model="patient.txradonc" value="Elsewhere"> Elsewhere</label>
+                                    <label class="radio inline"><input type="radio" ng-model="patient.txradonc" value=""> Not Indicated</label>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">If elsewhere selected, please indicate the clinic/hospital of treatment.</label>
+                                <div class="controls">
+                                    <input type="text" ng-model="patient.txelsewh">
+                                </div>
                             </div>
                         </div>
+                        <div class="span6">
 
-                        <div class="control-group">
-                            <label class="control-label">Date of Actual Patient Contact</label>
-                            <div class="controls">
-                                <input type="text" ng-model="patient.actualdt" datefield>
+                            <div class="control-group">
+                                <label class="control-label">If yes, indicate UAB Protocol Number</label>
+                                <div class="controls">
+                                    <input type="text" ng-model="patient.uabprtcl" autofill>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="control-group">
-                            <label class="control-label">Appointment Date Offered</label>
-                            <div class="controls">
-                                <input type="text" ng-model="patient.offerdt" datefield>
+                            <div class="control-group">
+                                <label class="control-label">Date letter sent to referring physician.</label>
+                                <div class="controls">
+                                    <input type="text" ng-model="patient.dtltrfwd" datefield>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="control-group">
-                            <label class="control-label">Appointment Date Accepted</label>
-                            <div class="controls">
-                                <input type="text" ng-model="patient.accptdt" datefield>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Did patient previously have insurance?</label>
-                            <div class="controls">
-                                <label class="radio inline"><input type="radio" ng-model="patient.previns" value="Yes"> Yes</label>
-                                <label class="radio inline"><input type="radio" ng-model="patient.previns" value="No"> No</label>
-                                <label class="radio inline"><input type="radio" ng-model="patient.previns" value="">    N/A</label>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Type of Insurance</label>
-                            <div class="controls">
-                                <input type="text" ng-model="patient.typeins" autofill>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">If no, did patient apply for insurance?</label>
-                            <div class="controls">
-                                <label class="radio inline"><input type="radio" ng-model="patient.appins" value="Yes"> Yes</label>
-                                <label class="radio inline"><input type="radio" ng-model="patient.appins" value="No"> No</label>
-                                <label class="radio inline"><input type="radio" ng-model="patient.appins" value="">    N/A</label>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Type of Insurance Applied For</label>
-                            <div class="controls">
-                                <input type="text" ng-model="patient.typeinsapp">
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">How did the patient hear about the Multidisciplinary Clinic at UAB?</label>
-                            <div class="controls">
-                                <input type="text" ng-model="patient.pthowinf">
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Patient Home Town</label>
-                            <div class="controls">
-                                <input type="text" ng-model="patient.ptaddy" autofill>
+                            <div class="control-group">
+                                <label class="control-label">Other clinical notes.</label>
+                                <div class="controls">
+                                    <textarea ng-model="patien.othclnts"></textarea>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Consultation Info -->
-                <legend>Consultations</legend>
-                <div class="row-fluid">
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab1" data-toggle="tab">Surgery</a></li>
-                        <li><a href="#tab2" data-toggle="tab">MedOnc</a></li>
-                        <li><a href="#tab3" data-toggle="tab">RadOnc</a></li>
-                        <li><a href="#tab4" data-toggle="tab">Plastic Surg</a></li>
-                        <li><a href="#tab5" data-toggle="tab">BMT</a></li>
-                        <li><a href="#tab6" data-toggle="tab">Dent</a></li>
-                        <li><a href="#tab7" data-toggle="tab">Other</a></li>
-                    </ul>
-
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="tab1">
-                            <div class="span6">
-                                <div class="control-group">
-                                    <label class="control-label">Date</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.surgdt" datefield>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label">Time</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.surgtm">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="span6">
-                                <div class="control-group">
-                                    <label class="control-label">Location</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.surgloc">
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label">Consulting Physician</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.surgmd" autofill>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane" id="tab2">
-                            <div class="span6">
-                                <div class="control-group">
-                                    <label class="control-label">Date</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.mdoncdt" datefield>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label">Time</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.mdonctm">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="span6">
-                                <div class="control-group">
-                                    <label class="control-label">Location</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.mdoncloc" autofill>
-                                    </div>
-                                </div>
-
-                                <div class="control-group">
-                                    <label class="control-label">Consulting Physician</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.medoncmd" autofill>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane" id="tab3">
-                            <div class="span6">
-                                <div class="control-group">
-                                    <label class="control-label">Date</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.radondt" datefield>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label">Time</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.radontm">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="span6">
-                                <div class="control-group">
-                                    <label class="control-label">Location</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.radonloc" autofill>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label">Consulting Physician</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.radoncmd" autofill>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane" id="tab4">
-                            <div class="span6">
-                                <div class="control-group">
-                                    <label class="control-label">Date</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.plsurdt" datefield>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label">Time</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.plsurtm">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="span6">
-                                <div class="control-group">
-                                    <label class="control-label">Location</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.plsurloc" autofill>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label">Consulting Physician</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.plsurgmd" autofill>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane" id="tab5">
-                            <div class="span6">
-                                <div class="control-group">
-                                    <label class="control-label">Date</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.bmtdt" datefield>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label">Time</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.bmttm">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="span6">
-                                <div class="control-group">
-                                    <label class="control-label">Location</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.bmtloc" autofill>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label">Consulting Physician</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.bmtmd" autofill>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane" id="tab6">
-                            <div class="span6">
-                                <div class="control-group">
-                                    <label class="control-label">Date</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.dentdt" datefield>
-                                    </div>
-                                </div>
-
-                                <div class="control-group">
-                                    <label class="control-label">Time</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.denttm">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="span6">
-                                <div class="control-group">
-                                    <label class="control-label">Location</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.dentloc" autofill>
-                                    </div>
-                                </div>
-
-                                <div class="control-group">
-                                    <label class="control-label">Consulting Physician</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.dentmd" autofill>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane" id="tab7">
-                            <div class="span6">
-                                <div class="control-group">
-                                    <label class="control-label">Date</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.othdt" datefield>
-                                    </div>
-                                </div>
-
-                                <div class="control-group">
-                                    <label class="control-label">Time</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.othtm">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="span6">
-                                <div class="control-group">
-                                    <label class="control-label">Location</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.othloc" autofill>
-                                    </div>
-                                </div>
-
-                                <div class="control-group">
-                                    <label class="control-label">Consulting Physician</label>
-                                    <div class="controls">
-                                        <input type="text" ng-model="patient.othmd" autofill>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                </div>
-
-                <!-- Treatment and Diagnosis Info -->
-                <div class="row-fluid">
-                    <div class="span6">
-                        <div class="control-group">
-                            <label class="control-label">Treatment Plan</label>
-                            <div class="controls">
-                                <input type="text" ng-model="patient.txplan" autofill>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Surgery Location</label>
-                            <div class="controls">
-                                <label class="radio inline"><input type="radio" ng-model="patient.txsurg" value="UAB"> UAB</label>
-                                <label class="radio inline"><input type="radio" ng-model="patient.txsurg" value="Elsewhere"> Elsewhere</label>
-                                <label class="radio inline"><input type="radio" ng-model="patient.txsurg" value=""> Not Indicated</label>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Medical Oncology Location</label>
-                            <div class="controls">
-                                <label class="radio inline"><input type="radio" ng-model="patient.txmedonc" value="UAB"> UAB</label>
-                                <label class="radio inline"><input type="radio" ng-model="patient.txmedonc" value="Elsewhere"> Elsewhere</label>
-                                <label class="radio inline"><input type="radio" ng-model="patient.txmedonc" value=""> Not Indicated</label>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Radiation Oncology Location</label>
-                            <div class="controls">
-                                <label class="radio inline"><input type="radio" ng-model="patient.txradonc" value="UAB"> UAB</label>
-                                <label class="radio inline"><input type="radio" ng-model="patient.txradonc" value="Elsewhere"> Elsewhere</label>
-                                <label class="radio inline"><input type="radio" ng-model="patient.txradonc" value=""> Not Indicated</label>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">If elsewhere selected, please indicate the clinic/hospital of treatment.</label>
-                            <div class="controls">
-                                <input type="text" ng-model="patient.txelsewh">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="span6">
-                        <div class="control-group">
-                            <label class="control-label">Clinical Trials</label>
-                            <div class="controls">
-                                <label class="radio inline"><input type="radio" ng-model="patient.cltrial" value="Yes"> Yes</label>
-                                <label class="radio inline"><input type="radio" ng-model="patient.cltrial" value="Declined"> Declined</label>
-                                <label class="radio inline"><input type="radio" ng-model="patient.cltrial" value="Ineligible"> Ineligible</label>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">If yes, indicate UAB Protocol Number</label>
-                            <div class="controls">
-                                <input type="text" ng-model="patient.uabprtcl" autofill>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Date letter sent to referring physician.</label>
-                            <div class="controls">
-                                <input type="text" ng-model="patient.dtltrfwd" datefield>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Other clinical notes.</label>
-                            <div class="controls">
-                                <textarea ng-model="patien.othclnts"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Buttons at the Bottom -->
                 <button class="btn btn-primary" type="submit" ng-disabled="isClean() || patientForm.$invalid">Submit</button>
