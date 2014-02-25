@@ -1,5 +1,5 @@
 #!/bin/bash
-dirs=( opername refermd refuabmd icd9 clinstg typeins surgloc surgmd mdoncloc medoncmd radonloc radoncmd plsurloc plsurgmd bmtloc bmtmd dentloc dentmd othloc othmd txplan uabprtcl )
+dirs=( opername refermd refuabmd icd9 clinstg typeins surgloc surgmd mdoncloc medoncmd radonloc radoncmd plsurloc plsurgmd bmtloc bmtmd dentloc dentmd othloc othmd txplan uabprtcl radoncplan medoncplan surgplan)
 
 for i in "${dirs[@]}"
 do
