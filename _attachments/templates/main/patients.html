@@ -155,17 +155,19 @@
 
                 <!-- Admin Only Views -->
                 <div ng-show="user.admin">
+                    <hr/>
+                    <legend>Admin Views</legend>
                     <div class="row-fluid">
                         <div class="span6">
                             <div class="control-group" ng-class="{error: patientForm.ptfstnm.$invalid}">
-                                <label class="control-label">Patient First Name <i class="icon-star-empty"></i></label>
+                                <label class="control-label">Patient First Name</label>
                                 <div class="controls">
                                     <input type="text" ng-model="patient.ptfstnm" name="ptfstnm">
                                 </div>
                             </div>
 
                             <div class="control-group" ng-class="{error: patientForm.ptlstnm.$invalid}">
-                                <label class="control-label">Patient Last Name <i class="icon-star-empty"></i></label>
+                                <label class="control-label">Patient Last Name</label>
                                 <div class="controls">
                                     <input type="text" ng-model="patient.ptlstnm" name="ptlstnm">
                                 </div>
@@ -231,7 +233,7 @@
                         </div>
                         <div class="span6">
                             <div class="control-group">
-                                <label class="control-label">Date of Referral <i class="icon-star-empty"></i></label>
+                                <label class="control-label">Date of Referral</label>
                                 <div class="controls">
                                     <input type="text" ng-model="patient.dtrefer" name="dtrefer" datefield>
                                 </div>
@@ -596,7 +598,7 @@
                     <div class="row-fluid">
                         <div class="span12">
                             <div class="control-group" ng-class="{error: patientForm.txplan.$invalid}">
-                                <label class="control-label">Treatment Plan <i class="icon-star-empty"></i></label>
+                                <label class="control-label">Treatment Plan</label>
                                 <div class="controls">
                                     <textarea type="text" ng-model="patient.txplan" name="txplan" autofill class="span12" ></textarea>
                                 </div>
@@ -607,10 +609,12 @@
 
 
                 <!-- Buttons at the Bottom -->
-                <button class="btn btn-primary" type="submit" ng-disabled="isClean() || patientForm.$invalid">Submit</button>
-                <button class="btn" type="submit" ng-disabled="isClean() || patientForm.$invalid">Save</button>
-                <button class="btn" type="button" ng-click="scrollTop()">Top</button>
-                <button class="btn btn-danger" type="button" ng-click="deletePatient()" ng-show="user.admin">Delete</button>
+                <div class="well">
+                    <button class="btn btn-primary" type="submit" ng-disabled="isClean() || patientForm.$invalid">Submit</button>
+                    <button class="btn" type="submit" ng-disabled="isClean() || patientForm.$invalid">Save</button>
+                    <button class="btn" type="button" ng-click="scrollTop()">Top</button>
+                    <button class="btn btn-danger" type="button" ng-click="deletePatient()" ng-show="user.admin">Delete</button>
+                </div>
             </form>
 
         </div>
