@@ -21,7 +21,7 @@
                 <input type="hidden" ng-model="patient.type">
                 <input type="hidden" ng-model="patient.datadate">
 
-                <!-- First row of inputs -->
+                <!-- Operator and Clinic -->
                 <div class="row-fluid">
                     <div class="span6">
                         <div class="control-group">
@@ -44,79 +44,110 @@
                     </div>
                 </div>
 
-                <!-- General Patient Information -->
-                <legend>Basic Patient Information</legend>
+                <!-- Treatment Information -->
+                <legend>Treatment Plan</legend>
                 <div class="row-fluid">
-                    <div class="span6">
-                        <div class="control-group" ng-class="{error: patientForm.ptfstnm.$invalid}">
-                            <label class="control-label">Patient First Name <i class="icon-star-empty"></i></label>
-                            <div class="controls">
-                                <input type="text" ng-model="patient.ptfstnm" name="ptfstnm" required>
-                            </div>
-                        </div>
-
-                        <div class="control-group" ng-class="{error: patientForm.ptlstnm.$invalid}">
-                            <label class="control-label">Patient Last Name <i class="icon-star-empty"></i></label>
-                            <div class="controls">
-                                <input type="text" ng-model="patient.ptlstnm" name="ptlstnm" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="span6">
+                    <div class="span12">
                         <div class="control-group" ng-class="{error: patientForm.medrec.$invalid}">
                             <label class="control-label">MRN <i class="icon-star-empty"></i></label>
                             <div class="controls">
                                 <input type="text" ng-model="patient.medrec" name="medrec" required>
                             </div>
                         </div>
-                        <div class="control-group" ng-class="{error: patientForm.txloc.$invalid}">
-                            <label class="control-label">Proposed Treament to Occur at UAB?</label>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span6">
+                        <div class="control-group" ng-class="{error: patientForm.txsurg.$invalid}">
+                            <label class="control-label">Proposed Surgery Location <i class="icon-star-empty"></i></label>
                             <div class="controls">
-                                <label class="radio inline"><input type="radio" name="txloc" ng-model="patient.txloc" value="Yes" required> Yes</label>
-                                <label class="radio inline"><input type="radio" name="txloc" ng-model="patient.txloc" value="No" required> No</label>
-                                <label class="radio inline"><input type="radio" name="txloc" ng-model="patient.txloc" value="" required> Unknown</label>
+                                <label class="radio inline"><input type="radio" ng-model="patient.txsurg" name="txsurg" value="UAB" required> UAB</label>
+                                <label class="radio inline"><input type="radio" ng-model="patient.txsurg" name="txsurg" value="Elsewhere"> Elsewhere</label>
+                                <label class="radio inline"><input type="radio" ng-model="patient.txsurg" name="txsurg" value="n/a"> N/A</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span6">
+                        <div class="control-group" ng-class="{error: patientForm.surgplan.$invalid}">
+                            <label class="control-label">Surgery Plan</label>
+                            <div class="controls">
+                                <textarea type="text" ng-model="patient.surgplan" name="surgplan" autofill></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row-fluid">
-                    <div class="span12">
-                        <div class="control-group" ng-class="{error: patientForm.txplan.$invalid}">
-                            <label class="control-label">Treatment Plan <i class="icon-star-empty"></i></label>
+                    <div class="span6">
+                        <div class="control-group" ng-class="{error: patientForm.txmedonc.$invalid}">
+                            <label class="control-label">Proposed Chemo Location <i class="icon-star-empty"></i></label>
                             <div class="controls">
-                                <textarea type="text" ng-model="patient.txplan" name="txplan" autofill class="span12" required></textarea>
+                                <label class="radio inline"><input type="radio" ng-model="patient.txmedonc" name="txmedonc" value="UAB" required> UAB</label>
+                                <label class="radio inline"><input type="radio" ng-model="patient.txmedonc" name="txmedonc" value="Elsewhere"> Elsewhere</label>
+                                <label class="radio inline"><input type="radio" ng-model="patient.txmedonc" name="txmedonc" value="n/a"> N/A</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span6">
+                        <div class="control-group" ng-class="{error: patientForm.medoncplan.$invalid}">
+                            <label class="control-label">Chemo Plan</label>
+                            <div class="controls">
+                                <textarea type="text" ng-model="patient.medoncplan" name="medoncplan" autofill></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span6">
+                        <div class="control-group" ng-class="{error: patientForm.txradonc.$invalid}">
+                            <label class="control-label">Proposed Radiation Location <i class="icon-star-empty"></i></label>
+                            <div class="controls">
+                                <label class="radio inline"><input type="radio" ng-model="patient.txradonc" name="txradonc" value="UAB" required> UAB</label>
+                                <label class="radio inline"><input type="radio" ng-model="patient.txradonc" name="txradonc" value="Elsewhere"> Elsewhere</label>
+                                <label class="radio inline"><input type="radio" ng-model="patient.txradonc" name="txradonc" value="n/a"> N/A</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span6">
+                        <div class="control-group" ng-class="{error: patientForm.radoncplan.$invalid}">
+                            <label class="control-label">Radiation Plan</label>
+                            <div class="controls">
+                                <textarea type="text" ng-model="patient.radoncplan" name="radoncplan" autofill></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <legend>Patient Referrals</legend>
+
+                <!-- Referrals -->
+                <legend>Referrals by PCC</legend>
                 <div class="row-fluid">
-                    <div class="span12">
+                    <div class="span4">
                         <div class="control-group">
                             <label class="control-label">Clinical Trials</label>
                             <div class="controls">
                                 <label class="radio inline"><input type="radio" ng-model="patient.cltrial" value="Yes"> Yes</label>
-                                <label class="radio inline"><input type="radio" ng-model="patient.cltrial" value="Declined"> Declined</label>
-                                <label class="radio inline"><input type="radio" ng-model="patient.cltrial" value="Ineligible"> Ineligible</label>
+                                <label class="radio inline"><input type="radio" ng-model="patient.cltrial" value="No"> No</label>
+                                <label class="radio inline"><input type="radio" ng-model="patient.cltrial" value="n/a"> N/A</label>
                             </div>
                         </div>
-
+                    </div>
+                    <div class="span4">
                         <div class="control-group" ng-class="{error: patientForm.refnav.$invalid}">
-                            <label class="control-label">Referral to Navigation Services? <i class="icon-star-empty"></i></label>
+                            <label class="control-label">Navigation Services <i class="icon-star-empty"></i></label>
                             <div class="controls">
                                 <label class="radio inline"><input type="radio" name="refnav" ng-model="patient.refnav" value="Yes" required> Yes</label>
                                 <label class="radio inline"><input type="radio" name="refnav" ng-model="patient.refnav" value="No" required> No</label>
-                                <label class="radio inline"><input type="radio" name="refnav" ng-model="patient.refnav" value="" required>    N/A</label>
+                                <label class="radio inline"><input type="radio" name="refnav" ng-model="patient.refnav" value="n/a" required> N/A</label>
                             </div>
                         </div>
-
+                    </div>
+                    <div class="span4">
                         <div class="control-group" ng-class="{error: patientForm.refpastoral.$invalid}">
-                            <label class="control-label">Referral to Pastoral Care Services? <i class="icon-star-empty"></i></label>
+                            <label class="control-label">Pastoral Care Services <i class="icon-star-empty"></i></label>
                             <div class="controls">
                                 <label class="radio inline"><input type="radio" name="refpastoral" ng-model="patient.refpastoral" value="Yes" required> Yes</label>
                                 <label class="radio inline"><input type="radio" name="refpastoral" ng-model="patient.refpastoral" value="No" required> No</label>
-                                <label class="radio inline"><input type="radio" name="refpastoral" ng-model="patient.refpastoral" value="" required>    N/A</label>
+                                <label class="radio inline"><input type="radio" name="refpastoral" ng-model="patient.refpastoral" value="n/a" required> N/A</label>
                             </div>
                         </div>
                     </div>
@@ -126,6 +157,20 @@
                 <div ng-show="user.admin">
                     <div class="row-fluid">
                         <div class="span6">
+                            <div class="control-group" ng-class="{error: patientForm.ptfstnm.$invalid}">
+                                <label class="control-label">Patient First Name <i class="icon-star-empty"></i></label>
+                                <div class="controls">
+                                    <input type="text" ng-model="patient.ptfstnm" name="ptfstnm">
+                                </div>
+                            </div>
+
+                            <div class="control-group" ng-class="{error: patientForm.ptlstnm.$invalid}">
+                                <label class="control-label">Patient Last Name <i class="icon-star-empty"></i></label>
+                                <div class="controls">
+                                    <input type="text" ng-model="patient.ptlstnm" name="ptlstnm">
+                                </div>
+                            </div>
+
                             <div class="control-group">
                                 <label class="control-label">Referring Physician</label>
                                 <div class="controls">
@@ -516,32 +561,6 @@
                     <!-- Treatment and Diagnosis Info -->
                     <div class="row-fluid">
                         <div class="span6">
-                            <div class="control-group">
-                                <label class="control-label">Surgery Location</label>
-                                <div class="controls">
-                                    <label class="radio inline"><input type="radio" ng-model="patient.txsurg" value="UAB"> UAB</label>
-                                    <label class="radio inline"><input type="radio" ng-model="patient.txsurg" value="Elsewhere"> Elsewhere</label>
-                                    <label class="radio inline"><input type="radio" ng-model="patient.txsurg" value=""> Not Indicated</label>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <label class="control-label">Medical Oncology Location</label>
-                                <div class="controls">
-                                    <label class="radio inline"><input type="radio" ng-model="patient.txmedonc" value="UAB"> UAB</label>
-                                    <label class="radio inline"><input type="radio" ng-model="patient.txmedonc" value="Elsewhere"> Elsewhere</label>
-                                    <label class="radio inline"><input type="radio" ng-model="patient.txmedonc" value=""> Not Indicated</label>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <label class="control-label">Radiation Oncology Location</label>
-                                <div class="controls">
-                                    <label class="radio inline"><input type="radio" ng-model="patient.txradonc" value="UAB"> UAB</label>
-                                    <label class="radio inline"><input type="radio" ng-model="patient.txradonc" value="Elsewhere"> Elsewhere</label>
-                                    <label class="radio inline"><input type="radio" ng-model="patient.txradonc" value=""> Not Indicated</label>
-                                </div>
-                            </div>
 
                             <div class="control-group">
                                 <label class="control-label">If elsewhere selected, please indicate the clinic/hospital of treatment.</label>
@@ -570,6 +589,16 @@
                                 <label class="control-label">Other clinical notes.</label>
                                 <div class="controls">
                                     <textarea ng-model="patien.othclnts"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="control-group" ng-class="{error: patientForm.txplan.$invalid}">
+                                <label class="control-label">Treatment Plan <i class="icon-star-empty"></i></label>
+                                <div class="controls">
+                                    <textarea type="text" ng-model="patient.txplan" name="txplan" autofill class="span12" ></textarea>
                                 </div>
                             </div>
                         </div>
