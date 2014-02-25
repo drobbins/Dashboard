@@ -39,6 +39,11 @@ validateDocUpdate = function(newDoc, savedDoc, userCtx){
             throw({forbidden : "You may only edit records you entered."});
         }
         required("medrec", "Medical Record Number required");
+        required("txsurg", "Surgery Location required");
+        required("txmedonc", "Chemo Location required");
+        required("txradonc", "Radiation Location required");
+        required("refnav", "Referral to Navigation Services required");
+        required("refpastoral", "Referral to Pastoral Services required");
     }
 
 };
