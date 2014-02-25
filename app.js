@@ -39,9 +39,6 @@ validateDocUpdate = function(newDoc, savedDoc, userCtx){
             throw({forbidden : "You may only edit records you entered."});
         }
         required("medrec", "Medical Record Number required");
-        required("ptfstnm", "Patient First Name Required");
-        required("ptlstnm", "Patient Last Name Required");
-        required("dtrefer", "Referral Date Required");
     }
 
 };
