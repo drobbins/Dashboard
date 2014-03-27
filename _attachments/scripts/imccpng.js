@@ -521,7 +521,7 @@
         });
     });
 
-    imccp.controller("PatientController", function ($scope, $routeParams, $window, Clinics, Patient, Session, currentSession) {
+    imccp.controller("PatientController", function ($scope, $routeParams, $window, Clinics, Patient, Session, User, currentSession) {
         var errorHandler = function errorHandler(response) {
             $scope.$emit("alert", {
                 "message" : response.data.reason,
@@ -531,6 +531,19 @@
 
         $scope.clinics = Clinics.list();
         $scope.user = currentSession.userCtx;
+
+        if ( $scope.user.admin || $scope.user.clinic === "Pastoral") {
+            var response = User.list(function () {
+                $scope.users = response.rows.map(function (row) {
+                    if (row.id !== "_design/_auth") {
+                        row.name = row.id.slice(17);
+                        return row;
+                    }
+                }).filter(function (row) {
+                    if (row) return row;
+                });
+            });
+        }
 
         $scope.updatePatientList = function updatePatientList() {
             if (!$scope.queryterm) return;
