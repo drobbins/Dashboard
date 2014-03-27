@@ -130,10 +130,7 @@
 
     imccp.factory("Clinics", function ($http) {
         var clinics = [];
-        // $http.get("_view/autofill_clinic?group=true").then(function (response) {
-        //     angular.copy(response.data.rows.map(function (row) { return row.key; }), clinics);
-        // });
-        clinics = ["Breast", "Gi", "Gyn Onc", "Head And Neck", "Liver", "Lymp And Leuk", "Neuro Onc", "Thoracic", "Urology"];
+        clinics = ["Breast", "Gi", "Gyn Onc", "Head And Neck", "Liver", "Lymp And Leuk", "Neuro Onc", "Thoracic", "Urology", "Pastoral"];
         return {
             list : function () {
                 return clinics;
@@ -281,7 +278,7 @@
         });
 
         $scope.clinics = Clinics.list();
-        
+
         $scope.updatePassword = function updatePassword () {
             var user = new User($scope.user);
             user.password = $scope.password;
