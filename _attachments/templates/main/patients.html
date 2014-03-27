@@ -62,7 +62,7 @@
                     <div class="control-group" ng-class="{error: patientForm.surgplan.$invalid}">
                         <label class="control-label">Surgery Plan</label>
                         <div class="controls">
-                            <textarea type="text" ng-model="patient.surgplan" name="surgplan" autofill required></textarea>
+                            <textarea type="text" ng-model="patient.surgplan" name="surgplan" autofill ng-required="patient.txsurg"></textarea>
                         </div>
                     </div>
                     <div class="control-group" ng-class="{error: patientForm.txmedonc.$invalid}">

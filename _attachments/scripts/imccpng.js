@@ -778,4 +778,19 @@
         };
     });
 
+    imccp.directive("requiredIf", function () {
+        return {
+            restrict: "A",
+            link: function (scope, element, attr) {
+                scope.$watch(attr.requiredIf, function (required) {
+                    if (required) {
+                        element.attr("required", "true");
+                    } else {
+                        element.removeAttr("required");
+                    }
+                });
+            }
+        };
+    });
+
 })();
