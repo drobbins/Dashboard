@@ -25,6 +25,10 @@ validateDocUpdate = function(newDoc, savedDoc, userCtx){
         });
     }
 
+    function sameClinic (doc, user) {
+        return user.roles.indexOf(doc.clinic) !== -1;
+    };
+
     // Ensure the user is logged in, and that they have at least one of the authorized roles.
     if (!userCtx.name) {
         throw({forbidden : "You must be logged in to complete that action."});
@@ -35,8 +39,8 @@ validateDocUpdate = function(newDoc, savedDoc, userCtx){
     // Ensure that the user has particular permission to edit the document in question, and
     // that all required fields are present.
     if(newDoc.type === "data_management_form"){
-        if(newDoc.opername !== userCtx.name && userCtx.roles.indexOf("_admin") === -1){
-            throw({forbidden : "You may only edit records you entered."});
+        if(!sameClinic(newDoc, userCtx) && userCtx.roles.indexOf("_admin") === -1){
+            throw({forbidden : "You are not permitted to modify that record."});
         }
         required("medrec", "Medical Record Number required");
         required("txsurg", "Surgery Location required");
