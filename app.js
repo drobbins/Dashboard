@@ -11,7 +11,7 @@ validateDocUpdate = function(newDoc, savedDoc, userCtx){
 
     // List of roles authorized to submit documents to the database. Roles must be added
     // by an admin to new accounts.
-    var authorizedRoles = ["_admin", "Breast", "Gi", "Gyn Onc", "Head And Neck", "Liver", "Lymp And Leuk", "Neuro Onc", "Thoracic", "Urology"];
+    var authorizedRoles = ["_admin", "Breast", "Gi", "Gyn Onc", "Head And Neck", "Liver", "Lymp And Leuk", "Neuro Onc", "Thoracic", "Urology", "Pastoral"];
 
     function required (field, message /* optional */) {
         message = message || "Document must have a " + field;
@@ -39,7 +39,7 @@ validateDocUpdate = function(newDoc, savedDoc, userCtx){
     // Ensure that the user has particular permission to edit the document in question, and
     // that all required fields are present.
     if(newDoc.type === "data_management_form"){
-        if(!sameClinic(newDoc, userCtx) && userCtx.roles.indexOf("_admin") === -1){
+        if(!sameClinic(newDoc, userCtx) && userCtx.roles.indexOf("_admin") === -1 && userCtx.roles.indexOf("Pastoral") === -1){
             throw({forbidden : "You are not permitted to modify that record."});
         }
         required("medrec", "Medical Record Number required");

@@ -790,7 +790,7 @@ function (head, req) {
 
     user = req.userCtx;
 
-    if (!req.userCtx.name && !(user.roles.indexOf("_admin") >= 0 || user.roles.indexOf("dashboard") >= 0)) {
+    if (!req.userCtx.name && !(user.roles.indexOf("_admin") >= 0 || user.roles.indexOf("dashboard") >= 0 || user.roles.indexOf("Pastoral") >= 0)) {
       start({
         "code" : 401
       });

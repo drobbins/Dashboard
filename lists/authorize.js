@@ -5,7 +5,7 @@ function (head, req){
         user = req.userCtx,
         has_permission = function(row){
             var clinic = row.value && row.value.clinic;
-            if (user.roles.indexOf("_admin") >= 0 || user.roles.indexOf("dashboard") >= 0) {
+            if (user.roles.indexOf("_admin") >= 0 || user.roles.indexOf("dashboard") >= 0 || user.roles.indexOf("Pastoral") >= 0) {
                 return true;
             }
             if (clinic && (user.roles.indexOf(clinic) >= 0)){
