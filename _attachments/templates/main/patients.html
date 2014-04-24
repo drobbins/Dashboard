@@ -62,7 +62,7 @@
                     <div class="control-group" ng-class="{error: patientForm.surgplan.$invalid}">
                         <label class="control-label">Surgery Plan</label>
                         <div class="controls">
-                            <textarea type="text" ng-model="patient.surgplan" name="surgplan" autofill required></textarea>
+                            <textarea type="text" ng-model="patient.surgplan" name="surgplan" autofill ng-required="patient.txsurg!='n/a'"></textarea>
                         </div>
                     </div>
                     <div class="control-group" ng-class="{error: patientForm.txmedonc.$invalid}">
@@ -76,7 +76,7 @@
                     <div class="control-group" ng-class="{error: patientForm.medoncplan.$invalid}">
                         <label class="control-label">Chemo Plan</label>
                         <div class="controls">
-                            <textarea type="text" ng-model="patient.medoncplan" name="medoncplan" autofill required></textarea>
+                            <textarea type="text" ng-model="patient.medoncplan" name="medoncplan" autofill ng-required="patient.txmedonc!='n/a'"></textarea>
                         </div>
                     </div>
                     <div class="control-group" ng-class="{error: patientForm.txradonc.$invalid}">
@@ -90,7 +90,21 @@
                     <div class="control-group" ng-class="{error: patientForm.radoncplan.$invalid}">
                         <label class="control-label">Radiation Plan</label>
                         <div class="controls">
-                            <textarea type="text" ng-model="patient.radoncplan" name="radoncplan" autofill required></textarea>
+                            <textarea type="text" ng-model="patient.radoncplan" name="radoncplan" autofill ng-required="patient.txradonc!='n/a'"></textarea>
+                        </div>
+                    </div>
+                    <div class="control-group" ng-class="{error: patientForm.txother.$invalid}">
+                        <label class="control-label">Proposed Other Treatment Location</label>
+                        <div class="controls">
+                            <label class="radio inline"><input type="radio" ng-model="patient.txother" name="txother" value="UAB" required> UAB</label>
+                            <label class="radio inline"><input type="radio" ng-model="patient.txother" name="txother" value="Elsewhere"> Elsewhere</label>
+                            <label class="radio inline"><input type="radio" ng-model="patient.txother" name="txother" value="n/a"> N/A</label>
+                        </div>
+                    </div>
+                    <div class="control-group" ng-class="{error: patientForm.txplan.$invalid}">
+                        <label class="control-label">Other Treatment Plan</label>
+                        <div class="controls">
+                            <textarea type="text" ng-model="patient.txplan" name="txplan" autofill ng-required="patient.txother!='n/a'"></textarea>
                         </div>
                     </div>
                 </div>
