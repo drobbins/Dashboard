@@ -117,7 +117,7 @@
     });
 
     imccp.factory("Record", function ($resource) {
-        return $resource("_list/authorize/:view", {"include_docs" : true, "view" : "@view"}, {
+        return $resource("_list/authorize/:view", {"include_docs" : false, "view" : "@view"}, {
             getAll : {
                 method : "GET",
                 params : {
@@ -403,7 +403,7 @@
                 .group(function (d) {return d.value.clinic;})
                 .size(100)
                 .columns([
-                    function (d) {return d.doc.opername;},
+                    function (d) {return d.value.opername;},
                     function (d) {return d.value.clinic;},
                     function (d) {return dateFormat(d.date);},
                     function (d) {return d.value.referral_to_appointment;},
@@ -463,7 +463,7 @@
             // Visits by Date
             var datex = d3.time.scale().domain(d3.extent($scope.visitsByDate.all(), function (d) { return d.key; }));
             $scope.dateChart = dc.barChart("#overview-date-chart", "overviewCharts")
-                .width(920).height(220)
+                .width(1170).height(220)
                 .dimension($scope.byDate)
                 .group($scope.visitsByDate)
                 .centerBar(true)
