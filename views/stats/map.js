@@ -892,6 +892,12 @@ function (doc) {
          // County
             value.county = lib.extractCounty(doc.ptaddy);
 
+         // Extractions
+            value.opername = doc.opername;
+            value.ptlstnm = doc.ptlstnm;
+            value.ptfstnm = doc.ptfstnm;
+            value.datadate = doc.datadate;
+
             if (!doc.dtrefer) emit(visitDate.toISOString().slice(0,10), value);
             else emit(doc.dtrefer.slice(0,10), value);
         }
