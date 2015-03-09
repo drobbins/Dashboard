@@ -807,18 +807,41 @@ function (head, req) {
         send(value + "\t");
     };
 
-    normalizeDates = function (labels, row) {
-        dateLabels = labels.filter(function (date) { return date.match(/(dt|date)/);});
-        dateLabels.forEach(function (label) {
-            date = new Date(row.doc[label]);
-            row.doc[label] = "ITS A DATE!!";
-        });
+    normalizeDate = function (date) {
+        if (!date || typeof date.match !== "function") return date;
+        var isoDateString, fields, type;
+        if (date.match(/^\d{1,2}\/\d{2}\/\d{4}$/)) {
+            type = "mm/dd/yyyy";
+            fields = date.split("/");
+            isoDateString = fields[2]+"-"+fields[0]+"-"+fields[1];
+        } else if (date.match(/^\d{4}-\d{2}-\d{2}/)) {
+            type = "yyyy-mm-dd";
+            isoDateString = date.slice(0,10);
+        } else if (date.match(/^\d{1,2}-\d{2}-\d{4}$/)) {
+            type = "mm-dd-yyyy";
+            fields = date.split("-");
+            isoDateString = fields[2]+"-"+fields[0]+"-"+fields[1];
+        } else if (date.match(/^\d{1,2}\/\d{2}\/\d{2}$/)) {
+            type = "mm/dd/yy";
+            fields = date.split("/");
+            isoDateString = "20"+fields[2]+"-"+fields[0]+"-"+fields[1];
+        } else if (date.match(/^\d{1,2}-\d{2}-\d{2}$/)) {
+            type = "mm-dd-yy";
+            fields = date.split("-");
+            isoDateString = "20"+fields[2]+"-"+fields[0]+"-"+fields[1];
+        }
+
+        if (isoDateString){
+            return (new Date(isoDateString)).toLocaleDateString();
+        } else {
+            return date;
+        }
     }
 
     sendRow = function (labels, row) {
         labels.forEach(function (label) {
             var value = row.doc[label]
-            if (dateLabels.indexOf(label) !== -1) value = (new Date(value)).toLocaleDateString();
+            if (dateLabels.indexOf(label) !== -1) value = normalizeDate(value);
             sendWithTab(value);
         });
         send("\n");
@@ -850,7 +873,6 @@ function (head, req) {
         if (row.doc.ptaddy && counties[row.doc.ptaddy.split(",")[0].toLowerCase()]) {
             row.doc.ptaddy = row.doc.ptaddy + ", " + counties[row.doc.ptaddy.split(",")[0].toLowerCase()] + " County";
         }
-        //normalizeDates(labels, row);
         sendRow(labels, row);
         row = getRow();
     } while (row);
